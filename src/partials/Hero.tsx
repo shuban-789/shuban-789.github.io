@@ -15,7 +15,7 @@ const Hero = () => (
       }
       description={
         <>
-          Hi, I'm Shuban. I'mm a current Junior at Del Norte High School interested in applying computer science to various fields of other sciences. My blog will tackle topics such as math, cybersecurity, physics, general computer science, and competition writeups or reviews. Here is my {' '}
+          Hi, I'm Shuban. I'm a current Junior at Del Norte High School interested in applying computer science to various fields of other sciences. My blog will tackle topics such as math, cybersecurity, physics, general computer science, and competition writeups or reviews. Here is my {' '}
           <a className="text-cyan-400 hover:underline" href="https://github.com/shuban-789">
             GitHub
           </a>{' '}
@@ -32,28 +32,10 @@ const Hero = () => (
       }
       socialButtons={
         <>
-          <a href="/">
+          <a href="https://github.com/shuban-789">
             <HeroSocial
-              src="/assets/images/twitter-icon.png"
-              alt="Twitter icon"
-            />
-          </a>
-          <a href="/">
-            <HeroSocial
-              src="/assets/images/facebook-icon.png"
-              alt="Facebook icon"
-            />
-          </a>
-          <a href="/">
-            <HeroSocial
-              src="/assets/images/linkedin-icon.png"
-              alt="Linkedin icon"
-            />
-          </a>
-          <a href="/">
-            <HeroSocial
-              src="/assets/images/youtube-icon.png"
-              alt="Youtube icon"
+              src="/assets/images/GitHub.png"
+              alt="GitHub icon"
             />
           </a>
         </>
