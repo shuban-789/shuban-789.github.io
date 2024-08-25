@@ -1,7 +1,8 @@
 # Personal Blog
 
 - Template: https://github.com/ixartz/Astro-boilerplate
-- Template Credit: `ixartz@github`
+- Template Github Credit: `ixartz@github`
+- Template Build Credit ![CreativeDesignGuru](https://creativedesignsguru.com/)
 - Framework: Astro `JavaScript Web Framework`
 - Deployment: `Github Pages`
 
