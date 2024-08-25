@@ -12,17 +12,7 @@ const Navbar = () => (
       <a href="/">
         <Logo
           icon={
-            <svg
-              className="mr-1 h-10 w-10 stroke-cyan-600"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <text x="10" y="40" font-family="Arial" font-size="30" fill="black">&gt;</text>
-            </svg>
+            <img src="assets/images/linuxpng.png" alt="title" width="10" height="10"></img>
           }
           name="Shuban's Blog"
         />
