@@ -21,9 +21,7 @@ const Navbar = () => (
               strokeLinecap="round"
               strokeLinejoin="round"
             >
-              <path d="M0 0h24v24H0z" stroke="none"></path>   
-              <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">&gt;_</text>
-              <path d="M4 20h14"></path>
+              <text x="10" y="40" font-family="Arial" font-size="40" fill="black">&gt;</text>
             </svg>
           }
           name="Shuban's Blog"
