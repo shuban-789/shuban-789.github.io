@@ -3,8 +3,8 @@ layout: '@/templates/BasePost.astro'
 title: Privelege Escalation via /tmp Injection in PATH
 description: A writeup for a privelege escalation challenge in PicoCTF 2023
 pubDate: 2023-03-28T00:00:00Z
-imgSrc: '/assets/images/image-post6.jpeg'
-imgAlt: 'Image post 6'
+imgSrc: '/assets/images/post-vne'
+imgAlt: 'vne post image'
 ---
 
 # PicoCTF 2023 Binary Exploitation: VNE - 2️0️0️ points
