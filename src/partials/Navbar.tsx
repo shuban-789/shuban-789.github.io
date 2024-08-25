@@ -1,5 +1,4 @@
 import {
-  Logo,
   NavbarTwoColumns,
   NavMenu,
   NavMenuItem,
