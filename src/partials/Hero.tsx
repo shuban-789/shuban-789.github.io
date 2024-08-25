@@ -19,7 +19,7 @@ const Hero = () => (
           <a className="text-cyan-400 hover:underline" href="https://github.com/shuban-789">
             GitHub
           </a>{' '}
-          .
+         .
         </>
       }
       avatar={
