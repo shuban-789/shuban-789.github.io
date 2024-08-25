@@ -12,7 +12,7 @@ const Navbar = () => (
       <a href="/">
         <Logo
           icon={
-            <img src="assets/images/linuxpng.png" alt="title" width="100" height="100"></img>
+            <img src="assets/images/linuxpng.png" alt="title" width="30" height="30"></img>
           }
           name="Shuban's Blog"
         />
