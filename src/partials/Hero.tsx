@@ -15,11 +15,11 @@ const Hero = () => (
       }
       description={
         <>
-          I'm a current Junior at Del Norte High School interested in applying computer science to various fields of other sciences. My blog will tackle topics such as math, cybersecurity, physics, general computer science, and competition writeups or reviews. Here is my {' '}
+          I'm a current Junior at Del Norte High School interested in applying computer science to various fields of other sciences. My blog will tackle topics such as math, cybersecurity, physics, general computer science, and competition writeups or reviews. Most of my projects are on {' '}
           <a className="text-cyan-400 hover:underline" href="https://github.com/shuban-789">
             GitHub
           </a>{' '}
-          which contains most of my projects and writeups.
+          .
         </>
       }
       avatar={
