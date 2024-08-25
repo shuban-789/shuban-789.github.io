@@ -22,7 +22,9 @@ const Navbar = () => (
               strokeLinejoin="round"
             >
               <path d="M0 0h24v24H0z" stroke="none"></path>
-              <polygon points="50,15 90,85 10,85" fill="cyan" />
+              <rect x="10" y="20" rx="10" ry="10" width="180" height="60" fill="#333" stroke="white" stroke-width="2" />
+        
+              <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">&lt;_</text>
               <path d="M4 20h14"></path>
             </svg>
           }
