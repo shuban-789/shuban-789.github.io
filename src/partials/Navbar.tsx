@@ -21,7 +21,7 @@ const Navbar = () => (
               strokeLinecap="round"
               strokeLinejoin="round"
             >
-              <text x="10" y="40" font-family="Arial" font-size="20" fill="black">&gt;</text>
+              <text x="10" y="40" font-family="Arial" font-size="30" fill="black">&gt;</text>
             </svg>
           }
           name="Shuban's Blog"
