@@ -1,0 +1,101 @@
+---
+layout: '@/templates/BasePost.astro'
+title: Privelege Escalation via /tmp Injection in PATH
+description: A writeup for a privelege escalation challenge in PicoCTF 2023
+pubDate: 2023-03-28T00:00:00Z
+imgSrc: '/assets/images/image-post6.jpeg'
+imgAlt: 'Image post 6'
+---
+
+# PicoCTF 2023 Binary Exploitation: VNE - 2️0️0️ points
+
+## VNE
+
+```
+📁Category: Binary Exploitation
+📄Files: N/A
+💻 Server Connections: Yes
+🏷️Tags: bash, env, injection
+
+📃Description: We've got a binary that can list directories as root, try it out !!
+Additional details will be available after launching your challenge instance.
+
+1️⃣Hint 1: Have you checked the contents of the /root folder?
+2️⃣Hint 2: Find a way to add more instruction to ls
+```
+
+### Takeaways from hints, description, and tags: 
+* Something important is in the /root file (the flag)
+* We will have to use environment variables
+* The binary lists contents of a directory as root
+* We need to inject code into “ls”
+
+## Phase 1: Recon 🔍
+It is important to get familiar with the machine we log into so that we can find important assets such as possible vulnerabilities, which we may be able to exploit to get us root access.
+
+### What do we notice? 
+* A binary that lists a directory as root
+* Why this is important: It does it as root via an SUID bit, because the root user made the executable
+* How it works: It takes the input for the directory as an environment variable
+* Other important takeaways: If it is listing the contents of a directory, it is most probably doing something with the ls binary
+
+![image](https://github.com/shuban-789/PicoPwnbooks-BinaryExploitation/assets/67974101/5815e2a0-7aa3-4358-8976-26e145f19b36)
+
+> SUID, short for Set User ID, is a special permission that can be assigned to executable files. When an executable file has the SUID permission enabled, it allows users who execute the file to temporarily assume the privileges of the file's owner.
+
+## Phase 2: Constructing a Plan 🛠️
+Using the information we have gathered, we can try to assess vulnerabilities on our target system. So far, we have thought of environment variable injection, but now it is time for us to plot out this plan.
+
+### The Plan 
+We make our own ls binary that spawns a shell. Since the file has an SUID, this will give us a root shell if the binary we are manipulating uses ls (in which according to the hints, it does).
+
+There are however, some rather huge obstacles
+
+```
+Q: How would we execute this plan so that the binary we are manipulating thinks our ls binary is the real ls binary?
+
+A: We could exploit the `PATH` environment variable. Many hints and tags tell us that the exploit has something to do
+with environment variables and the ls executable which the SUID binary is most likely using for its operations.
+```
+
+```
+Q: What directory should we put our binary into?
+
+A: The answer is /tmp. A directory with read, write, and execute permissions for everyone. This is perfect as it will
+be the perfect soil to plant our C code in.
+```
+### The Theory: 
+When "ls" is typed into the command line, the system looks through path for an executable with the name "ls". So in our injected PATH, because `/tmp` is first, when the binary which runs ls as root runs "ls" as root it wil run our binary as root which will run /bin/bash root.
+
+![image](https://github.com/shuban-789/PicoPwnbooks-BinaryExploitation/assets/67974101/9525b700-e39d-4ec6-a2b6-62fe0edec152)
+
+
+## Phase 3: Execution 🧀
+First, let's log onto our machine. To logon, we will need to use ssh with the command format of: 
+`ssh -p <port> <user>@<ip>`
+After logging on, let’s list our environment variables, and try editing the PATH.
+
+![image](https://github.com/shuban-789/PicoPwnbooks-BinaryExploitation/assets/67974101/64a60cc6-9cad-4ccb-bd9d-c21473fb51ae)
+
+It looks like the injection worked, so we can move on to making our fake ls executable.
+
+Finally, we need to make our fake ls binary containing this C code:
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+  system("/bin/bash");
+}
+```
+
+![image](https://github.com/shuban-789/PicoPwnbooks-BinaryExploitation/assets/67974101/a7a36a0b-8473-4114-bd49-09561a07b049)
+
+Lets execute!
+
+![image](https://github.com/shuban-789/PicoPwnbooks-BinaryExploitation/assets/67974101/984f1ed0-42e2-40c0-b297-5eb833df79e3)
+
+### Disclaimer
+The flag obtained in the command sequence example is obviously an edited version of the real flag. I highly reccomend you to try to solve the VNE problem and obtain its flag on your own. Happy Hacking! 🧑‍💻
