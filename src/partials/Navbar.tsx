@@ -21,6 +21,7 @@ const Navbar = () => (
               strokeLinecap="round"
               strokeLinejoin="round"
             >
+              <img src="/assets/images/terminal.svg" alt="icon for logo" />
             </svg>
           }
           name="Shuban's Blog"
