@@ -28,6 +28,7 @@ const Hero = () => (
           src="/assets/images/avatar.png"
           alt="Avatar image"
           loading="lazy"
+          style={{ borderRadius: '50%' }}
         />
       }
       socialButtons={
