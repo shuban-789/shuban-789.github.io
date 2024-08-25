@@ -2,7 +2,7 @@
 
 - Template: https://github.com/ixartz/Astro-boilerplate
 - Template Github Credit: `ixartz@github`
-- Template Build Credit [CreativeDesignGuru](https://creativedesignsguru.com/)
+- Template Build Credit: [CreativeDesignGuru](https://creativedesignsguru.com/)
 - Framework: Astro `JavaScript Web Framework`
 - Deployment: `Github Pages`
 
