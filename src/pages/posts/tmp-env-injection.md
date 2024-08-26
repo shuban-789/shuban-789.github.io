@@ -7,7 +7,7 @@ imgSrc: '/assets/images/post-vne.jpg'
 imgAlt: 'vne post image'
 ---
 
-<div style="margin-left: 20px; margin-right: 20px;">
+<div style="margin-left: 10px; margin-right: 10px;">
 
 # PicoCTF 2023 Binary Exploitation: VNE - 2️0️0️ points
 
