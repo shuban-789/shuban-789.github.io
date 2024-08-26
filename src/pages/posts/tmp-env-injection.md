@@ -7,13 +7,13 @@ imgSrc: '/assets/images/post-vne.jpg'
 imgAlt: 'vne post image'
 ---
 
-<div style="margin-left: 5px; margin-right: 5px;">
+<div style="margin-left: 50px; margin-right: 50px;">
 
 # PicoCTF 2023 Binary Exploitation: VNE - 2️0️0️ points
 
 ## VNE
 
-<code>
+```
 📁Category: Binary Exploitation
 📄Files: N/A
 💻 Server Connections: Yes
@@ -24,7 +24,7 @@ Additional details will be available after launching your challenge instance.
 
 1️⃣Hint 1: Have you checked the contents of the /root folder?
 2️⃣Hint 2: Find a way to add more instruction to ls
-</code>
+```
 
 ### Takeaways from hints, description, and tags: 
 * Something important is in the /root file (the flag)
