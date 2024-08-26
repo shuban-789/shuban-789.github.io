@@ -19,8 +19,10 @@ imgAlt: 'vne post image'
 💻 Server Connections: Yes
 🏷️Tags: bash, env, injection
 
-📃Description: We've got a binary that can list directories as root, try it out !!
-Additional details will be available after launching your challenge instance.
+📃Description: We've got a binary that can list directories as 
+root, try it out !!
+Additional details will be available after launching your challenge 
+instance.
 
 1️⃣Hint 1: Have you checked the contents of the /root folder?
 2️⃣Hint 2: Find a way to add more instruction to ls
@@ -53,19 +55,19 @@ We make our own ls binary that spawns a shell. Since the file has an SUID, this 
 
 There are however, some rather huge obstacles
 
-```
-Q: How would we execute this plan so that the binary we are manipulating thinks our ls binary is the real ls binary?
 
-A: We could exploit the `PATH` environment variable. Many hints and tags tell us that the exploit has something to do
+> Q1: How would we execute this plan so that the binary we are manipulating thinks our ls binary is the real ls binary?
+
+> A1: We could exploit the `PATH` environment variable. Many hints and tags tell us that the exploit has something to do
 with environment variables and the ls executable which the SUID binary is most likely using for its operations.
-```
 
-```
-Q: What directory should we put our binary into?
 
-A: The answer is /tmp. A directory with read, write, and execute permissions for everyone. This is perfect as it will
+
+> Q2: What directory should we put our binary into?
+
+> A2: The answer is /tmp. A directory with read, write, and execute permissions for everyone. This is perfect as it will
 be the perfect soil to plant our C code in.
-```
+
 ### The Theory: 
 When "ls" is typed into the command line, the system looks through path for an executable with the name "ls". So in our injected PATH, because `/tmp` is first, when the binary which runs ls as root runs "ls" as root it wil run our binary as root which will run /bin/bash root.
 
