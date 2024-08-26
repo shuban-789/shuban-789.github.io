@@ -7,6 +7,8 @@ imgSrc: '/assets/images/post-vne.jpg'
 imgAlt: 'vne post image'
 ---
 
+<div style="margin-left: 20px; margin-right: 20px;">
+
 # PicoCTF 2023 Binary Exploitation: VNE - 2️0️0️ points
 
 ## VNE
@@ -99,3 +101,5 @@ Lets execute!
 
 ### Disclaimer
 The flag obtained in the command sequence example is obviously an edited version of the real flag. I highly reccomend you to try to solve the VNE problem and obtain its flag on your own. Happy Hacking! 🧑‍💻
+
+</div>
