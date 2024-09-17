@@ -1,5 +1,5 @@
 import { createElement } from 'react';
-import { render, hydrate, unmountComponentAtNode } from 'react-dom';
+import { hydrate, render, unmountComponentAtNode } from 'react-dom';
 import StaticHtml from './static-html.js';
 
 export default (element) =>
@@ -10,7 +10,7 @@ export default (element) =>
 		const componentEl = createElement(
 			Component,
 			props,
-			children != null ? createElement(StaticHtml, { value: children }) : children
+			children != null ? createElement(StaticHtml, { value: children }) : children,
 		);
 
 		const isHydrate = client !== 'only';

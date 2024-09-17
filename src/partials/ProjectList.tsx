@@ -16,12 +16,12 @@ const ProjectList = () => (
   >
     <div className="flex flex-col gap-6">
       <Project
-        name="Bluefox"
+        name="Maglev"
         description="A Versatile Remote Access Swiss Army Knife"
-        link="https://github.com/shuban-789/bluefox"
+        link="https://github.com/shuban-789/maglev"
         img={{
-          src: '/assets/images/project-bluefox.png',
-          alt: 'bluefox image',
+          src: '/assets/images/project-maglev.png',
+          alt: 'maglev image',
         }}
         category={
           <>
