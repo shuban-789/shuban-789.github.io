@@ -20,7 +20,7 @@ const ProjectList = () => (
         description="A Versatile Remote Access Swiss Army Knife"
         link="https://github.com/shuban-789/maglev"
         img={{
-          src: '/assets/images/project-maglev.png',
+          src: '/assets/images/project-m.png',
           alt: 'maglev image',
         }}
         category={
