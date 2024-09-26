@@ -20,7 +20,7 @@ const Navbar = () => (
 
       <NavMenu>
         <NavMenuItem href="/posts/">Blogs</NavMenuItem>
-        <NavMenuItem href="https://github.com/shuban-789">GitHub</NavMenuItem>
+        <NavMenuItem href="https://devpost.com/shuban-789">Devpost</NavMenuItem>
         <NavMenuItem href="https://ctftime.org/user/189279">CTFtime</NavMenuItem>
         <NavMenuItem href="https://leetcode.com/u/shuban-789/">Leetcode</NavMenuItem>
       </NavMenu>
