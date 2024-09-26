@@ -34,8 +34,26 @@ const Hero = () => (
         <>
           <a href="https://github.com/shuban-789">
             <HeroSocial
-              src="/assets/images/GitHub.png"
+              src="/assets/images/github.svg"
               alt="GitHub icon"
+            />
+          </a>
+          <a href="https://gitlab.com/shuban-789">
+            <HeroSocial
+              src="/assets/images/gitlab.svg"
+              alt="GitLab icon"
+            />
+          </a>
+          <a href="https://mailto:cybergeek11929@gmail.com">
+            <HeroSocial
+              src="/assets/images/gmail.svg"
+              alt="Gmail icon"
+            />
+          </a>
+          <a href="https://hub.docker.com/u/shubanpcs">
+            <HeroSocial
+              src="/assets/images/docker.svg"
+              alt="DockerHub icon"
             />
           </a>
         </>
