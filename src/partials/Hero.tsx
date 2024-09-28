@@ -50,12 +50,6 @@ const Hero = () => (
               alt="Gmail icon"
             />
           </a>
-          <a href="https://hub.docker.com/u/shubanpcs">
-            <HeroSocial
-              src="/assets/images/docker.svg"
-              alt="DockerHub icon"
-            />
-          </a>
         </>
       }
     />
