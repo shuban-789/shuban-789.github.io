@@ -50,6 +50,12 @@ const Hero = () => (
               alt="Gmail icon"
             />
           </a>
+          <a href="https://www.linkedin.com/in/shuban-pal-5429952b1/">
+            <HeroSocial
+              src="/assets/images/linkedin.svg"
+              alt="Linkedin icon"
+            />
+          </a>
         </>
       }
     />
