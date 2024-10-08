@@ -30,6 +30,21 @@ const ProjectList = () => (
           </>
         }
       />
+      <Project
+        name="SnapSpark"
+        description="An Innovative Natural Fire Ignition Prediction System"
+        link="https://github.com/SnapSpark-AI/SnapSpark"
+        img={{
+          src: '/assets/images/snapspark.png',
+          alt: 'snapspark',
+        }}
+        category={
+          <>
+            <Tags color={ColorTags.BLUE}>Python</Tags>
+            <Tags color={ColorTags.TEAL}>FastAPI</Tags>
+          </>
+        }
+      />
     </div>
   </Section>
 );
