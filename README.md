@@ -4,7 +4,7 @@ Showcases all of my projects and activities on a single site.
 
 # Specifications
 
-- Framework: Astro `JavaScript Web Framework`
+- Framework: `Astro JavaScript Web Framework`
 - Deployment: `Github Pages`
 
 # Template Credits
