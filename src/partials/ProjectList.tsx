@@ -45,6 +45,22 @@ const ProjectList = () => (
           </>
         }
       />
+      <Project
+        name="LinkID"
+        description="An AES encryption enhanced Blockchain system for protecting medical records through a unique 8 digit id and private key pair."
+        link="https://github.com/TEAM-GOJO/LinkID-Blockchain"
+        img={{
+          src: '/assets/images/snapspark.png',
+          alt: 'linkid',
+        }}
+        category={
+          <>
+            <Tags color={ColorTags.SKY}>Go</Tags>
+            <Tags color={ColorTags.AMBER}>Blockchain</Tags>
+            <Tags color={ColorTags.AMBER}>AES</Tags>
+          </>
+        }
+      />
     </div>
   </Section>
 );
