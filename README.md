@@ -1,6 +1,6 @@
 # Personal Blog
 
-Showcases all of my projects and activities on a single site.
+Showcases all of my projects and activities on a single website.
 
 # Specifications
 
