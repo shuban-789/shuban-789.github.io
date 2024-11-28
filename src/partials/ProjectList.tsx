@@ -9,10 +9,10 @@ const ProjectList = () => (
   <Section
     title={
       <>
-        Recent {' '}
-        <span className="text-cyan-400">
+        Recent{' '}
+        <span className="text-sky-500">
             Projects
-        </span>{' '}
+        </span>
       </>
     }
   >
