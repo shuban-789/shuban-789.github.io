@@ -12,8 +12,8 @@ const Navbar = () => (
         <img
           src="/assets/images/penguin.png"
           alt="title"
-          width="28"
-          height="28"
+          width="30"
+          height="30"
           style={{ marginRight: '8px' }}
         />
         <span className="text-sky-500 text-2xl font-bold">
