@@ -9,13 +9,17 @@ import {
 const Navbar = () => (
   <Section>
     <NavbarTwoColumns>
-      <a href="/">
-        <Logo
-          icon={
-            <img src="/assets/images/penguin.png" alt="title" width="26" height="26" style={{ marginRight: '8px' }}></img>
-          }
-          name="Shuban's Blog"
+      <a href="/" className="flex items-center">
+        <img
+          src="/assets/images/penguin.png"
+          alt="title"
+          width="26"
+          height="26"
+          style={{ marginRight: '8px' }}
         />
+        <span className="text-sky-500 font-bold">
+          Shuban's Blog
+        </span>
       </a>
 
       <NavMenu>
