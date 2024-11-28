@@ -17,7 +17,7 @@ const Navbar = () => (
           height="26"
           style={{ marginRight: '8px' }}
         />
-        <span className="text-sky-500 font-bold">
+        <span className="text-sky-500 text-xl font-bold">
           Shuban's Blog
         </span>
       </a>
