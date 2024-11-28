@@ -2,7 +2,6 @@ import type { MarkdownInstance } from 'astro';
 import type { IFrontmatter } from 'astro-boilerplate-components';
 import {
   BlogGallery,
-  GradientText,
   Section,
 } from 'astro-boilerplate-components';
 
@@ -15,7 +14,10 @@ const RecentPosts = (props: IRecentPostsProps) => (
     title={
       <div className="flex items-baseline justify-between">
         <div>
-          Recent <GradientText>Posts</GradientText>
+          Recent{' '} 
+          <span className="text-sky-500">
+            Posts
+          </span>{' '}
         </div>
 
         <div className="text-sm">
