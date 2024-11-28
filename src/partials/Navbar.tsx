@@ -23,10 +23,18 @@ const Navbar = () => (
       </a>
 
       <NavMenu>
-        <NavMenuItem href="/posts/">Blogs</NavMenuItem>
-        <NavMenuItem href="https://devpost.com/shuban-789">Devpost</NavMenuItem>
-        <NavMenuItem href="https://ctftime.org/user/189279">CTFtime</NavMenuItem>
-        <NavMenuItem href="https://leetcode.com/u/shuban-789/">Leetcode</NavMenuItem>
+        <span className="text-sky-500 text-lg hover:underline">
+          <NavMenuItem href="/posts/">Blogs</NavMenuItem>
+        </span>
+        <span className="text-sky-500 text-lg hover:underline">
+          <NavMenuItem href="https://devpost.com/shuban-789">Devpost</NavMenuItem>
+        </span>
+        <span className="text-sky-500 text-lg hover:underline">
+          <NavMenuItem href="https://ctftime.org/user/189279">CTFtime</NavMenuItem>
+        </span>
+        <span className="text-sky-500 text-lg hover:underline">
+          <NavMenuItem href="https://leetcode.com/u/shuban-789/">Leetcode</NavMenuItem>
+        </span>
       </NavMenu>
     </NavbarTwoColumns>
   </Section>
