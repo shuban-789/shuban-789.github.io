@@ -10,7 +10,7 @@ const Hero = () => (
       title={
         <>
           Hi, I'm{' '}
-          <span className="text-cyan-400">
+          <span className="text-sky-500">
             Shuban
           </span>{' '}
           👋
