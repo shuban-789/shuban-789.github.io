@@ -24,16 +24,16 @@ const Navbar = () => (
 
       <NavMenu>
         <span className="text-sky-500 text-lg">
-          <NavMenuItem href="/posts/">Blogs</NavMenuItem>
+          <NavMenuItem href="/posts/">/blogs</NavMenuItem>
         </span>
         <span className="text-sky-500 text-lg">
-          <NavMenuItem href="https://devpost.com/shuban-789">Devpost</NavMenuItem>
+          <NavMenuItem href="https://devpost.com/shuban-789">/devpost</NavMenuItem>
         </span>
         <span className="text-sky-500 text-lg">
-          <NavMenuItem href="https://ctftime.org/user/189279">CTFtime</NavMenuItem>
+          <NavMenuItem href="https://ctftime.org/user/189279">/ctftime</NavMenuItem>
         </span>
         <span className="text-sky-500 text-lg">
-          <NavMenuItem href="https://leetcode.com/u/shuban-789/">Leetcode</NavMenuItem>
+          <NavMenuItem href="https://leetcode.com/u/shuban-789/">/leetcode</NavMenuItem>
         </span>
       </NavMenu>
     </NavbarTwoColumns>
