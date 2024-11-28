@@ -26,13 +26,16 @@ const Navbar = () => (
           <NavMenuItem href="/posts/">/blogs</NavMenuItem>
         </span>
         <span className="text-cyan-400 text-xl">
-          <NavMenuItem href="https://devpost.com/shuban-789">/devpost</NavMenuItem>
+          <NavMenuItem href="https://devpost.com/shuban-789">/hackathons</NavMenuItem>
         </span>
         <span className="text-cyan-400 text-xl">
-          <NavMenuItem href="https://ctftime.org/user/189279">/ctftime</NavMenuItem>
+          <NavMenuItem href="https://ctftime.org/user/189279">/ctf</NavMenuItem>
         </span>
         <span className="text-cyan-400 text-xl">
           <NavMenuItem href="https://leetcode.com/u/shuban-789/">/leetcode</NavMenuItem>
+        </span>
+        <span className="text-cyan-400 text-xl">
+          <NavMenuItem href="https://leetcode.com/u/shuban-789/">/competitions</NavMenuItem>
         </span>
       </NavMenu>
     </NavbarTwoColumns>
