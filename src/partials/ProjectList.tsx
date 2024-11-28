@@ -1,6 +1,5 @@
 import {
   ColorTags,
-  GradientText,
   Project,
   Section,
   Tags,
@@ -10,7 +9,10 @@ const ProjectList = () => (
   <Section
     title={
       <>
-        Recent <GradientText>Projects</GradientText>
+        Recent {' '}
+        <span className="text-cyan-400">
+            Projects
+        </span>{' '}
       </>
     }
   >
