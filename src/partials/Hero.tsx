@@ -1,5 +1,4 @@
 import {
-  GradientText,
   HeroAvatar,
   HeroSocial,
   Section,
@@ -10,10 +9,11 @@ const Hero = () => (
     <HeroAvatar
       title={
         <>
-          Hi, I'm {' '} 👋
-          <a className="text-cyan-400 hover:underline">
+          Hi, I'm{' '}
+          <span className="text-cyan-400">
             Shuban
-          </a>.
+          </span>{' '}
+          👋
         </>
       }
       description={
