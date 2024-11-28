@@ -1,5 +1,4 @@
 import {
-  Logo,
   NavbarTwoColumns,
   NavMenu,
   NavMenuItem,
@@ -18,7 +17,7 @@ const Navbar = () => (
           style={{ marginRight: '8px' }}
         />
         <span className="text-sky-500 text-xl font-bold">
-          Shuban's Blog
+          🐧Shuban's Blog
         </span>
       </a>
 
