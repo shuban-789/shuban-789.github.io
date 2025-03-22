@@ -13,11 +13,12 @@ weight: 1
 ```
 📁Category: Binary Exploitation
 📄Files: N/A
-💻 Server Connections: Yes
+💻Server Connections: Yes
 🏷️Tags: bash, env, injection
 
-📃Description: We've got a binary that can list directories as root, try it out !!
-Additional details will be available after launching your challenge instance.
+📃Description: We've got a binary that can list directories as root, try it 
+out !! Additional details will be available after launching your challenge 
+instance.
 
 1️⃣Hint 1: Have you checked the contents of the /root folder?
 2️⃣Hint 2: Find a way to add more instruction to ls
