@@ -15,10 +15,3 @@ url = "https://github.com/shuban-789"
 [social.params]
 icon = "brand-github"
 
-[[social]]
-identifier = "gitlab"
-name = "GitLab"
-url = "https://twitter.com"
-
-[social.params]
-icon = "brand-gitlab"
