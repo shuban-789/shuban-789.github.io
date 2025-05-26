@@ -1,6 +1,6 @@
 ---
-title: CTF
-description: Anything related to CTF will fall under this category
+title: Math
+description: Math notes or documentation
 image:
 
 # Badge style

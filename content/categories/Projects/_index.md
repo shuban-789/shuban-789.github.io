@@ -1,6 +1,6 @@
 ---
 title: Projects
-description: Anything related to my personal projects will fall under this category
+description: Anything related to my personal projects
 image:
 
 # Badge style
