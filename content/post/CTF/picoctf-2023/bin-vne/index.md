@@ -2,7 +2,7 @@
 title: "PicoCTF 2023 Binary Exploitation: VNE"
 description: "Writeup for VNE from PicoCTF 2023"
 slug: "picoctf-vne"
-date: "2022-03-06 00:00:00+0000"
+date: "2023-04-06 00:00:00+0000"
 image: "cover.jpg"
 categories:
     - "CTF"
