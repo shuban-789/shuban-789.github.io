@@ -1,6 +1,6 @@
 ---
-title: "VNE Writeup (Pwn)"
-description: "Writeup for VNE from PicoCTF 2023 (Pwn chall)"
+title: "VNE Writeup"
+description: "Writeup for VNE from PicoCTF 2023"
 slug: "picoctf-vne"
 date: "2023-04-06 00:00:00+0000"
 image: "cover.jpg"
