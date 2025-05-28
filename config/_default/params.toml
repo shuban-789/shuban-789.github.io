@@ -13,7 +13,6 @@ published = "Jan 02, 2006"
 lastUpdated = "Jan 02, 2006 15:04 MST"
 
 [sidebar]
-emoji = "🐧"
 subtitle = "Programmer interested in operating systems, computer simulations, and machine learning. Codes mainly in Go and Python"
 
 [sidebar.avatar]
