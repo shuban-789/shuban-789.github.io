@@ -1,6 +1,6 @@
 ---
-title: "ROPemporium Full Solutions"
-description: "My solutions to all ROPemporium chall"
+title: "ROP Emporium Full Solutions"
+description: "My solutions to all ROP Emporium challs"
 slug: "pwn-ropemp"
 date: "2025-05-21 00:00:00+0000"
 image: "cover.png"
