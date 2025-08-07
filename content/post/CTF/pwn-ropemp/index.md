@@ -1,6 +1,6 @@
 ---
 title: "ROP Emporium Full Solutions"
-description: "My solutions to all ROP Emporium challs. Right now this is just a wall of code ill prob add explanation when i have time but also thought that my comments should somewhat suffice"
+description: "My solutions to all ROP Emporium challs. Right now this is just a wall of code ill prob add explanation when i have time but also thought that my comments should somewhat suffice (for the harder challs)"
 slug: "pwn-ropemp"
 date: "2025-05-21 00:00:00+0000"
 image: "cover.png"
