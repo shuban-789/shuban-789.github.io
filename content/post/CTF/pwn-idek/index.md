@@ -1,5 +1,5 @@
 ---
-title: "Mini Writeup: myspace2 idek 2025"
+title: "myspace2 idek 2025"
 description: "My solution to myspace2 which i did even when my team got it in 15 mins after release cuz i was bored and didnt know how to do system-abuse AT ALL"
 slug: "pwn-idek"
 date: "2025-05-21 00:00:00+0000"
