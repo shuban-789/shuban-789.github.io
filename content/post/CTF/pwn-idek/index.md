@@ -2,7 +2,7 @@
 title: "myspace2 idek 2025"
 description: "My solution to myspace2 which i did even when my team got it in 15 mins after release cuz i was bored and didnt know how to do system-abuse AT ALL"
 slug: "pwn-idek"
-date: "2025-05-21 00:00:00+0000"
+date: "2025-08-05 00:00:00+0000"
 image: "cover.png"
 categories:
     - "Pwn"
@@ -322,6 +322,8 @@ i know that the canary is likely loaded in `0x00000000004016bc <+312>:   mov    
 
 simple canary capture
 
+basically tldr canary is a value in the stack which when overwritten makes the program just crash out. Its a security protection which is supposed to stop buffer overflow attacks this way. Alas, like many protections it gets absolutely screwed over if leaks exist.
+
 ```py
 #!/usr/bin/python3
 from pwn import *
@@ -356,7 +358,7 @@ canary: 0x51426e6fa1175900
 [*] Stopped process './myspace2' (pid 12602)
 ```
 
-the `00` suffix is there so yea canary. Yea. Now i can bof in peace ig
+the `00` suffix is there so yea canary. Now i can bof in peace
 
 
 now ->
