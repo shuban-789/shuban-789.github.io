@@ -10,7 +10,7 @@ tags:
 weight: 1
 ---
 
-The rest of the idek pwn kinda hurted my brain (orz vy and nightxade) so I thought this chall might be good practice anyway to touch up on some of the basics. This is the pseudocode from ghidra which i pieced together. Its like the pseudo C ghidra has and I added some comments
+The rest of the idek pwn kinda hurted my brain (orz vy and nightxade) so I thought this chall might be good practice anyway to touch up on some of the basics. This is the pseudocode from ghidra which i pieced together. Its like the pseudo C ghidra has and I added some comments.
 
 ```c
 void all_friends(char (*top_friends)[8]) {
