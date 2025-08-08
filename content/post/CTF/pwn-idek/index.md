@@ -1,5 +1,5 @@
 ---
-title: "myspace2 idek 2025"
+title: "myspace2 idekCTF 2025"
 description: "My solution to myspace2 which i did even when my team got it in 15 mins after release cuz i was bored and didnt know how to do system-abuse at all because i still need to become orz"
 slug: "pwn-idek"
 date: "2025-08-05 00:00:00+0000"

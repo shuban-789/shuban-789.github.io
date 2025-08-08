@@ -1,6 +1,6 @@
 ---
-title: "i finally learned rust"
-description: "ts lang is actually kinda goated ngl"
+title: "I finally learned Rust"
+description: "This lang is actually kinda goated not gonna lie"
 slug: "coding-rust"
 date: "2025-08-07 00:00:00+0000"
 image: "cover.png"
