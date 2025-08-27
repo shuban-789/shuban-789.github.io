@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Programming on Shuban Pal</title><link>https://shuban-789.github.io/categories/coding/</link><description>Recent content in Programming on Shuban Pal</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 07 Aug 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://shuban-789.github.io/categories/coding/index.xml" rel="self" type="application/rss+xml"/><item><title>I finally learned Rust</title><link>https://shuban-789.github.io/p/coding-rust/</link><pubDate>Thu, 07 Aug 2025 00:00:00 +0000</pubDate><guid>https://shuban-789.github.io/p/coding-rust/</guid><description>&lt;img src="https://shuban-789.github.io/p/coding-rust/cover.png" alt="Featured image of post I finally learned Rust" />&lt;h2 id="introduction">Introduction
+&lt;/h2>&lt;p>As someone who writes code primarily in Go and Python, maybe sometimes C and Java, I have never had a cult following for a language. I liked Go for its syntax, compiler, and extensive libraries and import system and Python for its simple syntax and basically the ability for it to act as both as a programming and scripting language. Everytime I learn a new language its with a certain goal in mind which is achieved by learning that language. Go for server-side apps and command line tools, Python for scientific computing and scripts&lt;/p>
+&lt;p>The main reason I don&amp;rsquo;t code in C or Java too often is because aside from FTC, I don&amp;rsquo;t really see a use in writing Java code now that AP CSA is over. As for C, I don&amp;rsquo;t trust myself to write safe code.&lt;/p>
+&lt;p>Learning Rust was the first time I learned a language just to learn it because out of any programming language out there, Rust probably has one of the largest cults. I wanted to see what the hype was all about.&lt;/p>
+&lt;p>I started where I think everyone starts learning Rust: &lt;a class="link" href="https://doc.rust-lang.org/book/" target="_blank" rel="noopener"
+>https://doc.rust-lang.org/book/&lt;/a>&lt;/p>
+&lt;p>This yap session might be like a mini version of this book&lt;/p>
+&lt;h2 id="cargo-and-rustc">Cargo and Rustc
+&lt;/h2>&lt;p>The binary &lt;code>rustc&lt;/code> was the main compiler for rust programs. The convention was pretty easy to follow. &lt;code>rustc main.rs&lt;/code> and you would get a &lt;code>main&lt;/code> ELF file. If you want to compile a standalone Rust program that would be done with &lt;code>rustc&lt;/code>. You may think this is a Pretty standard compiler, but I actually really like &lt;code>rustc&lt;/code> as a compiler because of its error messages. Whenever an error is present inside of a Rust program, not onlly is &lt;code>rustc&lt;/code> able to capture it, but it gives pretty accurate and helpful suggestions for fixes which is especially useful when dealing with datatype compliance. A breath of fresh air compared to the horrendous &lt;code>gcc&lt;/code> error wall.&lt;/p>
+&lt;p>A lot of &lt;code>rustc&lt;/code> functionality is also invoked by &lt;code>cargo&lt;/code> which is the package manager. A project is likely best formatted to work with &lt;code>cargo&lt;/code> if it has many dependencies which require fetching or resolving. The main file to write is &lt;code>Cargo.toml&lt;/code> which stores information for your program, but also important compilation options such as whether you want to compile it to a library or a standard executable. Overall its pretty great for handling dependencies and managing your project.&lt;/p>
+&lt;p>&lt;code>cargo new project&lt;/code> creates a new cargo project directory&lt;/p>
+&lt;p>&lt;code>Cargo.toml&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">[package]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">name = &amp;#34;project&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">version = &amp;#34;0.1.0&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">edition = &amp;#34;2024&amp;#34;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">[dependencies]
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Build to executable: &lt;code>cargo build&lt;/code>
+Run program: &lt;code>cargo run&lt;/code>
+Check if it compiles: &lt;code>cargo check&lt;/code>&lt;/p>
+&lt;p>Very good stuff. &lt;code>9/10&lt;/code>&lt;/p>
+&lt;h2 id="datatypes-and-variables">Datatypes and Variables
+&lt;/h2></description></item></channel></rss>
