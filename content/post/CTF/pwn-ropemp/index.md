@@ -1,6 +1,6 @@
 ---
 title: "ROP Emporium Full Solutions"
-description: "My solutions to all ROP Emporium challs. My favorite instruction is prolly ret after this. Its just too iconic. Favorite register is rax cuz it just sounds so tuff"
+description: "My solutions to all ROP Emporium challs. My favorite instruction is prolly ret after doing rop emporium. Its just too iconic. Favorite register is rax cuz it just sounds so tuff"
 slug: "pwn-ropemp"
 date: "2025-05-21 00:00:00+0000"
 image: "cover.png"
