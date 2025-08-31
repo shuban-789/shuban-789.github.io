@@ -47,4 +47,45 @@ Check if it compiles: `cargo check`
 
 Very good stuff. `9/10`
 
-## Datatypes and Variables
+## Syntax: Datatypes and Variables
+
+I am going to be very honest here syntax is probably a big part of what makes me like a programming language. More than speed or compiler and what not. I literally do not care if your language is "blazing fast". It can have a compiler which only works online and sends the source code to some server running off 5 lemon batteries in a rural Japanese village which then sends back the executable. If it has good syntax, then I like it.
+
+Ironically the syntax I hate the most is JavaScript which is why I have always refused to learn it. It just looks like a toy language. Maybe because it kinda is.
+
+I really like C and Go type syntax. Python syntax is also cool cuz Python is cool but not gonna lie I would have liked python more if I could use braces instead of indents.
+
+ANYWAY! Rust var declaration. In Rust the simple datatypes are:
+
+```
+i8 --> 8 bit int
+i16 --> 16 bit int (short)
+i32 --> 32 bit int (int)
+i64 --> 54 bit int (long)
+
+f8 --> does not exist lol
+f16 --> also does not exist lol
+f32 --> 32 bit float
+f64 --> 64 bit float
+
+u8 --> unsigned 8 bit int
+u16 --> unsigned 16 bit int
+u32 --> unsigned 32 bit int
+u64 --> unsigned 64 bit int
+
+bool --> Pretty new and underground primitive. Revolutionary too. Stores "true" or "false". 
+char --> single unicode scalar value
+```
+
+I think you see a pattern here. Rust is very slang when it comes to its datatypes which I think is pretty tuff. Like they way it calls stuff i64 and f32 is just kinda tuff right off the bat. Already some consistency here.
+
+Rust also has type inference. So you can do stuff like this:
+
+```rust
+fn ret_one() -> i32 {
+    let n = 1;
+    return n;
+}
+```
+
+and it will automatically treat 1 as an `i32`.
