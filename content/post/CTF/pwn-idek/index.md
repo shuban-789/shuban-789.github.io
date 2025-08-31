@@ -1,6 +1,6 @@
 ---
 title: "myspace2 idekCTF 2025"
-description: "My solution to myspace2 which i did even when my team got it in 15 mins after release cuz i was bored and didnt know how to do system-abuse at all because i still need to become orz"
+description: "Pretty easy chall but its like i need more writeups here or else the blog will look kinda lame and i need to make myself look like the CTF poet or something"
 slug: "pwn-idek"
 date: "2025-08-05 00:00:00+0000"
 image: "cover.png"
