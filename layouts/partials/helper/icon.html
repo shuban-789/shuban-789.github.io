@@ -1,6 +1,15 @@
-{{- $iconFile := resources.GetMatch (printf "icons/%s.svg" .) -}}
-{{- if $iconFile -}}
-    {{- $iconFile.Content | safeHTML -}}
+{{- $name := . -}}
+
+{{- $iconSvg := resources.GetMatch (printf "icons/%s.svg" $name) -}}
+{{- $iconPng := resources.GetMatch (printf "icons/%s.png" $name) -}}
+{{- $iconJpg := resources.GetMatch (printf "icons/%s.jpg" $name) -}}
+
+{{- if $iconSvg -}}
+    {{- $iconSvg.Content | safeHTML -}}
+{{- else if $iconPng -}}
+    <img src="{{ $iconPng.RelPermalink }}" alt="{{ $name }} icon" class="menu-icon">
+{{- else if $iconJpg -}}
+    <img src="{{ $iconJpg.RelPermalink }}" alt="{{ $name }} icon" class="menu-icon">
 {{- else -}}
-    {{- errorf "Error: icon '%s.svg' is not found under 'assets/icons' folder" . -}}
+    {{- errorf "Error: icon '%s.(svg|png|jpg)' is not found under 'assets/icons'" $name -}}
 {{- end -}}
