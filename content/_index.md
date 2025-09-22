@@ -11,7 +11,7 @@ menu:
 
 I am currently a senior at Del Norte High School planning to pursue computer science. Beyond computer science, I also enjoy studying math and physics, and I am actively trying to expand my understanding in both fields.
 
-I enjoy competing in events where I can apply my computer science and coding skills. These include CTF, a cybersecurity 'Capture The Flag' style competition I usually play on weekends with my team [Cosmic Bit Flip](); FTC, a robotics competition I participate in from September through spring with my team [12499 Gear Up](); and other competitions such as various hackathons and college-held competitions.
+I enjoy competing in events where I can apply my computer science and coding skills. These include CTF, a cybersecurity 'Capture The Flag' style competition I usually play (almost) every weekend with my team [Cosmic Bit Flip](); FTC, a robotics competition I participate in from September through spring with my team [12499 Gear Up](); and other competitions such as various hackathons and college-held competitions.
 
 Some of my hobbies include going on long night walks, coding new projects, and cooking (which I am actively trying to get better at because I am not very good)
 
