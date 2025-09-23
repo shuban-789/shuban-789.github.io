@@ -7,7 +7,7 @@ menu:
             icon: "preferences-desktop-gaming"
 ---
 
-# Hi, I'm Shuban Pal
+# Hi, I'm Shuban
 
 I am currently a senior at Del Norte High School planning to pursue computer science. Beyond computer science, I also enjoy studying math and physics, and I am actively trying to expand my understanding in both fields.
 

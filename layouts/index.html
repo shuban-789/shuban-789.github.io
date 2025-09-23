@@ -1,15 +1,26 @@
 {{ define "body-class" }}template-home{{ end }}
 
 {{ define "main" }}
-    <!-- Page Header -->
+    <style>
+      /* Force text to match theme colors exactly */
+      html[data-scheme="dark"] .article-content .text {
+        color: #ffffff !important;  /* dark mode text */
+      }
+      html[data-scheme="light"] .article-content .text {
+        color: #000000 !important;  /* light mode text */
+      }
+    </style>
+
     <header>
         <h2 class="section-title">{{ .Title }}</h2>
     </header>
 
-    <!-- Homepage content wrapper -->
-    <div class="homepage-content">
-        <!-- Render content/_index.md -->
-        {{ .Content }}
+    <div class="related-content">
+        <div class="article-content">
+            <div class="text">
+                {{ .Content }}
+            </div>
+        </div>
     </div>
 
 {{ end }}
