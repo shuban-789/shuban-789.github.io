@@ -2592,3 +2592,26 @@ a.link:hover {
 
 html[data-scheme="dark-mode"] .homepage-content { color: #fff; }
 html[data-scheme="light-mode"] .homepage-content { color: #000; }
+
+.sidebar-decoration {
+  position: fixed;
+  left: 0; /* Always at left edge of viewport */
+  top: 0;
+  width: 420px;
+  height: 100vh;
+  background-image: url('/galaxy3.png');
+  background-size: cover;
+  z-index: -1; /* Behind everything */
+}
+
+.sidebar-decoration2 {
+  position: fixed;
+  right: 0; /* Always at right edge of viewport */
+  top: 0;
+  width: 420px;
+  height: 100vh;
+  background-image: url('/galaxy3.png');
+  background-size: cover;
+  background-position: right center; /* Parse from right to left */
+  z-index: -1; /* Behind everything */
+}
