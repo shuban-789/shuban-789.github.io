@@ -2593,25 +2593,25 @@ a.link:hover {
 html[data-scheme="dark-mode"] .homepage-content { color: #fff; }
 html[data-scheme="light-mode"] .homepage-content { color: #000; }
 
+
 .sidebar-decoration {
   position: fixed;
-  left: 0; /* Always at left edge of viewport */
+  left: 0;
   top: 0;
-  width: 420px;
+  width: 100vw;
   height: 100vh;
   background-image: url('/galaxy3.png');
   background-size: cover;
-  z-index: -1; /* Behind everything */
+  background-position: center;
+  z-index: -9999;
+  pointer-events: none;
+  opacity: 0.2; /* Dim the entire background to 40% */
 }
 
-.sidebar-decoration2 {
-  position: fixed;
-  right: 0; /* Always at right edge of viewport */
-  top: 0;
-  width: 420px;
-  height: 100vh;
-  background-image: url('/galaxy3.png');
-  background-size: cover;
-  background-position: right center; /* Parse from right to left */
-  z-index: -1; /* Behind everything */
+aside.sidebar.right-sidebar {
+  background-color: transparent !important;
+}
+
+aside.sidebar.right-sidebar * {
+  background-color: transparent !important;
 }
