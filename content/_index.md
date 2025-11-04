@@ -17,4 +17,4 @@ Some of my hobbies include going on long night walks, coding new projects, pract
 
 In the context of programming, I like to code a lot of stuff related to OS, multiphysics simulations, and CLI app development as showcased through countless projects on my GitHub. In addition to that, I am also trying to learn exploit code development, particularly in the context of binary hijacking/exploitation (pwn).
 
-While my interests are diverse, one day I hope to use my skills in programming multiphysics simulations, computer vision algorithms, and general software to make strides in astrophysics and space related research.
+While my interests are diverse, one day I hope to use my skills in programming multiphysics simulations, computer vision algorithms, and general software to make strides in space exploration and safety. Whether it be targeted toward astrophysics research or improving system integrity within flight systems.

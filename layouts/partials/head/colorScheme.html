@@ -21,19 +21,6 @@
 
 <script>
     (function() {
-        const colorSchemeKey = 'StackColorScheme';
-        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
-        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
-
-        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
-            /**
-             * Enable dark mode if:
-             * 1. If dark mode is set already (in local storage)
-             * 2. Auto mode & prefere color scheme is dark
-             */
-            document.documentElement.dataset.scheme = 'dark';
-        } else {
-            document.documentElement.dataset.scheme = 'light';
-        }
+        document.documentElement.dataset.scheme = 'dark';
     })();
 </script>

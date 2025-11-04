@@ -1878,11 +1878,12 @@ footer.site-footer .powerby a {
     display: flex;
     align-items: center;
     cursor: pointer;
-    gap: var(--menu-icon-separation)
+    gap: var(--menu-icon-separation);
+    display: none !important;
 }
 
 #dark-mode-toggle .icon-tabler-toggle-right {
-    display: none
+    display: none;
 }
 
 #i18n-switch {
@@ -2608,10 +2609,6 @@ html[data-scheme="light-mode"] .homepage-content { color: #000; }
   opacity: 0.2; /* Dim the entire background to 40% */
 }
 
-aside.sidebar.right-sidebar {
-  background-color: transparent !important;
-}
-
-aside.sidebar.right-sidebar * {
-  background-color: transparent !important;
+.article-header, .article-details, .article-content, .article-footer {
+    backdrop-filter: blur(5px);
 }

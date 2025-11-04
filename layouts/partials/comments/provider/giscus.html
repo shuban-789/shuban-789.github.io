@@ -41,11 +41,7 @@
         window.addEventListener("onColorSchemeChange", handler);
 
         function handler() {
-            if (document.documentElement.dataset.scheme === "light") {
-                setGiscusTheme('{{- default "light" .lightTheme -}}');
-            } else {
-                setGiscusTheme('{{- default "dark_dimmed" .darkTheme -}}');
-            }
+            setGiscusTheme('{{- default "dark_dimmed" .darkTheme -}}');
         }
     })();
 </script>
