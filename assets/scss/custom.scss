@@ -2609,6 +2609,6 @@ html[data-scheme="light-mode"] .homepage-content { color: #000; }
   opacity: 0.2; /* Dim the entire background to 40% */
 }
 
-.article-header, .article-details, .article-content, .article-footer {
+.article-header, .article-details, .article-footer {
     backdrop-filter: blur(5px);
 }
