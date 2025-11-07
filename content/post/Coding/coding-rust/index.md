@@ -1,5 +1,5 @@
 ---
-title: "I finally learned Rust"
+title: "i tried Rust (no i did not join the cult)"
 description: "This lang is actually kinda goated"
 slug: "coding-rust"
 date: "2025-08-07 00:00:00+0000"
@@ -63,8 +63,6 @@ i16 --> 16 bit int (short)
 i32 --> 32 bit int (int)
 i64 --> 54 bit int (long)
 
-f8 --> does not exist lol
-f16 --> also does not exist lol
 f32 --> 32 bit float
 f64 --> 64 bit float
 
@@ -73,7 +71,7 @@ u16 --> unsigned 16 bit int
 u32 --> unsigned 32 bit int
 u64 --> unsigned 64 bit int
 
-bool --> Pretty new and underground primitive. Revolutionary too. Stores "true" or "false". 
+bool --> booll
 char --> single unicode scalar value
 ```
 
