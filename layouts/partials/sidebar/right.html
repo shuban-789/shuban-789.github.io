@@ -1,16 +1,21 @@
 {{- $scope := default "homepage" .Scope -}}
 {{- $context := .Context -}}
 {{- with (index .Context.Site.Params.widgets $scope) -}}
-    <aside class="sidebar right-sidebar sticky">
-        {{ range $widget := . }}
-            {{ if templates.Exists (printf "partials/widget/%s.html" .type) }}
-                <!-- Ensure that the `params` is not nil -->
-                {{- $params := default dict .params -}}
+<aside class="sidebar right-sidebar sticky">
+    <div class="window-controls">
+        <span class="control red"></span>
+        <span class="control yellow"></span>
+        <span class="control green"></span>
+    </div>
+    {{ range $widget := . }}
+    {{ if templates.Exists (printf "partials/widget/%s.html" .type) }}
+    <!-- Ensure that the `params` is not nil -->
+    {{- $params := default dict .params -}}
 
-                {{ partial (printf "widget/%s" .type) (dict "Context" $context "Params" $params) }}
-            {{ else }}
-                {{ warnf "Widget %s not found" .type }}
-            {{ end }}
-        {{ end }}
-    </aside>
+    {{ partial (printf "widget/%s" .type) (dict "Context" $context "Params" $params) }}
+    {{ else }}
+    {{ warnf "Widget %s not found" .type }}
+    {{ end }}
+    {{ end }}
+</aside>
 {{ end }}

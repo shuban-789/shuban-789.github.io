@@ -1,26 +1,26 @@
-{{ define "body-class" }}template-home{{ end }}
+{{ define "body-class" }}template-home article-page{{ end }}
 
 {{ define "main" }}
-    <style>
-      /* Force text to match theme colors exactly */
-      html[data-scheme="dark"] .article-content .text {
-        color: #ffffff !important;  /* dark mode text */
-      }
-      /* html[data-scheme="dark"] .article-content .text {
-        color: #000000 !important;  /* light mode text */
-      
-    </style>
-
-    <header>
-        <h2 class="section-title">{{ .Title }}</h2>
+<article class="main-article">
+    <div class="window-controls">
+        <span class="control red"></span>
+        <span class="control yellow"></span>
+        <span class="control green"></span>
+    </div>
+    <header class="article-header">
+        <div class="article-details">
+            <h2 class="article-title">{{ .Title }}</h2>
+        </div>
     </header>
 
-    <div class="related-content">
-        <div class="article-content">
-            <div class="text">
-                {{ .Content }}
-            </div>
-        </div>
-    </div>
+    <section class="article-content">
+        {{ .Content }}
+    </section>
 
+    <footer class="article-footer">
+        {{ partial "article/components/footer" . }}
+    </footer>
+</article>
+
+{{ partialCached "footer/footer" . }}
 {{ end }}
