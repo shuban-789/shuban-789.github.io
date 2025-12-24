@@ -27,13 +27,13 @@ readingTime = true
 
 ## Widgets
 [[widgets.homepage]]
-type = "search"
-
-[[widgets.homepage]]
 type = "archives"
 
 [widgets.homepage.params]
 limit = 5
+
+[[widgets.homepage]]
+type = "search"
 
 [[widgets.homepage]]
 type = "categories"

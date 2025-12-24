@@ -9,6 +9,10 @@
         window.addEventListener('load', () => {
             document.body.style.zoom = "reset";
         });
+        if (!sessionStorage.getItem('bg-animated')) {
+            document.documentElement.classList.add('animate-bg');
+            sessionStorage.setItem('bg-animated', 'true');
+        }
     </script>
     <body class="{{ block `body-class` . }}{{ end }}">
         {{- partial "head/colorScheme" . -}}
