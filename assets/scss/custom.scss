@@ -1259,12 +1259,13 @@ template {
 
 @media(min-width: 768px) {
     #main-menu {
-        align-items: flex-end;
+        align-items: flex-start;
         display: flex;
         background-color: transparent;
         padding: 0;
         box-shadow: none;
-        margin: 0
+        margin: 0;
+        overflow: visible;
     }
 }
 
@@ -1294,8 +1295,6 @@ template {
     color: var(--body-text-color);
     gap: var(--menu-icon-separation);
     transition: transform .3s ease, color .3s ease;
-    padding-left: 15px;
-    /* Base padding to allow left hover without clipping */
 }
 
 #main-menu li a:hover {
@@ -1868,8 +1867,7 @@ footer.site-footer .powerby a {
 @media(min-width: 768px) {
     .left-sidebar {
         width: auto;
-        padding-top: var(--main-top-padding);
-        padding-bottom: var(--main-top-padding);
+        padding: var(--main-top-padding) 20px;
         max-height: 100vh
     }
 }
