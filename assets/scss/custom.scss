@@ -2851,16 +2851,6 @@ html[data-scheme="light-mode"] .homepage-content {
 }
 
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 0.15;
-    }
-}
-
 .sidebar-decoration {
     position: fixed;
     left: 0;
@@ -2873,8 +2863,4 @@ html[data-scheme="light-mode"] .homepage-content {
     z-index: -9999;
     pointer-events: none;
     opacity: 0.15;
-}
-
-.animate-bg .sidebar-decoration {
-    animation: fadeIn 2s ease-in-out;
 }
