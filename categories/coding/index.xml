@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Programming on Shuban Pal</title><link>https://shuban-789.github.io/categories/coding/</link><description>Recent content in Programming on Shuban Pal</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 07 Aug 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://shuban-789.github.io/categories/coding/index.xml" rel="self" type="application/rss+xml"/><item><title>i tried Rust (no i did not join the cult)</title><link>https://shuban-789.github.io/p/coding-rust/</link><pubDate>Thu, 07 Aug 2025 00:00:00 +0000</pubDate><guid>https://shuban-789.github.io/p/coding-rust/</guid><description>&lt;img src="https://shuban-789.github.io/p/coding-rust/cover.png" alt="Featured image of post i tried Rust (no i did not join the cult)" /&gt;&lt;h2 id="introduction"&gt;Introduction
+&lt;/h2&gt;&lt;p&gt;As someone who writes code primarily in Go and Python, maybe sometimes C and Java, I have never had a cult following for a language. I liked Go for its syntax, compiler, and extensive libraries and import system and Python for its simple syntax and basically the ability for it to act as both as a programming and scripting language. Everytime I learn a new language its with a certain goal in mind which is achieved by learning that language. Go for server-side apps and command line tools, Python for scientific computing and scripts&lt;/p&gt;
+&lt;p&gt;The main reason I don&amp;rsquo;t code in C or Java too often is because aside from FTC, I don&amp;rsquo;t really see a use in writing Java code now that AP CSA is over. As for C, I don&amp;rsquo;t trust myself to write safe code.&lt;/p&gt;
+&lt;p&gt;Learning Rust was the first time I learned a language just to learn it because out of any programming language out there, Rust probably has one of the largest cults. I wanted to see what the hype was all about.&lt;/p&gt;
+&lt;p&gt;I started where I think everyone starts learning Rust: &lt;a class="link" href="https://doc.rust-lang.org/book/" target="_blank" rel="noopener"
+&gt;https://doc.rust-lang.org/book/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;This yap session might be like a mini version of this book&lt;/p&gt;
+&lt;h2 id="cargo-and-rustc"&gt;Cargo and Rustc
+&lt;/h2&gt;&lt;p&gt;The binary &lt;code&gt;rustc&lt;/code&gt; was the main compiler for rust programs. The convention was pretty easy to follow. &lt;code&gt;rustc main.rs&lt;/code&gt; and you would get a &lt;code&gt;main&lt;/code&gt; ELF file. If you want to compile a standalone Rust program that would be done with &lt;code&gt;rustc&lt;/code&gt;. You may think this is a Pretty standard compiler, but I actually really like &lt;code&gt;rustc&lt;/code&gt; as a compiler because of its error messages. Whenever an error is present inside of a Rust program, not onlly is &lt;code&gt;rustc&lt;/code&gt; able to capture it, but it gives pretty accurate and helpful suggestions for fixes which is especially useful when dealing with datatype compliance. A breath of fresh air compared to the horrendous &lt;code&gt;gcc&lt;/code&gt; error wall.&lt;/p&gt;
+&lt;p&gt;A lot of &lt;code&gt;rustc&lt;/code&gt; functionality is also invoked by &lt;code&gt;cargo&lt;/code&gt; which is the package manager. A project is likely best formatted to work with &lt;code&gt;cargo&lt;/code&gt; if it has many dependencies which require fetching or resolving. The main file to write is &lt;code&gt;Cargo.toml&lt;/code&gt; which stores information for your program, but also important compilation options such as whether you want to compile it to a library or a standard executable. Overall its pretty great for handling dependencies and managing your project.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;cargo new project&lt;/code&gt; creates a new cargo project directory&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Cargo.toml&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;[package]
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;name = &amp;#34;project&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;version = &amp;#34;0.1.0&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;edition = &amp;#34;2024&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;[dependencies]
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Build to executable: &lt;code&gt;cargo build&lt;/code&gt;
+Run program: &lt;code&gt;cargo run&lt;/code&gt;
+Check if it compiles: &lt;code&gt;cargo check&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Very good stuff. &lt;code&gt;9/10&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="syntax-datatypes-and-variables"&gt;Syntax: Datatypes and Variables
+&lt;/h2&gt;&lt;p&gt;I am going to be very honest here syntax is probably a big part of what makes me like a programming language. More than speed or compiler and what not. I literally do not care if your language is &amp;ldquo;blazing fast&amp;rdquo;. It can have a compiler which only works online and sends the source code to some server running off 5 lemon batteries in a rural Japanese village which then sends back the executable. If it has good syntax, then I like it.&lt;/p&gt;
+&lt;p&gt;Ironically the syntax I hate the most is JavaScript which is why I have always refused to learn it. It just looks like a toy language. Maybe because it kinda is.&lt;/p&gt;
+&lt;p&gt;I really like C and Go type syntax. Python syntax is also cool cuz Python is cool but not gonna lie I would have liked python more if I could use braces instead of indents.&lt;/p&gt;
+&lt;p&gt;ANYWAY! Rust var declaration. In Rust the simple datatypes are:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;span class="lnt"&gt;15
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;i8 --&amp;gt; 8 bit int
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;i16 --&amp;gt; 16 bit int (short)
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;i32 --&amp;gt; 32 bit int (int)
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;i64 --&amp;gt; 54 bit int (long)
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;f32 --&amp;gt; 32 bit float
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;f64 --&amp;gt; 64 bit float
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;u8 --&amp;gt; unsigned 8 bit int
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;u16 --&amp;gt; unsigned 16 bit int
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;u32 --&amp;gt; unsigned 32 bit int
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;u64 --&amp;gt; unsigned 64 bit int
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;bool --&amp;gt; booll
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;char --&amp;gt; single unicode scalar value
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;I think you see a pattern here. Rust is very slang when it comes to its datatypes which I think is pretty tuff. Like they way it calls stuff i64 and f32 is just kinda tuff right off the bat. Already some consistency here.&lt;/p&gt;
+&lt;p&gt;Rust also has type inference. So you can do stuff like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-rust" data-lang="rust"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;fn&lt;/span&gt; &lt;span class="nf"&gt;ret_one&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-&amp;gt; &lt;span class="kt"&gt;i32&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kd"&gt;let&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;return&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;and it will automatically treat 1 as an &lt;code&gt;i32&lt;/code&gt;.&lt;/p&gt;</description></item></channel></rss>
