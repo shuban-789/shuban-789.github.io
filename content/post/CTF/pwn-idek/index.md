@@ -107,7 +107,7 @@ int main(void) {
     long lVar1;
     int iVar2;
     long in_FS_OFFSET;
-    char top_friends[8][8]; // 8x8 mat of chars. Each row contains up to 8 chars for the name, multiple of these rows are stored for each name. Kind of funny
+    char top_friends[8][8]; // 8x8 mat of chars. Each row contains up to 8 chars for the name, multiple of these rows are stored for each name
     char buf[40];
 
     lVar1 = *(long *)(in_FS_OFFSET + 0x28);
