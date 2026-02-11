@@ -1,0 +1,13 @@
+{{ define "main" }}
+<section class="article-list">
+    {{ range .Pages }}
+    {{ partial "article-list/hobby" . }}
+    {{ end }}
+</section>
+
+{{- partial "footer/footer" . -}}
+{{ end }}
+
+{{ define "right-sidebar" }}
+{{ partial "sidebar/right.html" (dict "Context" . "Scope" "hobbies") }}
+{{ end }}

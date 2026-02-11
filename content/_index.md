@@ -11,10 +11,10 @@ menu:
 
 I am currently a senior at Del Norte High School planning to pursue computer science in college, although I also enjoy studying math and physics.
 
-I love competing in events where I can apply my computer science and coding skills. These include CTF, a cybersecurity "Capture The Flag" style competition I usually play (almost) every weekend with my team [Cosmic Bit Flip](https://ctftime.org/team/372043); FTC, a robotics competition I participate in from September through spring with my team [12499 Gear Up](https://www.gearup12499.com/team/); and other competitions such as various hackathons and college-held competitions.
+In my free time, I participate in cybersecurity, robotics, and computer science competitions among other STEM events. These include: CTF, a cybersecurity "Capture The Flag" style competition I usually play almost every weekend with my team [Cosmic Bit Flip](https://ctftime.org/team/372043); FTC, a robotics competition I participate in from September through spring with my team [12499 Gear Up](https://www.gearup12499.com/team/); and various other technical challenges, such as CyberPatriot, hackathons, and collegiate competitions.
 
-Some of my hobbies include going on long night walks, coding new projects, practicing binary exploitation for CTF, and cooking (which I am actively trying to get better at because I am not very good)
+Some of my hobbies include going on long night walks, coding new projects, studying binary exploitation for CTF, and cooking fusion recipes
 
-In the context of programming, I like to code a lot of stuff related to OS, multiphysics simulations, and CLI app development as showcased through countless projects on my GitHub. In addition to that, I am also trying to learn exploit code development, particularly in the context of binary hijacking/exploitation (pwn).
+In the context of programming, I like to code a lot of stuff related to OS, computational physics, and CLI app development as showcased through countless projects on my GitHub. In addition to that, I am also trying to learn exploit code development, particularly in the context of binary hijacking/exploitation (pwn).
 
-While my interests are diverse, one day I hope to use my skills in programming multiphysics simulations, computer vision algorithms, and general software to make strides in space exploration and safety. Whether it be targeted toward astrophysics research or improving system integrity within flight systems.
+Whether it be simulating physics for flight systems or patching vulnerabilities within codebases, I aim to identify and address weaknesses in technical systems through programming. My goal is to secure the foundations of progress, allowing humanity to innovate and explore the universe without the setback of technical failure.

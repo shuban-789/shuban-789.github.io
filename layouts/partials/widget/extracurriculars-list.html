@@ -1,0 +1,87 @@
+<section class="widget extracurriculars-list">
+    <div class="widget-icon-header">
+        <h2 class="widget-title section-title">Navigator</h2>
+    </div>
+    <div class="widget-extracurriculars--list">
+        {{ $pages := where .Context.Site.RegularPages "Section" "extracurriculars" }}
+        {{ range $pages }}
+        <div class="extracurricular-entry">
+            <a href="#{{ .Slug | default .File.ContentBaseName }}" class="extracurricular-link">
+                <div class="extracurricular-info">
+                    <span class="extracurricular-title">{{ .Title }}</span>
+                    {{ if .Date }}
+                    <span class="extracurricular-date">{{ .Date.Format "2006" }}</span>
+                    {{ end }}
+                </div>
+            </a>
+        </div>
+        {{ end }}
+    </div>
+</section>
+
+<style>
+    .widget.extracurriculars-list {
+        background: var(--card-background);
+        border-radius: var(--card-border-radius);
+        padding: var(--card-padding);
+        margin-bottom: var(--widget-separation);
+        box-shadow: var(--shadow-l1);
+    }
+
+    .widget-icon-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--card-separator-color);
+    }
+
+    .widget-icon-header img {
+        width: 28px;
+        height: 28px;
+    }
+
+    .widget-icon-header .widget-title {
+        margin: 0;
+        font-size: 1.6rem;
+        font-weight: 700;
+    }
+
+    .widget-extracurriculars--list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .extracurricular-link {
+        display: block;
+        padding: 12px;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        color: var(--card-text-color-main);
+        text-decoration: none;
+        background: rgba(var(--glass-background-rgb), 0.05);
+    }
+
+    .extracurricular-link:hover {
+        background: var(--card-background-selected);
+        transform: translateX(5px);
+    }
+
+    .extracurricular-info {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .extracurricular-title {
+        font-weight: 600;
+        font-size: 1.5rem;
+    }
+
+    .extracurricular-date {
+        font-size: 1.2rem;
+        color: var(--card-text-color-tertiary);
+    }
+</style>

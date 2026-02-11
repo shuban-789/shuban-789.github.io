@@ -1,0 +1,5 @@
+{{ $image := partialCached "helper/image" (dict "Context" . "Type" "articleList") .RelPermalink "articleList" }}
+<article id="{{ .Slug | default .File.ContentBaseName }}"
+    class="{{ if $image.exists }}has-image{{ end }} extracurricular-card">
+    {{ partial "article/components/header-extracurricular" . }}
+</article>

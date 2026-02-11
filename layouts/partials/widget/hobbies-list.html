@@ -1,0 +1,87 @@
+<section class="widget hobbies-list">
+    <div class="widget-icon-header">
+        <h2 class="widget-title section-title">Navigator</h2>
+    </div>
+    <div class="widget-hobbies--list">
+        {{ $pages := where .Context.Site.RegularPages "Section" "hobbies" }}
+        {{ range $pages }}
+        <div class="hobby-entry">
+            <a href="#{{ .Slug | default .File.ContentBaseName }}" class="hobby-link">
+                <div class="hobby-info">
+                    <span class="hobby-title">{{ .Title }}</span>
+                    {{ with .Params.daterange }}
+                    <span class="hobby-date">{{ . }}</span>
+                    {{ end }}
+                </div>
+            </a>
+        </div>
+        {{ end }}
+    </div>
+</section>
+
+<style>
+    .widget.hobbies-list {
+        background: var(--card-background);
+        border-radius: var(--card-border-radius);
+        padding: var(--card-padding);
+        margin-bottom: var(--widget-separation);
+        box-shadow: var(--shadow-l1);
+    }
+
+    .widget-icon-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--card-separator-color);
+    }
+
+    .widget-icon-header img {
+        width: 28px;
+        height: 28px;
+    }
+
+    .widget-icon-header .widget-title {
+        margin: 0;
+        font-size: 1.6rem;
+        font-weight: 700;
+    }
+
+    .widget-hobbies--list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .hobby-link {
+        display: block;
+        padding: 12px;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        color: var(--card-text-color-main);
+        text-decoration: none;
+        background: rgba(var(--glass-background-rgb), 0.05);
+    }
+
+    .hobby-link:hover {
+        background: var(--card-background-selected);
+        transform: translateX(5px);
+    }
+
+    .hobby-info {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .hobby-title {
+        font-weight: 600;
+        font-size: 1.5rem;
+    }
+
+    .hobby-date {
+        font-size: 1.2rem;
+        color: var(--card-text-color-tertiary);
+    }
+</style>

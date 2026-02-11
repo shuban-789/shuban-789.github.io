@@ -50,6 +50,9 @@ limit = 10
 [[widgets.page]]
 type = "toc"
 
+[[widgets.hobbies]]
+type = "hobbies-list"
+
 [opengraph.twitter]
 site = ""
 card = "summary_large_image"

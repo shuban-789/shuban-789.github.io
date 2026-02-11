@@ -1,0 +1,36 @@
+<div class="article-details">
+    {{ if .Params.categories }}
+    <header class="article-category">
+        {{ range (.GetTerms "categories") }}
+        <span {{ with .Params.style }}style="background-color: {{ .background }}; color: {{ .color }};" {{ end }}>
+            {{ .LinkTitle }}
+        </span>
+        {{ end }}
+    </header>
+    {{ end }}
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            {{- .Title -}}
+        </h2>
+
+        {{ with .Params.description }}
+        <div class="article-subtitle extracurricular-description">
+            {{ . | markdownify }}
+        </div>
+        {{ end }}
+    </div>
+
+    {{ $showDate := not .Date.IsZero }}
+    {{ if $showDate }}
+    <footer class="article-time">
+        {{ $dateFormat := .Site.Params.dateFormat.published | default "Jan 02, 2006" }}
+        <div>
+            {{ partial "helper/icon" "date" }}
+            <time class="article-time--published">
+                {{- .Date | time.Format $dateFormat -}}
+            </time>
+        </div>
+    </footer>
+    {{ end }}
+</div>

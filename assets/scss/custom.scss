@@ -4,6 +4,7 @@
 * @website: https://jimmycai.com
 * @link: https://github.com/CaiJimmy/hugo-theme-stack*/
 :root {
+    scroll-behavior: smooth;
     --main-top-padding: 35px;
     --body-background: #f5f5fa;
     --accent-color: #34495e;
@@ -112,8 +113,8 @@
 }
 
 :root[data-scheme=dark] {
-    --code-background-color: #272822;
-    --code-text-color: rgba(255, 255, 255, 0.9);
+    --code-background-color: #161b22;
+    --code-text-color: #c9d1d9;
     --table-border-color: #717171;
     --tr-even-background-color: #545454;
     --blockquote-background-color: rgb(75 75 75)
@@ -454,17 +455,17 @@
 }
 
 [data-scheme=dark] {
-    --pre-text-color: #f8f8f2;
-    --pre-background-color: #272822
+    --pre-text-color: #c9d1d9;
+    --pre-background-color: #0d1117
 }
 
 [data-scheme=dark] .chroma {
-    color: #f8f8f2;
-    background-color: #272822
+    color: #c9d1d9;
+    background-color: #0d1117
 }
 
 [data-scheme=dark] .chroma .err {
-    color: #bb0064
+    color: #f85149
 }
 
 [data-scheme=dark] .chroma .lntd {
@@ -500,268 +501,276 @@
 [data-scheme=dark] .chroma .hl {
     display: block;
     width: 100%;
-    background-color: #ffc
+    background-color: rgba(56, 139, 253, 0.15)
 }
 
 [data-scheme=dark] .chroma .lnt {
     margin-right: .4em;
     padding: 0 .4em;
-    color: #7f7f7f;
+    color: #484f58;
     display: block
 }
 
 [data-scheme=dark] .chroma .ln {
     margin-right: .4em;
     padding: 0 .4em;
-    color: #7f7f7f
+    color: #484f58
 }
 
 [data-scheme=dark] .chroma .k {
-    color: #66d9ef
+    color: #ff7b72
 }
 
 [data-scheme=dark] .chroma .kc {
-    color: #66d9ef
+    color: #79c0ff
 }
 
 [data-scheme=dark] .chroma .kd {
-    color: #66d9ef
+    color: #ff7b72
 }
 
 [data-scheme=dark] .chroma .kn {
-    color: #f92672
+    color: #ff7b72
 }
 
 [data-scheme=dark] .chroma .kp {
-    color: #66d9ef
+    color: #ff7b72
 }
 
 [data-scheme=dark] .chroma .kr {
-    color: #66d9ef
+    color: #ff7b72
 }
 
 [data-scheme=dark] .chroma .kt {
-    color: #66d9ef
+    color: #ffa657
 }
 
 [data-scheme=dark] .chroma .n {
-    color: #f8f8f2
+    color: #c9d1d9
 }
 
 [data-scheme=dark] .chroma .na {
-    color: #a6e22e
+    color: #c9d1d9
 }
 
 [data-scheme=dark] .chroma .nb {
-    color: #f8f8f2
+    color: #c9d1d9
 }
 
 [data-scheme=dark] .chroma .bp {
-    color: #f8f8f2
+    color: #c9d1d9
 }
 
 [data-scheme=dark] .chroma .nc {
-    color: #a6e22e
+    color: #ffa657
 }
 
 [data-scheme=dark] .chroma .no {
-    color: #66d9ef
+    color: #79c0ff
 }
 
 [data-scheme=dark] .chroma .nd {
-    color: #a6e22e
+    color: #d2a8ff
 }
 
 [data-scheme=dark] .chroma .ni {
-    color: #f8f8f2
+    color: #c9d1d9
 }
 
 [data-scheme=dark] .chroma .ne {
-    color: #a6e22e
+    color: #ffa657
 }
 
 [data-scheme=dark] .chroma .nf {
-    color: #a6e22e
+    color: #d2a8ff
 }
 
 [data-scheme=dark] .chroma .fm {
-    color: #f8f8f2
+    color: #d2a8ff
 }
 
 [data-scheme=dark] .chroma .nl {
-    color: #f8f8f2
+    color: #79c0ff
 }
 
 [data-scheme=dark] .chroma .nn {
-    color: #f8f8f2
+    color: #ffa657
 }
 
 [data-scheme=dark] .chroma .nx {
-    color: #a6e22e
+    color: #d2a8ff
 }
 
 [data-scheme=dark] .chroma .py {
-    color: #f8f8f2
+    color: #79c0ff
 }
 
 [data-scheme=dark] .chroma .nt {
-    color: #f92672
+    color: #7ee787
 }
 
 [data-scheme=dark] .chroma .nv {
-    color: #f8f8f2
+    color: #c9d1d9
 }
 
 [data-scheme=dark] .chroma .vc {
-    color: #f8f8f2
+    color: #c9d1d9
 }
 
 [data-scheme=dark] .chroma .vg {
-    color: #f8f8f2
+    color: #c9d1d9
 }
 
 [data-scheme=dark] .chroma .vi {
-    color: #f8f8f2
+    color: #c9d1d9
 }
 
 [data-scheme=dark] .chroma .vm {
-    color: #f8f8f2
+    color: #c9d1d9
 }
 
 [data-scheme=dark] .chroma .l {
-    color: #ae81ff
+    color: #79c0ff
 }
 
 [data-scheme=dark] .chroma .ld {
-    color: #e6db74
+    color: #a5d6ff
 }
 
 [data-scheme=dark] .chroma .s {
-    color: #e6db74
+    color: #a5d6ff
 }
 
 [data-scheme=dark] .chroma .sa {
-    color: #e6db74
+    color: #a5d6ff
 }
 
 [data-scheme=dark] .chroma .sb {
-    color: #e6db74
+    color: #a5d6ff
 }
 
 [data-scheme=dark] .chroma .sc {
-    color: #e6db74
+    color: #a5d6ff
 }
 
 [data-scheme=dark] .chroma .dl {
-    color: #e6db74
+    color: #a5d6ff
 }
 
 [data-scheme=dark] .chroma .sd {
-    color: #e6db74
+    color: #a5d6ff
 }
 
 [data-scheme=dark] .chroma .s2 {
-    color: #e6db74
+    color: #a5d6ff
 }
 
 [data-scheme=dark] .chroma .se {
-    color: #ae81ff
+    color: #79c0ff
 }
 
 [data-scheme=dark] .chroma .sh {
-    color: #e6db74
+    color: #a5d6ff
 }
 
 [data-scheme=dark] .chroma .si {
-    color: #e6db74
+    color: #a5d6ff
 }
 
 [data-scheme=dark] .chroma .sx {
-    color: #e6db74
+    color: #a5d6ff
 }
 
 [data-scheme=dark] .chroma .sr {
-    color: #e6db74
+    color: #a5d6ff
 }
 
 [data-scheme=dark] .chroma .s1 {
-    color: #e6db74
+    color: #a5d6ff
 }
 
 [data-scheme=dark] .chroma .ss {
-    color: #e6db74
+    color: #a5d6ff
 }
 
 [data-scheme=dark] .chroma .m {
-    color: #ae81ff
+    color: #79c0ff
 }
 
 [data-scheme=dark] .chroma .mb {
-    color: #ae81ff
+    color: #79c0ff
 }
 
 [data-scheme=dark] .chroma .mf {
-    color: #ae81ff
+    color: #79c0ff
 }
 
 [data-scheme=dark] .chroma .mh {
-    color: #ae81ff
+    color: #79c0ff
 }
 
 [data-scheme=dark] .chroma .mi {
-    color: #ae81ff
+    color: #79c0ff
 }
 
 [data-scheme=dark] .chroma .il {
-    color: #ae81ff
+    color: #79c0ff
 }
 
 [data-scheme=dark] .chroma .mo {
-    color: #ae81ff
+    color: #79c0ff
 }
 
 [data-scheme=dark] .chroma .o {
-    color: #f92672
+    color: #ff7b72
 }
 
 [data-scheme=dark] .chroma .ow {
-    color: #f92672
+    color: #ff7b72
 }
 
 [data-scheme=dark] .chroma .p {
-    color: #f8f8f2
+    color: #c9d1d9
 }
 
 [data-scheme=dark] .chroma .c {
-    color: #75715e
+    color: #8b949e;
+    font-style: italic
 }
 
 [data-scheme=dark] .chroma .ch {
-    color: #75715e
+    color: #8b949e;
+    font-style: italic
 }
 
 [data-scheme=dark] .chroma .cm {
-    color: #75715e
+    color: #8b949e;
+    font-style: italic
 }
 
 [data-scheme=dark] .chroma .c1 {
-    color: #75715e
+    color: #8b949e;
+    font-style: italic
 }
 
 [data-scheme=dark] .chroma .cs {
-    color: #75715e
+    color: #8b949e;
+    font-style: italic
 }
 
 [data-scheme=dark] .chroma .cp {
-    color: #75715e
+    color: #8b949e;
+    font-style: italic
 }
 
 [data-scheme=dark] .chroma .cpf {
-    color: #75715e
+    color: #8b949e;
+    font-style: italic
 }
 
 [data-scheme=dark] .chroma .gd {
-    color: #f92672
+    color: #ffa198;
+    background-color: rgba(248, 81, 73, 0.15)
 }
 
 [data-scheme=dark] .chroma .ge {
@@ -769,7 +778,8 @@
 }
 
 [data-scheme=dark] .chroma .gi {
-    color: #a6e22e
+    color: #7ee787;
+    background-color: rgba(63, 185, 80, 0.15)
 }
 
 [data-scheme=dark] .chroma .gs {
@@ -777,7 +787,7 @@
 }
 
 [data-scheme=dark] .chroma .gu {
-    color: #75715e
+    color: #79c0ff
 }
 
 :root {
@@ -2867,4 +2877,61 @@ html[data-scheme="light-mode"] .homepage-content {
 
 .site-description {
     font-style: italic;
+}
+
+/* Hobbies Styling */
+.hobby-card {
+    cursor: default;
+    /* Not clickable */
+    scroll-margin-top: 50px;
+
+    .article-subtitle.hobby-description {
+        font-size: 1.5rem;
+        line-height: 1.4;
+
+        @media(min-width: 1280px) {
+            font-size: 1.6rem;
+        }
+
+        p {
+            margin-bottom: 0.5em;
+        }
+
+        ul,
+        ol {
+            margin: 0.5em 0 !important;
+            padding-left: 0 !important;
+            list-style-position: inside !important;
+            list-style-type: disc !important;
+        }
+
+        li {
+            margin-left: 0 !important;
+            padding-left: 0 !important;
+            margin-bottom: 0.2em;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            margin-top: 1em;
+            margin-bottom: 0.5em;
+            color: var(--card-text-color-main);
+        }
+
+        h1 {
+            font-size: 1.25em;
+        }
+
+        h2 {
+            font-size: 1.15em;
+        }
+
+        h3 {
+            font-size: 1.05em;
+        }
+    }
 }

@@ -1,0 +1,121 @@
+<div class="article-details">
+    {{ if .Params.categories }}
+    <header class="article-category">
+        {{ range (.GetTerms "categories") }}
+        <span {{ with .Params.style }}style="background-color: {{ .background }}; color: {{ .color }};" {{ end }}>
+            {{ .LinkTitle }}
+        </span>
+        {{ end }}
+    </header>
+    {{ end }}
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            {{- .Title -}}
+        </h2>
+
+        {{ with .Params.description }}
+        <div class="article-subtitle hobby-description">
+            {{ . | markdownify }}
+        </div>
+        {{ end }}
+
+        {{ with .Params.achievements }}
+        <details class="hobby-achievements-dropdown">
+            <summary class="hobby-achievements-toggle">
+                <span class="toggle-icon"></span>
+                <span>Highlights</span>
+            </summary>
+            <ul class="hobby-achievements-list">
+                {{ range . }}
+                <li>{{ . }}</li>
+                {{ end }}
+            </ul>
+        </details>
+        {{ end }}
+    </div>
+
+    {{ with .Params.daterange }}
+    <footer class="article-time">
+        <div>
+            {{ partial "helper/icon" "date" }}
+            <span class="article-time--published">
+                {{- . -}}
+            </span>
+        </div>
+    </footer>
+    {{ end }}
+</div>
+
+<style>
+    .hobby-achievements-dropdown {
+        margin-top: 12px;
+        border-radius: 8px;
+        overflow: hidden;
+        background: rgba(var(--glass-background-rgb), 0.05);
+        border: 1px solid var(--card-separator-color);
+        transition: all 0.3s ease;
+    }
+
+    .hobby-achievements-dropdown[open] {
+        background: rgba(var(--glass-background-rgb), 0.08);
+    }
+
+    .hobby-achievements-toggle {
+        cursor: pointer;
+        padding: 10px 14px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 600;
+        font-size: 1.4rem;
+        color: var(--card-text-color-main);
+        list-style: none;
+        user-select: none;
+        transition: color 0.2s ease;
+    }
+
+    .hobby-achievements-toggle::-webkit-details-marker {
+        display: none;
+    }
+
+    .hobby-achievements-toggle:hover {
+        color: var(--accent-color);
+    }
+
+    .toggle-icon {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-right: 2px solid currentColor;
+        border-bottom: 2px solid currentColor;
+        transform: rotate(-45deg);
+        transition: transform 0.3s ease;
+        position: relative;
+        top: -1px;
+    }
+
+    .hobby-achievements-dropdown[open] .toggle-icon {
+        transform: rotate(45deg);
+        top: -2px;
+    }
+
+    .hobby-achievements-list {
+        padding: 0 14px 12px 32px;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .hobby-achievements-list li {
+        font-size: 1.4rem;
+        color: var(--card-text-color-secondary);
+        line-height: 1.5;
+        padding-left: 4px;
+    }
+
+    .hobby-achievements-list li::marker {
+        color: var(--accent-color);
+    }
+</style>

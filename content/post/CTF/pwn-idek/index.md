@@ -1,6 +1,6 @@
 ---
 title: "myspace2 idekCTF 2025"
-description: "Pretty easy chall but its like i need more writeups here or else the blog will look kinda lame and i need to make myself look like the CTF poet or something"
+description: "Pretty easy challenge but i need more writeups here or else the blog will look empty :("
 slug: "pwn-idek"
 date: "2025-08-05 00:00:00+0000"
 image: "cover.png"

