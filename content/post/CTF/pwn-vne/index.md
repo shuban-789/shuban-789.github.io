@@ -21,8 +21,6 @@ It is important to get familiar with the machine we log into so that we can find
 * How it works: It takes the input for the directory as an environment variable
 * Other important takeaways: If it is listing the contents of a directory, it is most probably doing something with the ls binary
 
-![image](https://github.com/shuban-789/PicoPwnbooks-BinaryExploitation/assets/67974101/5815e2a0-7aa3-4358-8976-26e145f19b36)
-
 > SUID, short for Set User ID, is a special permission that can be assigned to executable files. When an executable file has the SUID permission enabled, it allows users who execute the file to temporarily assume the privileges of the file's owner.
 
 ## Plan
@@ -33,19 +31,12 @@ We make an ls binary that spawns a shell. Since the file has an SUID, this will 
 ### The Plan in Practice 
 When "ls" is typed into the command line, the system looks through path for an executable with the name "ls". So in the injected PATH, because `/tmp` is first, when the binary which runs ls as root runs "ls" as root it wil run the binary as root which will run /bin/bash root.
 
-![image](https://github.com/shuban-789/PicoPwnbooks-BinaryExploitation/assets/67974101/9525b700-e39d-4ec6-a2b6-62fe0edec152)
-
-
 ## Actually Doing Stuff
 First, let's log onto the machine. To logon, we will need to use ssh with the command format of: 
 
 `ssh -p <port> <user>@<ip>`
 
-After logging on, let’s list the environment variables, and try editing the PATH.
-
-![image](https://github.com/shuban-789/PicoPwnbooks-BinaryExploitation/assets/67974101/64a60cc6-9cad-4ccb-bd9d-c21473fb51ae)
-
-It looks like the injection worked, so we can move on to making the fake ls executable.
+After logging on, we are able to edit the PATH. We can inject /tmp to the front to make sure it loks for binaries there
 
 Finally, we need to make the fake ls binary containing this C code:
 
@@ -59,11 +50,5 @@ int main()
 }
 ```
 
-<br>
-
-![image](https://github.com/shuban-789/PicoPwnbooks-BinaryExploitation/assets/67974101/a7a36a0b-8473-4114-bd49-09561a07b049)
-
-then just run the bin
-
-![image](https://github.com/shuban-789/PicoPwnbooks-BinaryExploitation/assets/67974101/984f1ed0-42e2-40c0-b297-5eb833df79e3)
+then just run the bin and get flag. The SUID binary will invoke ls but will end up calling /tmp/ls because /tmp is the first item of PATH
 
