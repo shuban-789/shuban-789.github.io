@@ -12,6 +12,6 @@ achievements:
   - "squ1rrelCTF 2025 (Cosmic Bit Flip, 1st place in academic division, 5th place)"
   - "Lexington Informatics Tournament CTF 2024 (><(('>, 9th place internationally HS)"
 image: "ctfs.png"
-daterange: "2024 - Present"
+daterange: "2023 - Present"
 date: 2025-01-27
 ---

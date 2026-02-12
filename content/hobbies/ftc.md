@@ -12,6 +12,6 @@ achievements:
   - "San Diego Turing League Championship Connect Award (2023)"
   - "3x FIRST Tech Challenge Regional Qualifier (2023, 2024, 2025)"
 image: "ftc.jpg"
-daterange: "2022 - Present"
+daterange: "2020 - Present"
 date: 2025-01-27
 ---
