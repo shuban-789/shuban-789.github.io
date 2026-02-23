@@ -2,8 +2,8 @@
 title: "PicoCTF 2019 Upsolve: zero_to_hero"
 description: "One of the many tcache poisoning pico challs"
 slug: "picoctf-z2h"
-date: "2023-04-06 00:00:00+0000"
-image: "penguin.png"
+date: "2026-02-22 00:00:00+0000"
+image: "cover.png"
 categories:
     - "Pwn"
 tags: 
