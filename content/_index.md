@@ -17,4 +17,4 @@ Some of my non-technical hobbies include going on long night walks, studying myt
 
 I like to code a lot of open source related to OS, computational physics, and CLI app development as showcased through countless projects on my GitHub. In addition to that, I am also trying to learn exploit code development, particularly in the context of binary hijacking/exploitation (pwn).
 
-Whether developing advanced embedded control systems to improve flight performance or patching vulnerabilities in complex codebases, I aim to strengthen technical systems and drive innovation through programming.
+Whether it be designing advanced embedded control systems to enhance flight or patching vulnerabilities within codebases, I aim to address weaknesses and drive innovation in technical systems through programming.

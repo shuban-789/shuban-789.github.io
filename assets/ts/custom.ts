@@ -2,8 +2,6 @@ const menu = document.getElementById("main-menu");
 const toggle = document.getElementById("toggle-menu");
 
 if (menu instanceof HTMLElement && toggle instanceof HTMLElement) {
-    const bodyOpenClass = "mobile-menu-open";
-    const bodyThemeOpenClass = "show-menu";
     const mobileQuery = window.matchMedia("(max-width: 767px)");
 
     const clearAnimatedMenuStyles = () => {
@@ -20,18 +18,22 @@ if (menu instanceof HTMLElement && toggle instanceof HTMLElement) {
         ].forEach((property) => menu.style.removeProperty(property));
     };
 
+    const syncMenuAccessibility = (open: boolean) => {
+        const isMobile = mobileQuery.matches;
+        toggle.classList.toggle("is-active", isMobile && open);
+        toggle.setAttribute("aria-expanded", String(isMobile && open));
+        menu.setAttribute("aria-hidden", String(isMobile && !open));
+    };
+
     const setMenuOpen = (open: boolean) => {
         clearAnimatedMenuStyles();
         menu.classList.toggle("show", open);
-        toggle.classList.toggle("is-active", open);
-        document.body.classList.toggle(bodyOpenClass, mobileQuery.matches && open);
-        document.body.classList.toggle(bodyThemeOpenClass, mobileQuery.matches && open);
+        syncMenuAccessibility(open);
     };
 
     const syncMobileMenuState = () => {
         const isMenuOpen = menu.classList.contains("show") || toggle.classList.contains("is-active");
-        document.body.classList.toggle(bodyOpenClass, mobileQuery.matches && isMenuOpen);
-        document.body.classList.toggle(bodyThemeOpenClass, mobileQuery.matches && isMenuOpen);
+        syncMenuAccessibility(mobileQuery.matches && isMenuOpen);
     };
 
     // Intercept mobile toggle clicks and force a no-animation menu open/close.
@@ -78,14 +80,10 @@ if (menu instanceof HTMLElement && toggle instanceof HTMLElement) {
 
         clearAnimatedMenuStyles();
         menu.classList.remove("show");
-        toggle.classList.remove("is-active");
-        document.body.classList.remove(bodyOpenClass, bodyThemeOpenClass);
+        syncMenuAccessibility(false);
     });
 
     window.addEventListener("pageshow", syncMobileMenuState);
-    window.addEventListener("pagehide", () => {
-        document.body.classList.remove(bodyOpenClass, bodyThemeOpenClass);
-    });
 
     syncMobileMenuState();
 }

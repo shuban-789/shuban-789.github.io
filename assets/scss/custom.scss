@@ -1878,34 +1878,20 @@ template {
 }
 
 footer.site-footer {
-    padding: 20px 0 var(--section-separation);
-    font-size: 1.4rem;
+    margin-top: calc(var(--section-separation) * -2 / 3);
+    padding: 0 0 var(--section-separation);
+    font-size: 1.2rem;
     line-height: 1.75
 }
 
 footer.site-footer:before {
-    content: "";
-    display: block;
-    height: 3px;
-    width: 50px;
-    background: var(--body-text-color);
-    margin-bottom: 20px
+    content: none
 }
 
 footer.site-footer .copyright {
     color: var(--accent-color);
     font-weight: 700;
     margin-bottom: 5px
-}
-
-footer.site-footer .powerby {
-    color: var(--body-text-color);
-    font-weight: 400;
-    font-size: 1.2rem
-}
-
-footer.site-footer .powerby a {
-    color: var(--body-text-color)
 }
 
 .pagination {
@@ -3069,8 +3055,8 @@ html[data-scheme="light-mode"] .homepage-content {
         background: var(--card-background) !important;
         background-color: var(--card-background) !important;
         background-image: none !important;
-        border: 1px solid var(--card-separator-color) !important;
-        box-shadow: 0 14px 32px rgba(0, 0, 0, 0.45) !important;
+        border: none !important;
+        box-shadow: none !important;
         opacity: 1 !important;
         backdrop-filter: var(--glass-blur) !important;
         -webkit-backdrop-filter: var(--glass-blur) !important;
@@ -3159,8 +3145,8 @@ html[data-scheme="light-mode"] .homepage-content {
 /* Mobile menu redesign: simpler layout, minimal motion, cleaner spacing. */
 @media(max-width: 767px) {
     .left-sidebar {
-        padding: 12px 8px 0;
-        gap: 12px;
+        padding: 14px 0 0;
+        gap: 10px;
         --sidebar-element-separation: 10px;
         --menu-icon-separation: 14px;
     }
@@ -3171,13 +3157,14 @@ html[data-scheme="light-mode"] .homepage-content {
         flex-direction: row;
         align-items: center;
         gap: 12px;
-        padding: 10px 56px 10px 12px;
-        border-radius: 14px;
-        border: 1px solid var(--card-separator-color);
+        padding: 12px 60px 12px 12px;
+        border-radius: 18px;
+        border: none;
         background: var(--card-background);
+        background-image: none;
         backdrop-filter: var(--glass-blur);
         -webkit-backdrop-filter: var(--glass-blur);
-        box-shadow: var(--shadow-l1);
+        box-shadow: none;
     }
 
     .left-sidebar .site-avatar {
@@ -3217,72 +3204,105 @@ html[data-scheme="light-mode"] .homepage-content {
 
     #toggle-menu {
         top: 14px;
-        right: 14px;
-        width: 36px;
-        height: 36px;
-        border-radius: 10px;
+        right: 10px;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
         padding: 0;
         display: flex;
         align-items: center;
         justify-content: center;
-        border: 1px solid var(--card-separator-color);
-        background: var(--card-background);
+        border: none;
+        background: rgba(var(--glass-background-rgb), 0.16);
         backdrop-filter: var(--glass-blur);
         -webkit-backdrop-filter: var(--glass-blur);
-        box-shadow: var(--shadow-l1);
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
+        opacity: 1;
     }
 
     [dir=rtl] #toggle-menu {
-        left: 14px;
+        left: 10px;
         right: auto;
     }
 
+    #toggle-menu:hover {
+        opacity: 1;
+    }
+
     #toggle-menu .hamburger-box {
-        width: 22px;
+        width: 18px;
         height: 18px;
     }
 
     #toggle-menu .hamburger-inner,
     #toggle-menu .hamburger-inner::before,
     #toggle-menu .hamburger-inner::after {
-        width: 22px;
-        transition: none !important;
+        width: 18px;
+        height: 2px;
+        border-radius: 999px;
+        transition: transform .18s ease, opacity .18s ease, top .18s ease !important;
+    }
+
+    #toggle-menu .hamburger-inner {
+        top: 50%;
+        margin-top: -1px;
+    }
+
+    #toggle-menu .hamburger-inner::before {
+        top: -6px;
+    }
+
+    #toggle-menu .hamburger-inner::after {
+        display: none;
     }
 
     #toggle-menu.is-active .hamburger-inner {
-        transform: none !important;
+        transform: rotate(45deg) !important;
     }
 
     #toggle-menu.is-active .hamburger-inner::before {
-        top: -8px !important;
+        top: 0 !important;
         opacity: 1 !important;
-    }
-
-    #toggle-menu.is-active .hamburger-inner::after {
-        bottom: -8px !important;
-        transform: none !important;
+        transform: rotate(90deg) !important;
     }
 
     #main-menu,
     #main-menu.show,
     #main-menu.transiting {
-        position: static !important;
-        top: auto !important;
-        right: auto !important;
-        left: auto !important;
-        width: 100% !important;
+        display: flex !important;
+        flex-direction: column;
+        position: absolute !important;
+        top: calc(100% + 10px) !important;
+        right: 0 !important;
+        left: 0 !important;
+        z-index: 150;
+        width: auto !important;
         max-width: none !important;
-        max-height: none !important;
-        margin: 2px 0 0 !important;
-        padding: 10px !important;
-        border-radius: 14px !important;
-        border: 1px solid var(--card-separator-color) !important;
-        background: var(--card-background) !important;
+        max-height: 62vh !important;
+        margin: 0 !important;
+        padding: 8px 12px 4px !important;
+        border-radius: 18px !important;
+        border: none !important;
+        background: linear-gradient(180deg, rgba(var(--glass-background-rgb), 0.24), rgba(var(--glass-background-rgb), 0.12)) !important;
         background-color: var(--card-background) !important;
         backdrop-filter: var(--glass-blur) !important;
         -webkit-backdrop-filter: var(--glass-blur) !important;
-        box-shadow: var(--shadow-l1) !important;
-        transition: none !important;
+        box-shadow: none !important;
+        overflow-y: auto !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+        transform: translateY(-8px) scale(0.985) !important;
+        transform-origin: top right;
+        transition: opacity .18s ease, transform .18s ease, visibility .18s ease !important;
+    }
+
+    #main-menu.show,
+    #main-menu.transiting {
+        opacity: 1 !important;
+        visibility: visible !important;
+        pointer-events: auto !important;
+        transform: translateY(0) scale(1) !important;
     }
 
     #main-menu,
@@ -3308,15 +3328,11 @@ html[data-scheme="light-mode"] .homepage-content {
     #main-menu li.menu-bottom-section {
         margin-top: 6px;
         padding-top: 8px;
-        border-top: 1px solid var(--card-separator-color);
+        border-top: none;
     }
 
     #main-menu .menu-icon {
         width: 24px;
         height: 24px;
-    }
-
-    body.mobile-menu-open .left-sidebar {
-        z-index: 140;
     }
 }
