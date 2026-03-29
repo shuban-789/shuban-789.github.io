@@ -13,4 +13,9 @@
 {{- if $image.exists -}}
     <meta name="twitter:card" content="{{ default `summary_large_image` .Site.Params.opengraph.twitter.card }}">
     <meta name="twitter:image" content='{{ absURL $image.permalink }}' />
+{{- else -}}
+    {{- with .Site.Params.favicon -}}
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:image" content='{{ absURL . }}' />
+    {{- end -}}
 {{- end -}}
