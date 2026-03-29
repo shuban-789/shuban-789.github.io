@@ -1,0 +1,13 @@
+{{- $interactive := default false .interactive -}}
+<div class="window-controls">
+    {{- if $interactive -}}
+    <button class="control red" type="button" data-window-action="close" aria-label="Temporarily close window"></button>
+    <button class="control yellow" type="button" data-window-action="minimize"
+        aria-label="Temporarily minimize window"></button>
+    <button class="control green" type="button" data-window-action="zoom" aria-label="Temporarily fullscreen window"></button>
+    {{- else -}}
+    <span class="control red" aria-hidden="true"></span>
+    <span class="control yellow" aria-hidden="true"></span>
+    <span class="control green" aria-hidden="true"></span>
+    {{- end -}}
+</div>

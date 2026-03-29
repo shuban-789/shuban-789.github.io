@@ -1,4 +1,7 @@
-<article class="{{ if .Params.image }}has-image {{ end }}main-article">
+<article class="{{ if .Params.image }}has-image {{ end }}main-article window-demo">
+    {{ if eq .Type "post" }}
+    {{ partial "helper/mac-window-bar" (dict "interactive" true) }}
+    {{ end }}
     {{ partial "article/components/header" . }}
 
     {{ partial "article/components/content" . }}

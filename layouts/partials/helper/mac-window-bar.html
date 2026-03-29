@@ -1,0 +1,4 @@
+{{- $interactive := default false .interactive -}}
+<div class="mac-window-bar{{ if not $interactive }} mac-window-bar--static{{ end }}">
+    {{ partial "helper/mac-window-controls" (dict "interactive" $interactive) }}
+</div>

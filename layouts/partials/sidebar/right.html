@@ -1,11 +1,12 @@
 {{- $scope := default "homepage" .Scope -}}
 {{- $context := .Context -}}
 {{- with (index .Context.Site.Params.widgets $scope) -}}
-<aside class="sidebar right-sidebar sticky">
+<aside class="sidebar right-sidebar sticky window-demo">
     <div class="window-controls">
-        <span class="control red"></span>
-        <span class="control yellow"></span>
-        <span class="control green"></span>
+        <button class="control red" type="button" data-window-action="close" aria-label="Temporarily close window"></button>
+        <button class="control yellow" type="button" data-window-action="minimize"
+            aria-label="Temporarily minimize window"></button>
+        <button class="control green" type="button" data-window-action="zoom" aria-label="Temporarily fullscreen window"></button>
     </div>
     {{ range $widget := . }}
     {{ if templates.Exists (printf "partials/widget/%s.html" .type) }}
