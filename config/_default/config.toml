@@ -16,3 +16,35 @@ disqusShortname = "hugo-theme-stack"
 
 [pagination]
 pagerSize = 5
+
+[[songs]]
+spotify_url = "https://open.spotify.com/track/68hjxmQouj1VRaUg8BHWAV?si=440dda2e57d74689"
+start_at = 0
+
+[[songs]]
+spotify_url = "https://open.spotify.com/track/4SquYNaAEtpiTLT5T8tkx6?si=e006b551f3d444da"
+start_at = 0
+
+[[songs]]
+spotify_url = "https://open.spotify.com/track/6B0uQN8uD1arVAOI4ZYAqJ?si=cd663e56e0d9466e"
+start_at = 0
+
+[[songs]]
+spotify_url = "https://open.spotify.com/track/58ZYYZ8UwYcioNnwMgQOc8?si=d3896bbdc3994a08"
+start_at = 0
+
+[[songs]]
+spotify_url = "https://open.spotify.com/track/3QpItBJGYu3gvkiLocgBSK?si=13524835e5c84011"
+start_at = 0
+
+[[songs]]
+spotify_url = "https://open.spotify.com/track/6hoahPnjmQ4dNtZrn2SjPS?si=08a0ab20b12a44e5"
+start_at = 0
+
+[[songs]]
+spotify_url = "https://open.spotify.com/track/4sUTagdmyuyAxd7RvbygpQ?si=32da8bc4072e4b4c"
+start_at = 0
+
+[[songs]]
+spotify_url = "https://open.spotify.com/track/69jGxyfw3lzGGYf78jdkpF?si=ac37c0ff9a9e4d68"
+start_at = 0

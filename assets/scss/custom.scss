@@ -3555,3 +3555,515 @@ html[data-scheme="light-mode"] .homepage-content {
         height: 24px;
     }
 }
+
+.favorites-page {
+    display: block;
+    --favorites-surface: rgba(var(--glass-background-rgb), 0.18);
+    --favorites-surface-strong: var(--card-background);
+    --spotify-slider-fill: #2e66f4;
+    --spotify-slider-track: rgba(46, 102, 244, 0.18);
+    --spotify-player-ink: rgba(255, 255, 255, 0.98);
+}
+
+.favorites-board {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 20px;
+    align-items: start;
+}
+
+.favorites-tile {
+    min-width: 0;
+    overflow: hidden;
+    border-radius: var(--card-border-radius);
+    background-color: var(--favorites-surface-strong);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    box-shadow: var(--shadow-l1);
+}
+
+.favorites-tile--player {
+    grid-column: span 4;
+}
+
+.favorites-tile--queue {
+    grid-column: span 4;
+}
+
+.favorites-tile--series {
+    grid-column: span 8;
+}
+
+.favorites-tile__body {
+    padding: 20px;
+}
+
+.favorites-media-section {
+    display: grid;
+    gap: 16px;
+}
+
+.spotify-player {
+    position: relative;
+    display: grid;
+    gap: 14px;
+}
+
+.spotify-player__topline {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.spotify-player__open {
+    font-size: .85rem;
+    font-weight: 600;
+    color: var(--spotify-player-ink);
+    text-decoration: none;
+}
+
+.spotify-player__open[aria-disabled="true"] {
+    opacity: .5;
+    pointer-events: none;
+}
+
+.spotify-player__open--hidden,
+.spotify-player__status-hidden {
+    display: none;
+}
+
+.spotify-player__device {
+    display: grid;
+    gap: 14px;
+    margin-inline: auto;
+    padding: 16px;
+    border-radius: 28px;
+    background-color: var(--favorites-surface);
+    color: var(--spotify-player-ink);
+}
+
+.spotify-player__art {
+    width: 100%;
+    max-width: 280px;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 24px;
+    background-color: var(--favorites-surface);
+    margin-inline: auto;
+}
+
+.spotify-player__art img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.spotify-player__art-fallback {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+    text-align: center;
+    background-color: var(--favorites-surface);
+}
+
+.spotify-player__art-fallback span {
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    font-weight: 700;
+    line-height: 1.05;
+}
+
+.spotify-player__copy {
+    display: grid;
+    gap: 8px;
+    text-align: center;
+}
+
+.spotify-player__kicker {
+    margin: 0;
+    font-size: .82rem;
+    font-weight: 600;
+    text-transform: lowercase;
+    color: rgba(255, 255, 255, 0.76);
+}
+
+.spotify-player__title {
+    margin: 0;
+    font-size: clamp(1.7rem, 3vw, 2.4rem);
+    line-height: .96;
+    color: var(--spotify-player-ink);
+}
+
+.spotify-player__artist {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.76);
+    min-height: 1.4em;
+}
+
+.spotify-player__timeline {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 10px;
+    font-size: .96rem;
+    font-variant-numeric: tabular-nums;
+    color: rgba(255, 255, 255, 0.76);
+}
+
+.spotify-player__timeline input[type="range"] {
+    width: 100%;
+    height: 24px;
+    margin: 0;
+    border: none;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    transition: opacity .18s ease;
+    cursor: pointer;
+}
+
+.spotify-player__timeline input[type="range"]::-webkit-slider-runnable-track {
+    height: 8px;
+    border-radius: 999px;
+    background: linear-gradient(to right,
+            var(--spotify-slider-fill) 0%,
+            var(--spotify-slider-fill) var(--spotify-slider-progress, 0%),
+            var(--spotify-slider-track) var(--spotify-slider-progress, 0%),
+            var(--spotify-slider-track) 100%);
+}
+
+.spotify-player__timeline input[type="range"]::-webkit-slider-thumb {
+    width: 18px;
+    height: 18px;
+    margin-top: -5px;
+    border: none;
+    border-radius: 50%;
+    appearance: none;
+    -webkit-appearance: none;
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(46, 102, 244, 0.24);
+}
+
+.spotify-player__timeline input[type="range"]::-moz-range-track {
+    height: 8px;
+    border: none;
+    border-radius: 999px;
+    background: var(--spotify-slider-track);
+}
+
+.spotify-player__timeline input[type="range"]::-moz-range-progress {
+    height: 8px;
+    border: none;
+    border-radius: 999px;
+    background: var(--spotify-slider-fill);
+}
+
+.spotify-player__timeline input[type="range"]::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border: none;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(46, 102, 244, 0.24);
+}
+
+.spotify-player__actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.spotify-player__button {
+    min-width: 44px;
+    min-height: 44px;
+    border: none;
+    padding: 0;
+    background: transparent;
+    color: var(--spotify-player-ink);
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform .18s ease, opacity .18s ease;
+}
+
+.spotify-player__button:hover:not(:disabled),
+.spotify-player__button:focus-visible:not(:disabled) {
+    transform: translateY(-1px);
+}
+
+.spotify-player__button:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+}
+
+.spotify-player__button--primary {
+    transform: scale(1.08);
+    margin-inline: 4px;
+}
+
+.spotify-player__button--primary:hover:not(:disabled),
+.spotify-player__button--primary:focus-visible:not(:disabled) {
+    transform: scale(1.08) translateY(-1px);
+}
+
+.spotify-player__embed {
+    overflow: hidden;
+    border-radius: 20px;
+    background-color: var(--favorites-surface);
+    min-height: 152px;
+}
+
+.spotify-player__embed iframe {
+    display: block;
+    width: 100%;
+    border: 0;
+}
+
+.spotify-player__icon {
+    position: relative;
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+}
+
+.spotify-player__icon--play::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 16px solid currentColor;
+    transform: translate(-35%, -50%);
+}
+
+.spotify-player__button--primary.is-playing .spotify-player__icon--play::before,
+.spotify-player__button--primary.is-playing .spotify-player__icon--play::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 6px;
+    height: 20px;
+    background-color: currentColor;
+    transform: translateY(-50%);
+}
+
+.spotify-player__button--primary.is-playing .spotify-player__icon--play::before {
+    left: 6px;
+    border: none;
+}
+
+.spotify-player__button--primary.is-playing .spotify-player__icon--play::after {
+    right: 6px;
+}
+
+.spotify-player__icon--previous::before,
+.spotify-player__icon--previous::after,
+.spotify-player__icon--next::before,
+.spotify-player__icon--next::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    transform: translateY(-50%);
+}
+
+.spotify-player__icon--previous::before {
+    left: 2px;
+    border-right: 10px solid currentColor;
+}
+
+.spotify-player__icon--previous::after {
+    left: 11px;
+    border-right: 10px solid currentColor;
+}
+
+.spotify-player__icon--next::before {
+    right: 11px;
+    border-left: 10px solid currentColor;
+}
+
+.spotify-player__icon--next::after {
+    right: 2px;
+    border-left: 10px solid currentColor;
+}
+
+.favorites-queue {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 10px;
+}
+
+.favorite-track {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 18px;
+    background-color: var(--favorites-surface);
+    color: rgba(255, 255, 255, 0.98);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 14px;
+    text-align: left;
+    cursor: pointer;
+    transition: transform .18s ease, border-color .18s ease, background-color .18s ease;
+}
+
+.favorite-track:hover:not(:disabled),
+.favorite-track:focus-visible:not(:disabled) {
+    transform: translateX(2px);
+    background-color: var(--card-background-selected);
+}
+
+.favorite-track:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+}
+
+.favorite-track.is-active {
+    background-color: var(--card-background-selected);
+}
+
+.favorite-track__index {
+    font-size: 1rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.56);
+}
+
+.favorite-track__copy {
+    display: grid;
+    gap: 4px;
+}
+
+.favorite-track__copy strong {
+    font-size: 1.15rem;
+    line-height: 1.1;
+}
+
+.favorite-track__copy small {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.72);
+}
+
+.series-wall {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.series-card {
+    position: relative;
+    display: block;
+    overflow: visible;
+    min-height: 0;
+    aspect-ratio: 7 / 6;
+    border-radius: 22px;
+    background-color: var(--favorites-surface);
+    color: rgba(255, 255, 255, 0.98);
+    text-decoration: none;
+}
+
+.series-card img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center center;
+    border-radius: 22px;
+}
+
+.series-card__placeholder {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    padding: 16px;
+    text-align: center;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.98);
+    background-color: var(--favorites-surface);
+}
+
+.favorites-empty-state p {
+    margin: 0;
+}
+
+.favorites-empty-state {
+    display: grid;
+    gap: 10px;
+    padding: 18px;
+    border-radius: 20px;
+    background-color: var(--favorites-surface);
+    color: var(--card-text-color-secondary);
+}
+
+.favorites-empty-state--dense {
+    min-height: 100%;
+    align-content: start;
+}
+
+@media (max-width: 1279px) {
+    .favorites-tile--series {
+        grid-column: span 12;
+    }
+
+    .favorites-tile--player,
+    .favorites-tile--queue {
+        grid-column: span 6;
+    }
+}
+
+@media (max-width: 1023px) {
+    .favorites-board {
+        grid-template-columns: 1fr;
+    }
+
+    .favorites-tile--player,
+    .favorites-tile--queue,
+    .favorites-tile--series {
+        grid-column: auto;
+    }
+
+    .spotify-player__device {
+        max-width: 420px;
+    }
+
+    .series-wall {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 767px) {
+    .favorites-board {
+        gap: 14px;
+    }
+
+    .favorites-page-title {
+        font-size: clamp(2rem, 11vw, 3rem);
+    }
+
+    .favorites-tile__body,
+    .spotify-player__device {
+        padding: 16px;
+    }
+
+    .spotify-player__timeline {
+        grid-template-columns: 1fr;
+        justify-items: start;
+    }
+
+    .series-wall {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}

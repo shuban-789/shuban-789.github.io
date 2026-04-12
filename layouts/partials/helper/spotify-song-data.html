@@ -1,0 +1,75 @@
+{{- $song := . -}}
+{{- $url := $song.spotify_url | default "" -}}
+{{- $title := $song.title | default "" -}}
+{{- $artist := $song.artist | default "" -}}
+{{- $artwork := $song.artwork | default "" -}}
+
+{{- if ne $url "" -}}
+    {{- $opts := dict
+        "headers" (dict
+            "User-Agent" "Mozilla/5.0"
+            "Accept-Language" "en-US,en;q=0.9"
+        )
+    -}}
+
+    {{- with try (resources.GetRemote $url $opts) -}}
+        {{- with .Value -}}
+            {{- $html := .Content -}}
+
+            {{- if eq $title "" -}}
+                {{- $titleMatches := findRESubmatch `property="og:title"\s+content="([^"]+)"` $html 1 -}}
+                {{- with index $titleMatches 0 -}}
+                    {{- $title = index . 1 | htmlUnescape -}}
+                {{- end -}}
+            {{- end -}}
+
+            {{- if eq $artwork "" -}}
+                {{- $artworkMatches := findRESubmatch `(?:property="og:image"|name="twitter:image")\s+content="([^"]+)"` $html 1 -}}
+                {{- with index $artworkMatches 0 -}}
+                    {{- $artwork = index . 1 | htmlUnescape -}}
+                {{- end -}}
+            {{- end -}}
+
+            {{- if eq $artist "" -}}
+                {{- $descriptionMatches := findRESubmatch `property="og:description"\s+content="([^"]+)"` $html 1 -}}
+                {{- with index $descriptionMatches 0 -}}
+                    {{- $description := index . 1 | htmlUnescape -}}
+                    {{- $descriptionParts := split $description " · " -}}
+                    {{- if gt (len $descriptionParts) 0 -}}
+                        {{- $artist = index $descriptionParts 0 -}}
+                    {{- end -}}
+                {{- end -}}
+            {{- end -}}
+
+            {{- if eq $artist "" -}}
+                {{- $artistMatches := findRESubmatch `music:musician_description"\s+content="([^"]+)"` $html 1 -}}
+                {{- with index $artistMatches 0 -}}
+                    {{- $artist = index . 1 | htmlUnescape -}}
+                {{- end -}}
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
+
+    {{- if or (eq $title "") (eq $artwork "") -}}
+        {{- $oembedURL := printf "https://open.spotify.com/oembed?url=%s" ($url | urlquery) -}}
+        {{- with try (resources.GetRemote $oembedURL $opts) -}}
+            {{- with .Value -}}
+                {{- $oembed := . | transform.Unmarshal -}}
+                {{- if eq $title "" -}}
+                    {{- $title = index $oembed "title" | default "" -}}
+                {{- end -}}
+                {{- if eq $artwork "" -}}
+                    {{- $artwork = index $oembed "thumbnail_url" | default "" -}}
+                {{- end -}}
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+
+{{- return (dict
+    "title" $title
+    "artist" $artist
+    "artwork" $artwork
+    "spotify_url" $url
+    "start_at" ($song.start_at | default 0)
+) -}}

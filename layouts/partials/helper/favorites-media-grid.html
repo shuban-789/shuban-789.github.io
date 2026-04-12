@@ -1,0 +1,38 @@
+{{- $items := .items | default (slice) -}}
+{{- $title := .title | default "Collection" -}}
+{{- $emptyKey := .emptyKey | default "items" -}}
+{{- $emptyPath := .emptyPath | default "/favorites/media/cover.jpg" -}}
+
+<section class="favorites-tile favorites-tile--series window-demo">
+    {{ partial "helper/mac-window-bar" (dict "interactive" false) }}
+    <div class="favorites-tile__body favorites-media-section">
+        {{ if gt (len $items) 0 }}
+            <div class="series-wall">
+                {{ range $item := $items }}
+                    {{ if $item.href }}
+                        <a class="series-card" href="{{ $item.href }}" {{ if or (hasPrefix $item.href "http://") (hasPrefix $item.href "https://") }}target="_blank" rel="noreferrer"{{ end }}>
+                            {{ if $item.image }}
+                                <img src="{{ $item.image | relURL }}" alt="{{ $item.title }} cover art" loading="lazy"{{ with $item.position }} style="object-position: {{ . }};"{{ end }}>
+                            {{ else }}
+                                <div class="series-card__placeholder">{{ $item.title }}</div>
+                            {{ end }}
+                        </a>
+                    {{ else }}
+                        <div class="series-card">
+                            {{ if $item.image }}
+                                <img src="{{ $item.image | relURL }}" alt="{{ $item.title }} cover art" loading="lazy"{{ with $item.position }} style="object-position: {{ . }};"{{ end }}>
+                            {{ else }}
+                                <div class="series-card__placeholder">{{ $item.title }}</div>
+                            {{ end }}
+                        </div>
+                    {{ end }}
+                {{ end }}
+            </div>
+        {{ else }}
+            <div class="favorites-empty-state favorites-empty-state--dense">
+                <p>No {{ lower $title }} yet.</p>
+                <p>Add `[[{{ $emptyKey }}]]` entries in `data/favorites.toml` and point images at `{{ $emptyPath }}`.</p>
+            </div>
+        {{ end }}
+    </div>
+</section>

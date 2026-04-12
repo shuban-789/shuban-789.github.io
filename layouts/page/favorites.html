@@ -1,0 +1,120 @@
+{{ define "body-class" }}template-favorites{{ end }}
+
+{{ define "head" }}
+<script>
+    window.__spotifyIframeApi = window.__spotifyIframeApi || null;
+    window.onSpotifyIframeApiReady = function (IFrameAPI) {
+        window.__spotifyIframeApi = IFrameAPI;
+        window.dispatchEvent(new CustomEvent("spotify-iframe-api-ready"));
+    };
+</script>
+<script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
+{{ end }}
+
+{{ define "main" }}
+{{ $favorites := site.Data.favorites }}
+{{ $songs := $favorites.songs | default (slice) }}
+{{ $configSongs := slice }}
+{{ with readFile "config/_default/config.toml" }}
+    {{ $parsedConfig := transform.Unmarshal (dict "format" "toml") . }}
+    {{ $configSongs = index $parsedConfig "songs" | default (slice) }}
+{{ end }}
+{{ if gt (len $configSongs) (len $songs) }}
+    {{ $songs = $configSongs }}
+{{ end }}
+{{ $games := $favorites.games | default (slice) }}
+
+<section class="favorites-page">
+    <section class="favorites-board">
+        <section class="favorites-tile favorites-tile--player window-demo">
+            {{ partial "helper/mac-window-bar" (dict "interactive" false) }}
+            <div class="favorites-tile__body">
+                <div class="spotify-player" data-spotify-player-root>
+                    <a class="spotify-player__open spotify-player__open--hidden" href="https://open.spotify.com/" target="_blank" rel="noreferrer" data-player-link>
+                        Open on Spotify
+                    </a>
+
+                    <div class="spotify-player__device">
+                        <div class="spotify-player__art" data-player-art>
+                            <div class="spotify-player__art-fallback">
+                                <span>Now Playing</span>
+                            </div>
+                        </div>
+
+                        <div class="spotify-player__copy">
+                            <h2 class="spotify-player__title" data-player-title>Ready for your queue</h2>
+                            <p class="spotify-player__artist" data-player-artist></p>
+                            <span class="spotify-player__status-hidden" data-player-status aria-hidden="true"></span>
+                        </div>
+
+                        <div class="spotify-player__actions">
+                            <button class="spotify-player__button spotify-player__button--icon" type="button" data-spotify-prev aria-label="Previous song">
+                                <span class="spotify-player__icon spotify-player__icon--previous" aria-hidden="true"></span>
+                            </button>
+                            <button class="spotify-player__button spotify-player__button--icon spotify-player__button--primary" type="button" data-spotify-toggle aria-label="Play or pause">
+                                <span class="spotify-player__icon spotify-player__icon--play" aria-hidden="true"></span>
+                            </button>
+                            <button class="spotify-player__button spotify-player__button--icon" type="button" data-spotify-next aria-label="Next song">
+                                <span class="spotify-player__icon spotify-player__icon--next" aria-hidden="true"></span>
+                            </button>
+                        </div>
+
+                        <div class="spotify-player__timeline">
+                            <span data-player-elapsed>0:00</span>
+                            <input type="range" min="0" max="0" value="0" step="10" data-spotify-seek disabled>
+                            <span data-player-remaining>-0:00</span>
+                        </div>
+                    </div>
+
+                    <div class="spotify-player__embed" data-spotify-embed></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="favorites-tile favorites-tile--queue window-demo">
+            {{ partial "helper/mac-window-bar" (dict "interactive" false) }}
+            <div class="favorites-tile__body">
+                {{ if gt (len $songs) 0 }}
+                    <ol class="favorites-queue" data-spotify-queue>
+                        {{ range $index, $song := $songs }}
+                            {{ $resolvedSong := partialCached "helper/spotify-song-data.html" $song ($song.spotify_url | default "") ($song.start_at | default 0) }}
+                            <li>
+                                <button
+                                    class="favorite-track"
+                                    type="button"
+                                    data-spotify-track
+                                    data-track-index="{{ $index }}"
+                                    data-song-title="{{ index $resolvedSong "title" | default (printf "Track %d" (add $index 1)) }}"
+                                    data-song-artist="{{ index $resolvedSong "artist" | default "Unknown artist" }}"
+                                    data-song-artwork="{{ index $resolvedSong "artwork" | default "" }}"
+                                    data-song-start="{{ index $resolvedSong "start_at" | default 0 }}"
+                                    data-spotify-url="{{ index $resolvedSong "spotify_url" | default "" }}">
+                                    <span class="favorite-track__index">{{ printf "%02d" (add $index 1) }}</span>
+                                    <span class="favorite-track__copy">
+                                        <strong>{{ index $resolvedSong "title" | default (printf "Track %d" (add $index 1)) }}</strong>
+                                        <small>{{ index $resolvedSong "artist" | default "Unknown artist" }}</small>
+                                    </span>
+                                </button>
+                            </li>
+                        {{ end }}
+                    </ol>
+                {{ else }}
+                    <div class="favorites-empty-state">
+                        <p>No Spotify tracks yet.</p>
+                        <p>Drop your links into `data/favorites.toml` under `[[songs]]`.</p>
+                    </div>
+                {{ end }}
+            </div>
+        </section>
+
+        {{ partial "helper/favorites-media-grid.html" (dict
+            "title" "Games"
+            "items" $games
+            "emptyKey" "games"
+            "emptyPath" "/favorites/games/cover.jpg"
+        ) }}
+    </section>
+</section>
+
+{{ partialCached "footer/footer" . }}
+{{ end }}

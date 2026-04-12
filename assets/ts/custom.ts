@@ -2,6 +2,37 @@ const menu = document.getElementById("main-menu");
 const toggle = document.getElementById("toggle-menu");
 const demoWindows = document.querySelectorAll<HTMLElement>(".window-demo");
 
+type SpotifyPlaybackUpdate = {
+    data?: {
+        duration?: number;
+        isPaused?: boolean;
+        position?: number;
+        playingURI?: string;
+    };
+};
+
+type SpotifyEmbedController = {
+    addListener: (eventName: string, handler: (event: SpotifyPlaybackUpdate) => void) => void;
+    loadUri: (spotifyUri: string, preferVideo?: boolean, startAt?: number, theme?: string) => void;
+    pause: () => void;
+    play: () => void;
+    resume: () => void;
+    seek: (seconds: number) => void;
+    togglePlay: () => void;
+};
+
+type SpotifyIframeAPI = {
+    createController: (
+        element: HTMLElement,
+        options: { uri: string; width?: string | number; height?: string | number },
+        callback: (controller: SpotifyEmbedController) => void,
+    ) => void;
+};
+
+interface Window {
+    __spotifyIframeApi?: SpotifyIframeAPI | null;
+}
+
 if (demoWindows.length > 0) {
     const demoTimers = new WeakMap<HTMLElement, number>();
     const restoreTimers = new WeakMap<HTMLElement, number>();
@@ -336,4 +367,382 @@ if (menu instanceof HTMLElement && toggle instanceof HTMLElement) {
     window.addEventListener("pageshow", syncMobileMenuState);
 
     syncMobileMenuState();
+}
+
+const spotifyPlayerRoot = document.querySelector<HTMLElement>("[data-spotify-player-root]");
+
+if (spotifyPlayerRoot instanceof HTMLElement) {
+    const embedHost = spotifyPlayerRoot.querySelector<HTMLElement>("[data-spotify-embed]");
+    const titleLabel = spotifyPlayerRoot.querySelector<HTMLElement>("[data-player-title]");
+    const artistLabel = spotifyPlayerRoot.querySelector<HTMLElement>("[data-player-artist]");
+    const artworkHost = spotifyPlayerRoot.querySelector<HTMLElement>("[data-player-art]");
+    const elapsedLabel = spotifyPlayerRoot.querySelector<HTMLElement>("[data-player-elapsed]");
+    const remainingLabel = spotifyPlayerRoot.querySelector<HTMLElement>("[data-player-remaining]");
+    const statusLabel = spotifyPlayerRoot.querySelector<HTMLElement>("[data-player-status]");
+    const externalLink = spotifyPlayerRoot.querySelector<HTMLAnchorElement>("[data-player-link]");
+    const seekBar = spotifyPlayerRoot.querySelector<HTMLInputElement>("[data-spotify-seek]");
+    const playPauseButton = spotifyPlayerRoot.querySelector<HTMLButtonElement>("[data-spotify-toggle]");
+    const previousButton = spotifyPlayerRoot.querySelector<HTMLButtonElement>("[data-spotify-prev]");
+    const nextButton = spotifyPlayerRoot.querySelector<HTMLButtonElement>("[data-spotify-next]");
+
+    const supportedSpotifyTypes = new Set(["album", "artist", "episode", "playlist", "show", "track"]);
+
+    const formatTime = (rawMs: number) => {
+        const totalSeconds = Math.max(0, Math.floor(rawMs / 1000));
+        const minutes = Math.floor(totalSeconds / 60);
+        const seconds = totalSeconds % 60;
+        return `${minutes}:${String(seconds).padStart(2, "0")}`;
+    };
+
+    const getEmbedHeight = (spotifyUri: string | null) => {
+        if (!spotifyUri) return 152;
+        return spotifyUri.startsWith("spotify:track:") ? 152 : 352;
+    };
+
+    const toSpotifyUri = (value: string) => {
+        const trimmed = value.trim();
+        if (trimmed.length === 0) return null;
+        if (trimmed.startsWith("spotify:")) return trimmed;
+
+        try {
+            const parsed = new URL(trimmed);
+            const segments = parsed.pathname.split("/").filter(Boolean);
+            const entityIndex = segments.findIndex((segment) => supportedSpotifyTypes.has(segment));
+            if (entityIndex === -1) return null;
+
+            const entityType = segments[entityIndex];
+            const entityId = segments[entityIndex + 1];
+            if (!entityType || !entityId) return null;
+
+            return `spotify:${entityType}:${entityId}`;
+        } catch {
+            return null;
+        }
+    };
+
+    const trackButtons = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-spotify-track]"));
+    const tracks = trackButtons
+        .map((button) => {
+            const rawUrl = button.dataset.spotifyUrl ?? "";
+            const uri = toSpotifyUri(rawUrl);
+            const index = Number(button.dataset.trackIndex ?? "-1");
+            const parsedStartAt = Number(button.dataset.songStart ?? "0");
+
+            return {
+                artist: button.dataset.songArtist ?? "Unknown artist",
+                artwork: button.dataset.songArtwork ?? "",
+                button,
+                index,
+                startAt: Number.isFinite(parsedStartAt) ? Math.max(0, parsedStartAt) : 0,
+                title: button.dataset.songTitle ?? `Track ${index + 1}`,
+                uri,
+                url: rawUrl,
+            };
+        })
+        .filter((track) => Number.isInteger(track.index));
+
+    let controller: SpotifyEmbedController | null = null;
+    let activeIndex = tracks.findIndex((track) => track.uri !== null);
+    let durationMs = 0;
+    let isPaused = true;
+    let isSeeking = false;
+    let playbackPositionMs = 0;
+    let playbackSyncedAt = 0;
+    let progressFrame = 0;
+    const maxBackwardPlaybackCorrectionMs = 900;
+    let pendingSeekTargetMs: number | null = null;
+    let pendingSeekIssuedAt = 0;
+    const seekSettleWindowMs = 1200;
+
+    const setControlsDisabled = (disabled: boolean) => {
+        [seekBar, playPauseButton, previousButton, nextButton].forEach((element) => {
+            if (element) element.disabled = disabled;
+        });
+    };
+
+    const syncQueueState = () => {
+        trackButtons.forEach((button) => {
+            const isActive = Number(button.dataset.trackIndex ?? "-1") === activeIndex;
+            button.classList.toggle("is-active", isActive);
+            button.setAttribute("aria-pressed", String(isActive));
+        });
+    };
+
+    const syncSeekBar = (positionMs: number) => {
+        if (!seekBar) return;
+
+        const clampedPositionMs = durationMs > 0 ? Math.min(Math.max(positionMs, 0), durationMs) : Math.max(positionMs, 0);
+        seekBar.max = String(Math.max(durationMs, 0));
+        seekBar.value = String(clampedPositionMs);
+
+        const progressPercent = durationMs > 0 ? Math.min((clampedPositionMs / durationMs) * 100, 100) : 0;
+        seekBar.style.setProperty("--spotify-slider-progress", `${progressPercent}%`);
+    };
+
+    const syncMeta = () => {
+        const track = tracks[activeIndex];
+        if (!track) return;
+
+        if (titleLabel) titleLabel.textContent = track.title;
+        if (artistLabel) artistLabel.textContent = track.artist;
+        if (artworkHost) {
+            artworkHost.innerHTML = "";
+
+            if (track.artwork.length > 0) {
+                const image = document.createElement("img");
+                image.src = track.artwork;
+                image.alt = `${track.title} cover art`;
+                image.loading = "lazy";
+                artworkHost.append(image);
+            } else {
+                const fallback = document.createElement("div");
+                fallback.className = "spotify-player__art-fallback";
+
+                const label = document.createElement("span");
+                label.textContent = track.title;
+                fallback.append(label);
+                artworkHost.append(fallback);
+            }
+        }
+
+        if (externalLink) {
+            externalLink.href = track.url || "https://open.spotify.com/";
+            externalLink.toggleAttribute("aria-disabled", track.url.length === 0);
+        }
+
+        syncQueueState();
+    };
+
+    const syncPlaybackLabels = (positionMs: number) => {
+        const normalizedPositionMs = Math.max(positionMs, 0);
+        const clampedPositionMs = durationMs > 0 ? Math.min(normalizedPositionMs, durationMs) : normalizedPositionMs;
+        const displayPositionMs = durationMs > 0 && clampedPositionMs >= durationMs - 250 ? durationMs : clampedPositionMs;
+
+        if (elapsedLabel) elapsedLabel.textContent = formatTime(displayPositionMs);
+        if (remainingLabel) remainingLabel.textContent = `-${formatTime(Math.max(durationMs - displayPositionMs, 0))}`;
+
+        if (!isSeeking) {
+            syncSeekBar(displayPositionMs);
+        }
+    };
+
+    const stopProgressLoop = () => {
+        if (progressFrame) {
+            window.cancelAnimationFrame(progressFrame);
+            progressFrame = 0;
+        }
+    };
+
+    const getVisualPlaybackPosition = (now = performance.now()) => {
+        const positionMs = isPaused
+            ? playbackPositionMs
+            : Math.min(durationMs, playbackPositionMs + Math.max(0, now - playbackSyncedAt));
+        const shouldSnapToEnd = durationMs > 0 && durationMs - positionMs <= 250;
+        return shouldSnapToEnd ? durationMs : positionMs;
+    };
+
+    const renderPlaybackPosition = () => {
+        const resolvedPositionMs = getVisualPlaybackPosition();
+
+        if (durationMs > 0 && resolvedPositionMs >= durationMs) {
+            playbackPositionMs = durationMs;
+        }
+
+        syncPlaybackLabels(resolvedPositionMs);
+
+        if (!isPaused && (durationMs <= 0 || resolvedPositionMs < durationMs)) {
+            progressFrame = window.requestAnimationFrame(renderPlaybackPosition);
+        } else {
+            progressFrame = 0;
+        }
+    };
+
+    const startProgressLoop = () => {
+        stopProgressLoop();
+        progressFrame = window.requestAnimationFrame(renderPlaybackPosition);
+    };
+
+    const selectTrack = (index: number, autoplay: boolean) => {
+        const track = tracks[index];
+        if (!track || !track.uri) return;
+
+        activeIndex = index;
+        durationMs = 0;
+        isPaused = !autoplay;
+        playbackPositionMs = track.startAt * 1000;
+        playbackSyncedAt = performance.now();
+        syncMeta();
+        syncPlaybackLabels(playbackPositionMs);
+        startProgressLoop();
+
+        if (statusLabel) {
+            statusLabel.textContent = autoplay ? "Loading from Spotify..." : "Ready in Spotify";
+        }
+
+        if (playPauseButton) {
+            playPauseButton.classList.toggle("is-playing", autoplay);
+        }
+
+        if (controller) {
+            if (embedHost) {
+                embedHost.style.minHeight = `${getEmbedHeight(track.uri)}px`;
+            }
+            controller.loadUri(track.uri, false, track.startAt);
+            if (autoplay) {
+                window.setTimeout(() => controller?.play(), 120);
+            }
+        }
+    };
+
+    const stepTrack = (delta: number) => {
+        if (tracks.length === 0 || activeIndex === -1) return;
+
+        for (let attempt = 1; attempt <= tracks.length; attempt += 1) {
+            const nextIndex = (activeIndex + delta * attempt + tracks.length) % tracks.length;
+            if (tracks[nextIndex]?.uri) {
+                selectTrack(nextIndex, true);
+                return;
+            }
+        }
+    };
+
+    if (tracks.length === 0 || activeIndex === -1 || !(embedHost instanceof HTMLElement)) {
+        if (statusLabel) statusLabel.textContent = "Add at least one valid Spotify link in data/favorites.toml";
+        setControlsDisabled(true);
+    } else {
+        setControlsDisabled(false);
+        syncMeta();
+        syncPlaybackLabels(tracks[activeIndex].startAt * 1000);
+
+        trackButtons.forEach((button) => {
+            const index = Number(button.dataset.trackIndex ?? "-1");
+            const track = tracks[index];
+            button.disabled = !track?.uri;
+
+            button.addEventListener("click", () => {
+                selectTrack(index, true);
+            });
+        });
+
+        previousButton?.addEventListener("click", () => stepTrack(-1));
+        nextButton?.addEventListener("click", () => stepTrack(1));
+
+        playPauseButton?.addEventListener("click", () => {
+            if (!controller) return;
+            controller.togglePlay();
+            if (statusLabel) statusLabel.textContent = "Syncing with Spotify...";
+        });
+
+        seekBar?.addEventListener("input", () => {
+            isSeeking = true;
+            const seekMs = Number(seekBar.value);
+            playbackPositionMs = seekMs;
+            playbackSyncedAt = performance.now();
+            syncSeekBar(seekMs);
+            if (elapsedLabel) elapsedLabel.textContent = formatTime(seekMs);
+            if (remainingLabel) remainingLabel.textContent = `-${formatTime(Math.max(durationMs - seekMs, 0))}`;
+        });
+
+        seekBar?.addEventListener("change", () => {
+            if (!controller || !seekBar) {
+                isSeeking = false;
+                return;
+            }
+            pendingSeekTargetMs = Number(seekBar.value);
+            pendingSeekIssuedAt = performance.now();
+            controller.seek(pendingSeekTargetMs / 1000);
+            isSeeking = false;
+            playbackPositionMs = pendingSeekTargetMs;
+            playbackSyncedAt = pendingSeekIssuedAt;
+            syncSeekBar(playbackPositionMs);
+            startProgressLoop();
+        });
+
+        const attachController = (api: SpotifyIframeAPI) => {
+            const initialTrack = tracks[activeIndex];
+            if (!initialTrack?.uri) return;
+
+            api.createController(
+                embedHost,
+                {
+                    height: getEmbedHeight(initialTrack.uri),
+                    uri: initialTrack.uri,
+                    width: "100%",
+                },
+                (embedController) => {
+                    controller = embedController;
+                    controller.loadUri(initialTrack.uri!, false, initialTrack.startAt);
+
+                    controller.addListener("playback_update", (event) => {
+                        const data = event.data;
+                        if (!data) return;
+
+                        const now = performance.now();
+                        const visualPositionMs = getVisualPlaybackPosition(now);
+                        const reportedIsPaused = data.isPaused ?? isPaused;
+                        const reportedPositionMs = data.position ?? playbackPositionMs;
+                        const backwardCorrectionMs = visualPositionMs - reportedPositionMs;
+                        const hasPendingSeek = pendingSeekTargetMs !== null && now - pendingSeekIssuedAt <= seekSettleWindowMs;
+                        const seekTargetMs = pendingSeekTargetMs ?? 0;
+                        const seekTargetGapMs = hasPendingSeek ? Math.abs(reportedPositionMs - seekTargetMs) : 0;
+                        const seekHasSettled = hasPendingSeek && seekTargetGapMs <= 450;
+
+                        durationMs = data.duration ?? durationMs;
+                        isPaused = reportedIsPaused;
+
+                        if (seekHasSettled) {
+                            pendingSeekTargetMs = null;
+                        }
+
+                        if (hasPendingSeek && !seekHasSettled) {
+                            playbackPositionMs = seekTargetMs;
+                        } else {
+                            playbackPositionMs = !reportedIsPaused
+                                && backwardCorrectionMs > 0
+                                && backwardCorrectionMs <= maxBackwardPlaybackCorrectionMs
+                                ? visualPositionMs
+                                : reportedPositionMs;
+                        }
+
+                        if (pendingSeekTargetMs !== null && now - pendingSeekIssuedAt > seekSettleWindowMs) {
+                            pendingSeekTargetMs = null;
+                        }
+                        playbackSyncedAt = now;
+
+                        if (playPauseButton) {
+                            playPauseButton.classList.toggle("is-playing", !isPaused);
+                        }
+
+                        if (statusLabel) {
+                            statusLabel.textContent = isPaused ? "Paused" : "Live on Spotify";
+                        }
+
+                        startProgressLoop();
+
+                        if (data.playingURI) {
+                            const playingIndex = tracks.findIndex((track) => track.uri === data.playingURI);
+                            if (playingIndex >= 0 && playingIndex !== activeIndex) {
+                                activeIndex = playingIndex;
+                                syncMeta();
+                            }
+                        }
+                    });
+                },
+            );
+        };
+
+        if (window.__spotifyIframeApi) {
+            attachController(window.__spotifyIframeApi);
+        } else {
+            window.addEventListener(
+                "spotify-iframe-api-ready",
+                () => {
+                    if (window.__spotifyIframeApi) {
+                        attachController(window.__spotifyIframeApi);
+                    }
+                },
+                { once: true },
+            );
+        }
+    }
 }
