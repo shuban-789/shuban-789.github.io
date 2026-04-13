@@ -22,8 +22,6 @@
 {{ if gt (len $configSongs) (len $songs) }}
     {{ $songs = $configSongs }}
 {{ end }}
-{{ $games := $favorites.games | default (slice) }}
-
 <section class="favorites-page">
     <section class="favorites-board">
         <section class="favorites-tile favorites-tile--player window-demo">
@@ -106,13 +104,6 @@
                 {{ end }}
             </div>
         </section>
-
-        {{ partial "helper/favorites-media-grid.html" (dict
-            "title" "Games"
-            "items" $games
-            "emptyKey" "games"
-            "emptyPath" "/favorites/games/cover.jpg"
-        ) }}
     </section>
 </section>
 

@@ -3569,10 +3569,12 @@ html[data-scheme="light-mode"] .homepage-content {
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
     gap: 20px;
-    align-items: start;
+    align-items: stretch;
 }
 
 .favorites-tile {
+    display: flex;
+    flex-direction: column;
     min-width: 0;
     overflow: hidden;
     border-radius: var(--card-border-radius);
@@ -3596,6 +3598,9 @@ html[data-scheme="light-mode"] .homepage-content {
 
 .favorites-tile__body {
     padding: 20px;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
 }
 
 .favorites-media-section {
@@ -3606,7 +3611,9 @@ html[data-scheme="light-mode"] .homepage-content {
 .spotify-player {
     position: relative;
     display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
     gap: 14px;
+    flex: 1;
 }
 
 .spotify-player__topline {
@@ -3634,7 +3641,9 @@ html[data-scheme="light-mode"] .homepage-content {
 
 .spotify-player__device {
     display: grid;
+    align-content: start;
     gap: 14px;
+    height: 100%;
     margin-inline: auto;
     padding: 16px;
     border-radius: 28px;

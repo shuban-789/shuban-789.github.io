@@ -48,3 +48,11 @@ start_at = 0
 [[songs]]
 spotify_url = "https://open.spotify.com/track/69jGxyfw3lzGGYf78jdkpF?si=ac37c0ff9a9e4d68"
 start_at = 0
+
+[[songs]]
+spotify_url = "https://open.spotify.com/track/2ff0Hy1uymLoiiHD1nmeOB?si=6bb64bcf934a4b64"
+start_at = 0
+
+[[songs]]
+spotify_url = "https://open.spotify.com/track/6Lph4zADq2K62XAjVaMWxR?si=0b8b107f8cc7491b"
+start_at = 0

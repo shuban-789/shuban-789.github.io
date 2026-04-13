@@ -1,5 +1,5 @@
 [meta]
-edit_note = "Add songs under [[songs]] and games under [[games]]."
+edit_note = "Add songs under [[songs]]."
 
 # Add one table per song.
 # `spotify_url` accepts either a full Spotify URL or a Spotify URI.
@@ -8,46 +8,8 @@ edit_note = "Add songs under [[songs]] and games under [[games]]."
 [[songs]]
 spotify_url = "https://open.spotify.com/track/68hjxmQouj1VRaUg8BHWAV?si=440dda2e57d74689"
 start_at = 0
-
-[[games]]
-title = "Super Smash Bros. Ultimate"
-image = "/favorites/games/ssbu.jpg"
-href = "https://www.nintendo.com/us/store/products/super-smash-bros-ultimate-switch/"
-summary = "Nintendo crossover fighter."
-position = "center center"
-
-[[games]]
-title = "Super Mario Odyssey"
-image = "/favorites/games/mario-odyssey.jpg"
-href = "https://www.nintendo.com/us/store/products/super-mario-odyssey-switch/"
-summary = "3D Mario platformer."
-position = "center center"
-
-[[games]]
-title = "The Legend of Zelda: Breath of the Wild"
-image = "/favorites/games/zelda-botw-new.jpg"
-href = "https://www.nintendo.com/us/store/products/the-legend-of-zelda-breath-of-the-wild-switch/"
-summary = "Open-world Zelda."
-position = "center 82%"
-
-[[games]]
-title = "Learn to Fly 3"
-image = "/favorites/games/learn-to-fly-3.jpg"
-href = "https://store.steampowered.com/app/589870/Learn_to_Fly_3/"
-summary = "Penguin launch game."
-position = "center center"
 #
 # Optional overrides if you ever want them:
 # title = "Song Title"
 # artist = "Artist Name"
 # artwork = "/favorites/songs/cover.jpg"
-
-# Add one table per game card.
-# Put the image file under `static/` and reference it from the site root.
-# Example image path: `/favorites/games/cover.jpg`
-#
-# [[games]]
-# title = "Game Title"
-# image = "/favorites/games/cover.jpg"
-# href = "https://example.com"
-# summary = "Optional short note."
