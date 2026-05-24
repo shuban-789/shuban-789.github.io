@@ -1,0 +1,29 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import FormattedDate from './FormattedDate.astro';
+import TagChip from './TagChip.astro';
+
+interface Props {
+	post: CollectionEntry<'blog'>;
+	featureLabel?: string;
+	compact?: boolean;
+}
+
+const { post, featureLabel = 'POST', compact = false } = Astro.props;
+---
+
+<article class:list={['post-card', 'panel', { compact }]}>
+	<a class="post-card__link" href={`/blog/${post.id}/`}>
+		<div class="post-card__meta">
+			<p class="eyebrow">{post.data.badge ?? featureLabel}</p>
+			<p class="micro-copy">
+				<FormattedDate date={post.data.pubDate} />
+			</p>
+		</div>
+		<h3>{post.data.title}</h3>
+		<p class="post-card__description">{post.data.description}</p>
+		<div class="tag-row">
+			{post.data.tags.map((tag) => <TagChip tag={tag} />)}
+		</div>
+	</a>
+</article>

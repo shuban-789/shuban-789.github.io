@@ -1,0 +1,16 @@
+---
+import { getCollection } from 'astro:content';
+import PostCard from '../../components/PostCard.astro';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { SITE_CONFIG } from '../../site.config';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+---
+
+<SiteLayout title={`${SITE_CONFIG.title} | Blog`} description="Blog posts">
+	<section class="post-list">
+		{posts.map((post) => <PostCard post={post} featureLabel="POST" />)}
+	</section>
+</SiteLayout>

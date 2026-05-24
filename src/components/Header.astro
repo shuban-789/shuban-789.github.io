@@ -1,0 +1,19 @@
+---
+import { SITE_CONFIG } from '../site.config';
+import HeaderLink from './HeaderLink.astro';
+---
+
+<header class="site-header">
+	<nav class="nav-panel panel" aria-label="Primary">
+		<a class="brand-lockup" href="/">
+			<span class="brand-title">{SITE_CONFIG.title}</span>
+		</a>
+		<div class="nav-links">
+			{
+				SITE_CONFIG.nav.map((item) => (
+					<HeaderLink href={item.href}>{item.label}</HeaderLink>
+				))
+			}
+		</div>
+	</nav>
+</header>

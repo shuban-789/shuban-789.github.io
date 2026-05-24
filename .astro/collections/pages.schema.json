@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "eyebrow": {
+      "type": "string"
+    },
+    "tagline": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    },
+    "$schema": {
+      "type": "string"
+    }
+  }
+}

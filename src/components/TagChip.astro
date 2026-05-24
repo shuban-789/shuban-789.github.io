@@ -1,0 +1,28 @@
+---
+interface Props {
+	tag: {
+		label: string;
+		color?: 'peach' | 'sky' | 'lavender' | 'sage' | 'gold' | 'rose';
+	};
+}
+
+const { tag } = Astro.props;
+
+const palette = {
+	peach: { bg: '#fff0e7', border: '#f4b28b', text: '#96512f' },
+	sky: { bg: '#eef8ff', border: '#8fbfe5', text: '#245b7d' },
+	lavender: { bg: '#f4efff', border: '#b8a2ef', text: '#58408d' },
+	sage: { bg: '#f0faee', border: '#9bc78d', text: '#3f6d37' },
+	gold: { bg: '#fff6cc', border: '#e0c46c', text: '#7d641a' },
+	rose: { bg: '#ffeaf1', border: '#e4a0b8', text: '#893954' },
+} as const;
+
+const colors = palette[tag.color ?? 'sky'];
+---
+
+<span
+	class="tag-chip"
+	style={`--tag-bg: ${colors.bg}; --tag-border: ${colors.border}; --tag-text: ${colors.text};`}
+>
+	{tag.label}
+</span>

@@ -1,0 +1,40 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import SiteLayout from './SiteLayout.astro';
+
+type Props = CollectionEntry<'pages'>['data'] & {
+	isHome?: boolean;
+};
+
+const { title, description, eyebrow, tagline, location, isHome = false } = Astro.props;
+const pageTitle = title?.trim() || undefined;
+const pageDescription = description?.trim() || undefined;
+const pageEyebrow = eyebrow?.trim() || undefined;
+const pageTagline = tagline?.trim() || undefined;
+const pageLocation = location?.trim() || undefined;
+---
+
+<SiteLayout title={pageTitle} description={pageDescription}>
+	{
+		isHome ? (
+			<section class="home-shell">
+				<article class="intro-panel panel">
+					{pageTitle && <h1>{pageTitle}</h1>}
+					{pageTagline && <p class="home-tagline">{pageTagline}</p>}
+					<div class="home-body">
+						<slot />
+					</div>
+					{pageLocation && <p class="home-location">{pageLocation}</p>}
+				</article>
+			</section>
+		) : (
+			<section class="simple-page panel">
+				{pageEyebrow && <p class="eyebrow">{pageEyebrow}</p>}
+				{pageTitle && <h1>{pageTitle}</h1>}
+				<div class="simple-page__body article-prose">
+					<slot />
+				</div>
+			</section>
+		)
+	}
+</SiteLayout>

@@ -1,0 +1,162 @@
+<!DOCTYPE html><html lang="en"> <head><!-- Global Metadata --><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#faf7f2"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" href="/favicon.ico"><link rel="sitemap" href="/sitemap-index.xml"><link rel="alternate" type="application/rss+xml" title="Shuban Pal" href="https://example.com/rss.xml"><meta name="generator" content="Astro v6.3.7"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"><!-- Canonical URL --><link rel="canonical" href="https://example.com/about/"><!-- Primary Meta Tags --><title>About</title><meta name="title" content="About"><meta name="description" content="About this site"><!-- Open Graph / Facebook --><meta property="og:type" content="website"><meta property="og:url" content="https://example.com/about/"><meta property="og:title" content="About"><meta property="og:description" content="About this site"><meta property="og:image" content="https://example.com/_astro/blog-placeholder-1.Bx0Zcyzv.jpg"><!-- Twitter --><meta property="twitter:card" content="summary_large_image"><meta property="twitter:url" content="https://example.com/about/"><meta property="twitter:title" content="About"><meta property="twitter:description" content="About this site"><meta property="twitter:image" content="https://example.com/_astro/blog-placeholder-1.Bx0Zcyzv.jpg"><link rel="stylesheet" href="/_astro/SiteLayout.DEQPrGj9.css"></head> <body class> <div class="site-background" aria-hidden="true" data-astro-transition-persist="astro-srsektdn-1"> <div class="site-background__wash"></div> <canvas class="site-background__canvas"></canvas> </div> <div class="page-frame"> <header class="site-header"> <nav class="nav-panel panel" aria-label="Primary"> <a class="brand-lockup" href="/"> <span class="brand-title">Shuban Pal</span> </a> <div class="nav-links"> <a href="/"> Home </a><a href="/blog"> Blog </a> </div> </nav> </header> <main class="page-content"> <section class="simple-page panel"> <p class="eyebrow">ABOUT</p> <h1>About</h1> <div class="simple-page__body article-prose">  <p>This page is markdown-backed too.</p>
+<p>Write a longer bio here, explain what you work on, or describe what this site is for.</p>  </div> </section> </main> <footer class="site-footer"></footer> </div> <script>(function(){const backgroundConfig = {"reach":118,"pointerReach":148,"nodeDensity":0.00014,"maxNodes":220,"velocity":0.3,"nodeOpacity":0.52,"lineOpacity":0.32,"pointerLineOpacity":0.52,"pointerNodeOpacity":0.44};
+
+			(() => {
+				if (window.__signalArrayBackgroundInitialized) return;
+				window.__signalArrayBackgroundInitialized = true;
+
+				const canvas = document.querySelector('.site-background__canvas');
+				if (!(canvas instanceof HTMLCanvasElement)) return;
+
+				const context = canvas.getContext('2d');
+				if (!context) return;
+
+				const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+				const pointer = {
+					x: 0,
+					y: 0,
+					targetX: 0,
+					targetY: 0,
+					active: false,
+					strength: 0,
+				};
+
+				let width = 0;
+				let height = 0;
+				let dpr = 1;
+				let nodes = [];
+				let frameId = 0;
+
+				const reach = backgroundConfig.reach;
+				const pointerReach = backgroundConfig.pointerReach;
+				const nodeDensity = backgroundConfig.nodeDensity;
+				const maxNodes = backgroundConfig.maxNodes;
+				const velocity = backgroundConfig.velocity;
+				const nodeOpacity = backgroundConfig.nodeOpacity;
+				const lineOpacity = backgroundConfig.lineOpacity;
+				const pointerLineOpacity = backgroundConfig.pointerLineOpacity;
+				const pointerNodeOpacity = backgroundConfig.pointerNodeOpacity;
+
+				const createNode = () => ({
+					x: Math.random() * width,
+					y: Math.random() * height,
+					vx: (Math.random() - 0.5) * velocity,
+					vy: (Math.random() - 0.5) * velocity,
+					radius: 1 + Math.random() * 0.85,
+				});
+
+				const rebuildNodes = () => {
+					const count = Math.min(maxNodes, Math.max(38, Math.round(width * height * nodeDensity)));
+					nodes = Array.from({ length: count }, () => createNode());
+				};
+
+				const resize = () => {
+					width = Math.max(320, Math.floor(window.innerWidth));
+					height = Math.max(260, Math.floor(window.innerHeight));
+					dpr = Math.min(window.devicePixelRatio || 1, 2);
+					canvas.width = Math.round(width * dpr);
+					canvas.height = Math.round(height * dpr);
+					canvas.style.width = `${width}px`;
+					canvas.style.height = `${height}px`;
+					context.setTransform(dpr, 0, 0, dpr, 0, 0);
+					rebuildNodes();
+				};
+
+				const onPointerMove = (event) => {
+					pointer.targetX = event.clientX;
+					pointer.targetY = event.clientY;
+					if (!pointer.active) {
+						pointer.x = event.clientX;
+						pointer.y = event.clientY;
+					}
+					pointer.active = true;
+				};
+
+				const onPointerLeave = () => {
+					pointer.active = false;
+				};
+
+				const draw = () => {
+					frameId = window.requestAnimationFrame(draw);
+					context.clearRect(0, 0, width, height);
+
+					const easing = mediaQuery.matches ? 1 : 0.24;
+					pointer.x += (pointer.targetX - pointer.x) * easing;
+					pointer.y += (pointer.targetY - pointer.y) * easing;
+					pointer.strength += ((pointer.active ? 1 : 0) - pointer.strength) * 0.14;
+
+					for (let i = 0; i < nodes.length; i += 1) {
+						const node = nodes[i];
+						if (!mediaQuery.matches) {
+							node.x += node.vx;
+							node.y += node.vy;
+
+							if (node.x < -12) node.x = width + 12;
+							if (node.x > width + 12) node.x = -12;
+							if (node.y < -12) node.y = height + 12;
+							if (node.y > height + 12) node.y = -12;
+						}
+
+						context.beginPath();
+						context.fillStyle = `rgba(33, 70, 111, ${nodeOpacity})`;
+						context.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+						context.fill();
+
+						for (let j = i + 1; j < nodes.length; j += 1) {
+							const neighbor = nodes[j];
+							const dx = neighbor.x - node.x;
+							const dy = neighbor.y - node.y;
+							const distance = Math.hypot(dx, dy);
+							if (distance > reach) continue;
+
+							const lineAlpha = (1 - distance / reach) * lineOpacity;
+							context.beginPath();
+							context.moveTo(node.x, node.y);
+							context.lineTo(neighbor.x, neighbor.y);
+							context.strokeStyle = `rgba(33, 70, 111, ${lineAlpha})`;
+							context.lineWidth = 0.75;
+							context.stroke();
+						}
+
+						if (pointer.strength < 0.02) continue;
+
+						const pointerDx = pointer.x - node.x;
+						const pointerDy = pointer.y - node.y;
+						const pointerDistance = Math.hypot(pointerDx, pointerDy);
+						if (pointerDistance > pointerReach) continue;
+
+						const pointerAlpha =
+							(1 - pointerDistance / pointerReach) * pointerLineOpacity * pointer.strength;
+						context.beginPath();
+						context.moveTo(node.x, node.y);
+						context.lineTo(pointer.x, pointer.y);
+						context.strokeStyle = `rgba(33, 70, 111, ${pointerAlpha})`;
+						context.lineWidth = 0.9;
+						context.stroke();
+
+						context.beginPath();
+						context.fillStyle = `rgba(33, 70, 111, ${pointerNodeOpacity * pointer.strength})`;
+						context.arc(node.x, node.y, node.radius + 0.45, 0, Math.PI * 2);
+						context.fill();
+					}
+				};
+
+				window.addEventListener('resize', resize);
+				window.addEventListener('pointermove', onPointerMove, { passive: true });
+				window.addEventListener('pointerleave', onPointerLeave);
+
+				resize();
+				draw();
+
+				window.addEventListener(
+					'beforeunload',
+					() => {
+						window.cancelAnimationFrame(frameId);
+						window.removeEventListener('resize', resize);
+						window.removeEventListener('pointermove', onPointerMove);
+						window.removeEventListener('pointerleave', onPointerLeave);
+					},
+					{ once: true },
+				);
+			})();
+		})();</script> </body> </html>
