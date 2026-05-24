@@ -16,6 +16,7 @@
 		0 24px 56px rgba(0, 0, 0, 0.05);
 	--radius: 20px;
 	--radius-sm: 14px;
+	--radius-chip: 10px;
 	--content-width: min(980px, calc(100vw - 32px));
 	--font-display: 'Space Grotesk', 'Segoe UI', sans-serif;
 	--font-body: 'Manrope', 'Segoe UI', sans-serif;
@@ -513,7 +514,7 @@ pre.astro-code span {
 	align-items: center;
 	padding: 0.36rem 0.62rem;
 	border: 1px solid var(--tag-border);
-	border-radius: var(--radius-sm);
+	border-radius: var(--radius-chip);
 	background: var(--tag-bg);
 	color: var(--tag-text);
 	font-size: 0.71rem;
