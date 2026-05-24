@@ -4,8 +4,8 @@ export const BACKGROUND_CONFIG = {
 	nodeDensity: 0.00014,
 	maxNodes: 220,
 	velocity: 0.3,
-	nodeOpacity: 0.52,
-	lineOpacity: 0.32,
-	pointerLineOpacity: 0.52,
-	pointerNodeOpacity: 0.44,
+	nodeOpacity: 1,
+	lineOpacity: 0.58,
+	pointerLineOpacity: 0.84,
+	pointerNodeOpacity: 1,
 };
