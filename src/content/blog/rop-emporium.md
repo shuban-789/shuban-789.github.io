@@ -1,7 +1,7 @@
 ---
 title: 'ROP Emporium'
 description: 'My solutions for all x86_64 binary exploitation puzzles'
-pubDate: 2026-05-18
+pubDate: 2025-06-02
 updatedDate: 2026-05-20
 badge: 'CAPTURE THE FLAG'
 tags:
@@ -9,7 +9,7 @@ tags:
     color: 'rose'
 ---
 
-## Chall 1: ret2win
+## Challenge 1: ret2win
 
 ```py
 from pwn import *
@@ -23,7 +23,7 @@ io.sendline(payload)
 io.interactive()
 ```
 
-## Chall 2: split
+## Challenge 2: split
 
 ```py
 #!/usr/bin/python3
@@ -47,7 +47,7 @@ io.interactive()
 
 ```
 
-## Chall 3: callme
+## Challenge 3: callme
 
 ```py
 from pwn import *
@@ -80,7 +80,7 @@ io.sendline(payload)
 io.interactive()
 ```
 
-## Chall 4: write4
+## Challenge 4: write4
 
 ```py
 from pwn import *
@@ -111,7 +111,7 @@ io.sendline(payload)
 io.interactive()
 ```
 
-## Chall 5: badchars
+## Challenge 5: badchars
 
 ```py
 from pwn import *
@@ -161,7 +161,7 @@ io.sendline(payload)
 io.interactive()
 ```
 
-## Chall 6: fluff
+## Challenge 6: fluff
 
 ```py
 #!/usr/bin/python3
@@ -255,7 +255,7 @@ io.sendline(payload)
 io.interactive()
 ```
 
-## Chall 7: pivot
+## Challenge 7: pivot
 
 ```py
 from pwn import *
@@ -310,7 +310,7 @@ io.sendline(pivot_payload)
 io.interactive()
 ```
 
-## Chall 8: ret2csu
+## Challenge 8: ret2csu
 
 ```py
 from pwn import *

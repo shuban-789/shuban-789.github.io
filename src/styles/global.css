@@ -1,3 +1,5 @@
+@import 'katex/dist/katex.min.css';
+
 :root {
 	--paper: #ffffff;
 	--paper-strong: #ffffff;
@@ -95,6 +97,12 @@ blockquote {
 	border-left: 3px solid var(--accent);
 	color: var(--ink-soft);
 	font-size: 1.05rem;
+}
+
+.katex-display {
+	overflow-x: auto;
+	overflow-y: hidden;
+	padding: 0.25rem 0;
 }
 
 hr {
