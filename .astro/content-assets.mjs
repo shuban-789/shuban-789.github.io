@@ -1,10 +1,1 @@
-
-import __ASTRO_IMAGE_IMPORT_ZQmv8Y from "image-1.png?astroContentImageFlag=&importer=src%2Fcontent%2Fblog%2Fbio-inspired-cryptography.md";
-import __ASTRO_IMAGE_IMPORT_Z1L25Tt from "image-3.png?astroContentImageFlag=&importer=src%2Fcontent%2Fblog%2Fbio-inspired-cryptography.md";
-import __ASTRO_IMAGE_IMPORT_Z2dQShI from "image-4.png?astroContentImageFlag=&importer=src%2Fcontent%2Fblog%2Fbio-inspired-cryptography.md";
-import __ASTRO_IMAGE_IMPORT_2ous8X from "image-5.png?astroContentImageFlag=&importer=src%2Fcontent%2Fblog%2Fbio-inspired-cryptography.md";
-import __ASTRO_IMAGE_IMPORT_1VEEKI from "image-6.png?astroContentImageFlag=&importer=src%2Fcontent%2Fblog%2Fbio-inspired-cryptography.md";
-import __ASTRO_IMAGE_IMPORT_12050e from "image-8.png?astroContentImageFlag=&importer=src%2Fcontent%2Fblog%2Fbio-inspired-cryptography.md";
-import __ASTRO_IMAGE_IMPORT_ZnaMg8 from "image.png?astroContentImageFlag=&importer=src%2Fcontent%2Fblog%2Fbio-inspired-cryptography.md";
-export default new Map([["image-1.png?astroContentImageFlag=&importer=src%2Fcontent%2Fblog%2Fbio-inspired-cryptography.md", __ASTRO_IMAGE_IMPORT_ZQmv8Y], ["image-3.png?astroContentImageFlag=&importer=src%2Fcontent%2Fblog%2Fbio-inspired-cryptography.md", __ASTRO_IMAGE_IMPORT_Z1L25Tt], ["image-4.png?astroContentImageFlag=&importer=src%2Fcontent%2Fblog%2Fbio-inspired-cryptography.md", __ASTRO_IMAGE_IMPORT_Z2dQShI], ["image-5.png?astroContentImageFlag=&importer=src%2Fcontent%2Fblog%2Fbio-inspired-cryptography.md", __ASTRO_IMAGE_IMPORT_2ous8X], ["image-6.png?astroContentImageFlag=&importer=src%2Fcontent%2Fblog%2Fbio-inspired-cryptography.md", __ASTRO_IMAGE_IMPORT_1VEEKI], ["image-8.png?astroContentImageFlag=&importer=src%2Fcontent%2Fblog%2Fbio-inspired-cryptography.md", __ASTRO_IMAGE_IMPORT_12050e], ["image.png?astroContentImageFlag=&importer=src%2Fcontent%2Fblog%2Fbio-inspired-cryptography.md", __ASTRO_IMAGE_IMPORT_ZnaMg8]]);
-		
+export default new Map();

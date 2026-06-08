@@ -11,6 +11,6 @@ const posts = (await getCollection('blog')).sort(
 
 <SiteLayout title={`${SITE_CONFIG.title} | Blog`} description="Blog posts">
 	<section class="post-list">
-		{posts.map((post) => <PostCard post={post} featureLabel="POST" />)}
+		{posts.map((post) => <PostCard post={post} />)}
 	</section>
 </SiteLayout>

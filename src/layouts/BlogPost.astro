@@ -1,37 +1,21 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import FormattedDate from '../components/FormattedDate.astro';
 import TagChip from '../components/TagChip.astro';
 import SiteLayout from './SiteLayout.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
 
-const { title, description, pubDate, updatedDate, tags } = Astro.props;
+const { title, description, tags } = Astro.props;
 ---
 
 <SiteLayout title={title} description={description}>
 	<article class="article-shell">
 		<section class="article-hero panel">
 			<div class="article-hero__copy">
-				<p class="eyebrow">BLOG POST</p>
-				<div class="tag-row">
-					{tags.map((tag) => <TagChip tag={tag} />)}
-				</div>
 				<h1>{title}</h1>
 				<p class="article-description">{description}</p>
-			</div>
-			<div class="article-hero__stats">
-				<div class="article-stat">
-					<span>Published</span>
-					<strong><FormattedDate date={pubDate} /></strong>
-				</div>
-				<div class="article-stat">
-					<span>Updated</span>
-					<strong>{updatedDate ? <FormattedDate date={updatedDate} /> : 'Original issue'}</strong>
-				</div>
-				<div class="article-stat">
-					<span>Format</span>
-					<strong>Markdown route</strong>
+				<div class="tag-row">
+					{tags.map((tag) => <TagChip tag={tag} />)}
 				</div>
 			</div>
 		</section>
