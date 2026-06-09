@@ -2,8 +2,10 @@ public/*
 !public/.nojekyll
 !public/apple-touch-icon.png
 !public/favicon.ico
+!public/favicon.png
 !public/favicon-32x32.png
 !public/favicon.svg
+!public/og-image.jpg
 !public/fonts/
 !public/fonts/comico/
 !public/fonts/comico/Comico-Regular.woff

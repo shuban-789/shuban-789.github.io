@@ -16,35 +16,4 @@ import HeaderLink from './HeaderLink.astro';
 			}
 		</div>
 	</nav>
-	<script>
-		import { annotate } from 'rough-notation';
-
-		const setupNavAnnotations = () => {
-			const nav = document.querySelector('.nav-links');
-			if (!nav || nav.dataset.navAnnotationsReady === 'true') {
-				return;
-			}
-
-			nav.dataset.navAnnotationsReady = 'true';
-			const links = Array.from(nav.querySelectorAll('[data-nav-link].active'));
-
-			for (const link of links) {
-				const annotation = annotate(link, {
-					type: 'circle',
-					color: '#111111',
-					padding: [1, 2, 1, 2],
-					strokeWidth: 1.55,
-					iterations: 2,
-					animationDuration: 420,
-					animate: true,
-				});
-
-				requestAnimationFrame(() => {
-					annotation.show();
-				});
-			}
-		};
-
-		setupNavAnnotations();
-	</script>
 </header>

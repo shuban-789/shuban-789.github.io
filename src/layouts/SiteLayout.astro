@@ -1,5 +1,4 @@
 ---
-import type { ImageMetadata } from 'astro';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
@@ -8,7 +7,7 @@ import { SITE_CONFIG } from '../site.config';
 interface Props {
 	title?: string;
 	description?: string;
-	image?: ImageMetadata;
+	image?: string;
 	pageClass?: string;
 }
 
@@ -33,17 +32,14 @@ const pageDescription = description?.trim() || SITE_CONFIG.description;
 		<script>
 			import { annotate } from 'rough-notation';
 
-			const linkHighlightConfig = {
-				type: 'highlight',
-				color: 'rgba(255, 230, 92, 0.78)',
-				multiline: true,
-				animationDuration: 800,
-				animate: true,
-			};
-
+			const annotations = [];
 			const linkHighlightSelector =
 				'.article-prose a, .home-body a, .article-description a, .page-links a, .home-tagline a, .home-location a';
+			const navAnnotationSelector = '.nav-links [data-nav-link].active';
 			const inlineHighlightParents = new Set(['STRONG', 'B', 'EM', 'I']);
+			let resizeTimer;
+			let fontsRefreshComplete = false;
+			const initialFontsLoaded = document.fonts?.status === 'loaded';
 
 			const getHighlightHost = (link) => {
 				const parent = link.parentElement;
@@ -58,61 +54,51 @@ const pageDescription = description?.trim() || SITE_CONFIG.description;
 				return link;
 			};
 
-			const extractTrailingPunctuation = (host) => {
-				const nextNode = host.nextSibling;
-				if (!nextNode || nextNode.nodeType !== Node.TEXT_NODE) {
-					return '';
+			const clearDetachedAnnotationNodes = () => {
+				for (const node of document.querySelectorAll('.rough-annotation')) {
+					node.remove();
 				}
-
-				const value = nextNode.textContent ?? '';
-				const match = value.match(/^([,.;:!?)\]}"'`]+)(.*)$/);
-				if (!match) {
-					return '';
-				}
-
-				nextNode.textContent = match[2];
-				return match[1];
 			};
 
-			const createHighlightTarget = (link) => {
-				const existing = link.closest('[data-highlight-target]');
-				if (existing) {
-					return existing;
+			const clearAnnotations = () => {
+				for (const annotation of annotations.splice(0)) {
+					annotation.remove();
 				}
 
-				const host = getHighlightHost(link);
-				const punctuation = extractTrailingPunctuation(host);
-				if (!punctuation) {
-					return host;
-				}
-
-				const wrapper = document.createElement('span');
-				const punctuationSpan = document.createElement('span');
-
-				wrapper.dataset.highlightTarget = 'true';
-				wrapper.style.display = 'inline';
-				punctuationSpan.textContent = punctuation;
-				punctuationSpan.style.fontWeight = getComputedStyle(host).fontWeight;
-
-				host.parentNode?.insertBefore(wrapper, host);
-				wrapper.appendChild(host);
-				wrapper.appendChild(punctuationSpan);
-
-				return wrapper;
+				clearDetachedAnnotationNodes();
 			};
 
-			const setupLinkHighlights = () => {
-				const body = document.body;
-				if (!body || body.dataset.linkHighlightsReady === 'true') {
-					return;
+			const renderAnnotations = (animate) => {
+				clearAnnotations();
+
+				const navLinks = Array.from(document.querySelectorAll(navAnnotationSelector));
+				const highlightLinks = Array.from(document.querySelectorAll(linkHighlightSelector));
+
+				for (const link of navLinks) {
+					annotations.push(
+						annotate(link, {
+							type: 'circle',
+							color: '#111111',
+							padding: [1, 2, 1, 2],
+							strokeWidth: 1.55,
+							iterations: 2,
+							animationDuration: 420,
+							animate,
+						}),
+					);
 				}
 
-				body.dataset.linkHighlightsReady = 'true';
-
-				const links = Array.from(document.querySelectorAll(linkHighlightSelector));
-				const annotations = links.map((link) =>
-					annotate(createHighlightTarget(link), linkHighlightConfig),
-				);
+				for (const link of highlightLinks) {
+					annotations.push(
+						annotate(getHighlightHost(link), {
+							type: 'highlight',
+							color: 'rgba(255, 230, 92, 0.78)',
+							multiline: true,
+							animationDuration: 800,
+							animate,
+						}),
+					);
+				}
 
 				requestAnimationFrame(() => {
 					for (const annotation of annotations) {
@@ -121,22 +107,38 @@ const pageDescription = description?.trim() || SITE_CONFIG.description;
 				});
 			};
 
-			const startLinkHighlights = () => {
-				if (document.fonts?.ready) {
-					document.fonts.ready.then(() => {
-						setupLinkHighlights();
-					});
+			const handleResize = () => {
+				window.clearTimeout(resizeTimer);
+				resizeTimer = window.setTimeout(() => {
+					renderAnnotations(false);
+				}, 120);
+			};
+
+			requestAnimationFrame(() => {
+				requestAnimationFrame(() => {
+					renderAnnotations(true);
+				});
+			});
+
+			if (document.fonts?.ready && !initialFontsLoaded) {
+				document.fonts.ready.then(() => {
+					if (fontsRefreshComplete) {
+						return;
+					}
+
+					fontsRefreshComplete = true;
+					renderAnnotations(false);
+				});
+			}
+
+			window.addEventListener('resize', handleResize);
+			window.addEventListener('pageshow', (event) => {
+				if (!event.persisted) {
 					return;
 				}
 
-				setupLinkHighlights();
-			};
-
-			if (document.readyState === 'complete') {
-				startLinkHighlights();
-			} else {
-				window.addEventListener('load', startLinkHighlights, { once: true });
-			}
+				renderAnnotations(false);
+			});
 		</script>
 	</body>
 </html>

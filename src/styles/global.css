@@ -138,7 +138,7 @@ hr {
 
 .panel {
 	background: rgba(255, 255, 255, 0.97);
-	border: 1px solid var(--line);
+	border: 2px solid var(--ink);
 	border-radius: var(--radius);
 	box-shadow: var(--shadow);
 }
@@ -208,6 +208,10 @@ hr {
 
 .nav-links .rough-annotation {
 	z-index: 0;
+}
+
+.rough-annotation {
+	pointer-events: none;
 }
 
 .nav-links a:hover,
@@ -440,7 +444,7 @@ pre.astro-code span {
 	display: inline-flex;
 	align-items: center;
 	padding: 0.36rem 0.62rem;
-	border: 1px solid var(--tag-border);
+	border: 2px solid var(--tag-border);
 	border-radius: var(--radius-chip);
 	background: var(--tag-bg);
 	color: var(--tag-text);

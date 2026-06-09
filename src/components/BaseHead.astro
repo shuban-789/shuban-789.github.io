@@ -1,13 +1,11 @@
 ---
 import '../styles/global.css';
-import type { ImageMetadata } from 'astro';
-import FallbackImage from '../assets/blog-placeholder-1.jpg';
 import { SITE_CONFIG } from '../site.config';
 
 interface Props {
 	title: string;
 	description: string;
-	image?: ImageMetadata;
+	image?: string;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -16,18 +14,24 @@ const comicoWoff2 = `${basePath}fonts/comico/Comico-Regular.woff2`;
 const comicoWoff = `${basePath}fonts/comico/Comico-Regular.woff`;
 const kalamWoff2 = `${basePath}fonts/kalam/Kalam-Regular.woff2`;
 const kalamWoff = `${basePath}fonts/kalam/Kalam-Regular.woff`;
+const defaultSocialImagePath = `${basePath}og-image.jpg`;
 
-const { title, description, image = FallbackImage } = Astro.props;
+const { title, description, image } = Astro.props;
+const socialImagePath = image?.trim() || defaultSocialImagePath;
+const socialImageURL = /^https?:\/\//.test(socialImagePath)
+	? socialImagePath
+	: new URL(socialImagePath, Astro.site).toString();
+const canonicalURLString = canonicalURL.toString();
 ---
 
 <!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="theme-color" content="#faf7f2" />
-<link rel="icon" type="image/png" href="/favicon.png?v=2" />
-<link rel="shortcut icon" href="/favicon.png?v=2" />
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon.png?v=2" />
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2" />
+<link rel="icon" type="image/png" href="/favicon.png?v=5" />
+<link rel="shortcut icon" href="/favicon.ico?v=5" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=5" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=5" />
 <link rel="sitemap" href="/sitemap-index.xml" />
 <link
 	rel="alternate"
@@ -82,14 +86,17 @@ const { title, description, image = FallbackImage } = Astro.props;
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website" />
-<meta property="og:url" content={Astro.url} />
+<meta property="og:site_name" content={SITE_CONFIG.title} />
+<meta property="og:url" content={canonicalURLString} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={new URL(image.src, Astro.url)} />
+<meta property="og:image" content={socialImageURL} />
+<meta property="og:image:alt" content={title} />
 
 <!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={Astro.url} />
-<meta property="twitter:title" content={title} />
-<meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={new URL(image.src, Astro.url)} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={canonicalURLString} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={socialImageURL} />
+<meta name="twitter:image:alt" content={title} />
