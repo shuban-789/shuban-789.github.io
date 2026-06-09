@@ -35,11 +35,13 @@ import HeaderLink from './HeaderLink.astro';
 					padding: [1, 2, 1, 2],
 					strokeWidth: 1.55,
 					iterations: 2,
-					animationDuration: 0,
-					animate: false,
+					animationDuration: 420,
+					animate: true,
 				});
 
-				annotation.show();
+				requestAnimationFrame(() => {
+					annotation.show();
+				});
 			}
 		};
 

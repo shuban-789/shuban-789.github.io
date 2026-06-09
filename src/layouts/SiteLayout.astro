@@ -30,5 +30,113 @@ const pageDescription = description?.trim() || SITE_CONFIG.description;
 			</main>
 			<Footer />
 		</div>
+		<script>
+			import { annotate } from 'rough-notation';
+
+			const linkHighlightConfig = {
+				type: 'highlight',
+				color: 'rgba(255, 230, 92, 0.78)',
+				multiline: true,
+				animationDuration: 800,
+				animate: true,
+			};
+
+			const linkHighlightSelector =
+				'.article-prose a, .home-body a, .article-description a, .page-links a, .home-tagline a, .home-location a';
+			const inlineHighlightParents = new Set(['STRONG', 'B', 'EM', 'I']);
+
+			const getHighlightHost = (link) => {
+				const parent = link.parentElement;
+				if (
+					parent &&
+					inlineHighlightParents.has(parent.tagName) &&
+					parent.childNodes.length === 1
+				) {
+					return parent;
+				}
+
+				return link;
+			};
+
+			const extractTrailingPunctuation = (host) => {
+				const nextNode = host.nextSibling;
+				if (!nextNode || nextNode.nodeType !== Node.TEXT_NODE) {
+					return '';
+				}
+
+				const value = nextNode.textContent ?? '';
+				const match = value.match(/^([,.;:!?)\]}"'`]+)(.*)$/);
+				if (!match) {
+					return '';
+				}
+
+				nextNode.textContent = match[2];
+				return match[1];
+			};
+
+			const createHighlightTarget = (link) => {
+				const existing = link.closest('[data-highlight-target]');
+				if (existing) {
+					return existing;
+				}
+
+				const host = getHighlightHost(link);
+				const punctuation = extractTrailingPunctuation(host);
+				if (!punctuation) {
+					return host;
+				}
+
+				const wrapper = document.createElement('span');
+				const punctuationSpan = document.createElement('span');
+
+				wrapper.dataset.highlightTarget = 'true';
+				wrapper.style.display = 'inline';
+				punctuationSpan.textContent = punctuation;
+				punctuationSpan.style.fontWeight = getComputedStyle(host).fontWeight;
+
+				host.parentNode?.insertBefore(wrapper, host);
+				wrapper.appendChild(host);
+				wrapper.appendChild(punctuationSpan);
+
+				return wrapper;
+			};
+
+			const setupLinkHighlights = () => {
+				const body = document.body;
+				if (!body || body.dataset.linkHighlightsReady === 'true') {
+					return;
+				}
+
+				body.dataset.linkHighlightsReady = 'true';
+
+				const links = Array.from(document.querySelectorAll(linkHighlightSelector));
+				const annotations = links.map((link) =>
+					annotate(createHighlightTarget(link), linkHighlightConfig),
+				);
+
+				requestAnimationFrame(() => {
+					for (const annotation of annotations) {
+						annotation.show();
+					}
+				});
+			};
+
+			const startLinkHighlights = () => {
+				if (document.fonts?.ready) {
+					document.fonts.ready.then(() => {
+						setupLinkHighlights();
+					});
+					return;
+				}
+
+				setupLinkHighlights();
+			};
+
+			if (document.readyState === 'complete') {
+				startLinkHighlights();
+			} else {
+				window.addEventListener('load', startLinkHighlights, { once: true });
+			}
+		</script>
 	</body>
 </html>

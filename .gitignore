@@ -8,6 +8,9 @@ public/*
 !public/fonts/comico/
 !public/fonts/comico/Comico-Regular.woff
 !public/fonts/comico/Comico-Regular.woff2
+!public/fonts/kalam/
+!public/fonts/kalam/Kalam-Regular.woff
+!public/fonts/kalam/Kalam-Regular.woff2
 resources
 .hugo_build.lock
 STYLE_EDIT_MAP.local.md
