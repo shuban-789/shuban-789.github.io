@@ -1,15 +1,5 @@
 @import 'katex/dist/katex.min.css';
 
-@font-face {
-	font-family: 'Comico';
-	src:
-		url('/fonts/comico/Comico-Regular.woff2') format('woff2'),
-		url('/fonts/comico/Comico-Regular.woff') format('woff');
-	font-weight: 400;
-	font-style: normal;
-	font-display: swap;
-}
-
 :root {
 	--paper: #ffffff;
 	--paper-strong: #ffffff;
@@ -333,8 +323,7 @@ p {
 }
 
 .button:hover,
-.link-panel:hover,
-.post-card:hover {
+.link-panel:hover {
 	transform: translateY(-2px);
 	box-shadow: var(--shadow-hover);
 }
@@ -450,12 +439,6 @@ pre.astro-code code {
 pre.astro-code span {
 	color: var(--ink) !important;
 	font-family: var(--font-display) !important;
-}
-
-.post-card {
-	transition:
-		transform 180ms ease,
-		box-shadow 180ms ease;
 }
 
 .post-card__link {

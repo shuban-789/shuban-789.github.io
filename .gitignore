@@ -4,6 +4,10 @@ public/*
 !public/favicon.ico
 !public/favicon-32x32.png
 !public/favicon.svg
+!public/fonts/
+!public/fonts/comico/
+!public/fonts/comico/Comico-Regular.woff
+!public/fonts/comico/Comico-Regular.woff2
 resources
 .hugo_build.lock
 STYLE_EDIT_MAP.local.md

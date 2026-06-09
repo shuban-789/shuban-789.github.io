@@ -4,7 +4,7 @@ description: Home page
 
 ## Hi, I'm Shuban
 
-I'm an incoming first-year at the Georgia Institute of Technology majoring in computer science. I build systems and technical projects centered around robotics, computer vision, and low-level computing. 
+I'm an incoming first-year at the **[Georgia Institute of Technology](https://www.gatech.edu/)** majoring in computer science. I build systems and technical projects centered around robotics, computer security, and low-level computing. 
 
 In my free time, I participate in various cs/engineering competitions particularly in fields like cybersecurity and robotics. That said, most of my writeups on this website cover **[CTFs](https://en.wikipedia.org/wiki/Capture_the_flag_(cybersecurity))**, "Capture The Flag" style cybersecurity competitions, I participate in with my team **[Cosmic Bit Flip](https://ctftime.org/team/372043)**.
 
