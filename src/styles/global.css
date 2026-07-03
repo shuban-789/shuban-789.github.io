@@ -212,6 +212,27 @@ hr {
 
 .rough-annotation {
 	pointer-events: none;
+	z-index: 0;
+}
+
+.annotation-highlight-context {
+	position: relative;
+	z-index: 0;
+	isolation: isolate;
+}
+
+.annotation-highlight-context > .rough-annotation {
+	z-index: -1 !important;
+}
+
+.annotation-highlight-host {
+	position: relative;
+	z-index: 1;
+}
+
+.annotation-highlight-host > * {
+	position: relative;
+	z-index: 1;
 }
 
 .nav-links a:hover,

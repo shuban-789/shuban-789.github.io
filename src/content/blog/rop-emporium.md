@@ -7,6 +7,8 @@ badge: 'CAPTURE THE FLAG'
 tags:
   - label: 'Binary Exploitation'
     color: 'rose'
+  - label: 'CTF'
+    color: 'sage'
 ---
 
 ## Challenge 1: ret2win

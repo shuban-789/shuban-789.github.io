@@ -37,9 +37,18 @@ const pageDescription = description?.trim() || SITE_CONFIG.description;
 				'.article-prose a, .home-body a, .article-description a, .page-links a, .home-tagline a, .home-location a';
 			const navAnnotationSelector = '.nav-links [data-nav-link].active';
 			const inlineHighlightParents = new Set(['STRONG', 'B', 'EM', 'I']);
-			let resizeTimer;
-			let fontsRefreshComplete = false;
-			const initialFontsLoaded = document.fonts?.status === 'loaded';
+			const highlightColor = '#bfdbf2';
+			let initRunId = 0;
+
+			const nextFrame = () =>
+				new Promise((resolve) => {
+					requestAnimationFrame(() => resolve());
+				});
+
+			const wait = (ms) =>
+				new Promise((resolve) => {
+					window.setTimeout(resolve, ms);
+				});
 
 			const getHighlightHost = (link) => {
 				const parent = link.parentElement;
@@ -54,6 +63,23 @@ const pageDescription = description?.trim() || SITE_CONFIG.description;
 				return link;
 			};
 
+			const prepareHighlightHost = (link) => {
+				const host = getHighlightHost(link);
+				host.parentElement?.classList.add('annotation-highlight-context');
+				host.classList.add('annotation-highlight-host');
+				return host;
+			};
+
+			const clearHighlightMarkers = () => {
+				for (const node of document.querySelectorAll('.annotation-highlight-host')) {
+					node.classList.remove('annotation-highlight-host');
+				}
+
+				for (const node of document.querySelectorAll('.annotation-highlight-context')) {
+					node.classList.remove('annotation-highlight-context');
+				}
+			};
+
 			const clearDetachedAnnotationNodes = () => {
 				for (const node of document.querySelectorAll('.rough-annotation')) {
 					node.remove();
@@ -66,10 +92,13 @@ const pageDescription = description?.trim() || SITE_CONFIG.description;
 				}
 
 				clearDetachedAnnotationNodes();
+				clearHighlightMarkers();
 			};
 
-			const renderAnnotations = (animate) => {
-				clearAnnotations();
+			const buildAnnotations = () => {
+				if (annotations.length > 0) {
+					return;
+				}
 
 				const navLinks = Array.from(document.querySelectorAll(navAnnotationSelector));
 				const highlightLinks = Array.from(document.querySelectorAll(linkHighlightSelector));
@@ -83,62 +112,135 @@ const pageDescription = description?.trim() || SITE_CONFIG.description;
 							strokeWidth: 1.55,
 							iterations: 2,
 							animationDuration: 420,
-							animate,
+							animate: true,
 						}),
 					);
 				}
 
 				for (const link of highlightLinks) {
 					annotations.push(
-						annotate(getHighlightHost(link), {
+						annotate(prepareHighlightHost(link), {
 							type: 'highlight',
-							color: 'rgba(255, 230, 92, 0.78)',
+							color: highlightColor,
 							multiline: true,
 							animationDuration: 800,
-							animate,
+							animate: true,
 						}),
 					);
 				}
+			};
+
+			const showAnnotations = (animate, runId) => {
+				buildAnnotations();
+
+				for (const annotation of annotations) {
+					annotation.animate = animate;
+					if (animate) {
+						annotation.hide();
+					}
+				}
 
 				requestAnimationFrame(() => {
+					if (runId !== initRunId) {
+						return;
+					}
+
 					for (const annotation of annotations) {
 						annotation.show();
 					}
 				});
 			};
 
-			const handleResize = () => {
-				window.clearTimeout(resizeTimer);
-				resizeTimer = window.setTimeout(() => {
-					renderAnnotations(false);
-				}, 120);
+			const waitForFonts = async () => {
+				if (!document.fonts?.ready || document.fonts.status === 'loaded') {
+					return;
+				}
+
+				await Promise.race([document.fonts.ready, wait(900)]);
 			};
 
-			requestAnimationFrame(() => {
-				requestAnimationFrame(() => {
-					renderAnnotations(true);
-				});
-			});
-
-			if (document.fonts?.ready && !initialFontsLoaded) {
-				document.fonts.ready.then(() => {
-					if (fontsRefreshComplete) {
+			const waitForViewportSettling = (runId) =>
+				new Promise((resolve) => {
+					const viewport = window.visualViewport;
+					if (!viewport) {
+						window.setTimeout(resolve, 120);
 						return;
 					}
 
-					fontsRefreshComplete = true;
-					renderAnnotations(false);
-				});
-			}
+					let idleTimer;
+					let maxTimer;
 
-			window.addEventListener('resize', handleResize);
+					const cleanup = () => {
+						viewport.removeEventListener('resize', arm);
+						window.clearTimeout(idleTimer);
+						window.clearTimeout(maxTimer);
+					};
+
+					const finish = () => {
+						cleanup();
+						resolve();
+					};
+
+					const arm = () => {
+						if (runId !== initRunId) {
+							finish();
+							return;
+						}
+
+						window.clearTimeout(idleTimer);
+						idleTimer = window.setTimeout(finish, 160);
+					};
+
+					maxTimer = window.setTimeout(finish, 900);
+					viewport.addEventListener('resize', arm, { passive: true });
+					arm();
+				});
+
+			const initializeAnnotations = async (animate) => {
+				const runId = ++initRunId;
+
+				await nextFrame();
+				await nextFrame();
+				if (runId !== initRunId) {
+					return;
+				}
+
+				await waitForFonts();
+				if (runId !== initRunId) {
+					return;
+				}
+
+				await waitForViewportSettling(runId);
+				if (runId !== initRunId) {
+					return;
+				}
+
+				await nextFrame();
+				if (runId !== initRunId) {
+					return;
+				}
+
+				showAnnotations(animate, runId);
+			};
+
+			initializeAnnotations(true);
+
+			const resetAnnotationState = () => {
+				initRunId += 1;
+				clearAnnotations();
+			};
+
 			window.addEventListener('pageshow', (event) => {
 				if (!event.persisted) {
 					return;
 				}
 
-				renderAnnotations(false);
+				clearAnnotations();
+				initializeAnnotations(true);
 			});
+
+			window.addEventListener('pagehide', resetAnnotationState);
+			window.addEventListener('beforeunload', resetAnnotationState);
 		</script>
 	</body>
 </html>
