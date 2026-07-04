@@ -7,9 +7,13 @@ badge: 'CAPTURE THE FLAG'
 tags:
   - label: 'Binary Exploitation'
     color: 'rose'
+  - label: 'ROP'
+    color: 'peach'
   - label: 'CTF'
     color: 'sage'
 ---
+
+> NOTE: Explanations coming :P I just need to make them concise and draw some diagrams
 
 ## Challenge 1: ret2win
 
