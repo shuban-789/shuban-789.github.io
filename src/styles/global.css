@@ -102,21 +102,31 @@ pre code {
 blockquote {
 	position: relative;
 	margin: 2rem 0;
-	padding: 0.2rem 0 0.2rem 0.95rem;
+	padding-left: 1rem;
 	color: var(--ink-soft);
 	font-size: 1.05rem;
+	line-height: 1.7;
 }
 
 blockquote::before {
-	content: '|';
+	content: attr(data-quote-gutter);
 	position: absolute;
-	top: 50%;
+	top: 0;
 	left: 0;
-	transform: translateY(-50%);
+	display: block;
+	white-space: pre;
 	color: var(--accent);
 	font-family: var(--font-body);
-	font-size: 1.1em;
-	line-height: 1;
+	font-size: 1em;
+	line-height: inherit;
+}
+
+blockquote > :first-child {
+	margin-top: 0;
+}
+
+blockquote > :last-child {
+	margin-bottom: 0;
 }
 
 .katex-display {

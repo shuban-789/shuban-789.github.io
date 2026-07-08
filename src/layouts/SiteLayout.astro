@@ -39,6 +39,7 @@ const pageDescription = description?.trim() || SITE_CONFIG.description;
 			const inlineHighlightParents = new Set(['STRONG', 'B', 'EM', 'I']);
 			const highlightColor = '#bfdbf2';
 			let initRunId = 0;
+			let blockquoteGutterFrame = 0;
 
 			const nextFrame = () =>
 				new Promise((resolve) => {
@@ -49,6 +50,59 @@ const pageDescription = description?.trim() || SITE_CONFIG.description;
 				new Promise((resolve) => {
 					window.setTimeout(resolve, ms);
 				});
+
+			const measureBlockquoteLines = (quote) => {
+				const walker = document.createTreeWalker(quote, NodeFilter.SHOW_TEXT, {
+					acceptNode(node) {
+						return node.textContent?.trim()
+							? NodeFilter.FILTER_ACCEPT
+							: NodeFilter.FILTER_REJECT;
+					},
+				});
+				const rects = [];
+				let node = walker.nextNode();
+
+				while (node) {
+					const range = document.createRange();
+					range.selectNodeContents(node);
+					rects.push(
+						...Array.from(range.getClientRects()).filter((rect) => rect.width > 0 && rect.height > 0),
+					);
+					node = walker.nextNode();
+				}
+
+				rects.sort((left, right) => left.top - right.top || left.left - right.left);
+				const lineTops = [];
+
+				for (const rect of rects) {
+					const previousTop = lineTops.at(-1);
+					if (previousTop === undefined || Math.abs(rect.top - previousTop) > 1) {
+						lineTops.push(rect.top);
+					}
+				}
+
+				return Math.max(1, lineTops.length);
+			};
+
+			const updateBlockquoteGutters = () => {
+				for (const quote of document.querySelectorAll('blockquote')) {
+					const gutter = Array.from({ length: measureBlockquoteLines(quote) }, () => '|').join('\n');
+					if (quote.dataset.quoteGutter !== gutter) {
+						quote.dataset.quoteGutter = gutter;
+					}
+				}
+			};
+
+			const scheduleBlockquoteGutterUpdate = () => {
+				if (blockquoteGutterFrame !== 0) {
+					cancelAnimationFrame(blockquoteGutterFrame);
+				}
+
+				blockquoteGutterFrame = requestAnimationFrame(() => {
+					blockquoteGutterFrame = 0;
+					updateBlockquoteGutters();
+				});
+			};
 
 			const getHighlightHost = (link) => {
 				const parent = link.parentElement;
@@ -220,9 +274,11 @@ const pageDescription = description?.trim() || SITE_CONFIG.description;
 					return;
 				}
 
+				scheduleBlockquoteGutterUpdate();
 				showAnnotations(animate, runId);
 			};
 
+			scheduleBlockquoteGutterUpdate();
 			initializeAnnotations(true);
 
 			const resetAnnotationState = () => {
@@ -236,9 +292,14 @@ const pageDescription = description?.trim() || SITE_CONFIG.description;
 				}
 
 				clearAnnotations();
+				scheduleBlockquoteGutterUpdate();
 				initializeAnnotations(true);
 			});
 
+			window.addEventListener('resize', scheduleBlockquoteGutterUpdate, { passive: true });
+			window.visualViewport?.addEventListener('resize', scheduleBlockquoteGutterUpdate, {
+				passive: true,
+			});
 			window.addEventListener('pagehide', resetAnnotationState);
 			window.addEventListener('beforeunload', resetAnnotationState);
 		</script>
