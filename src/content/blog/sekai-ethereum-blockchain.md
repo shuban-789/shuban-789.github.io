@@ -13,7 +13,7 @@ tags:
     color: 'sage'
 ---
 
-> NOTE: Explanations coming :P I just need to make them concise and draw some diagrams
+> NOTE: Explanations :P I just need to make them concise and draw some diagrams
 
 ## Challenge 1: PP Farming
 

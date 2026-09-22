@@ -1,5 +1,22 @@
 # Astro Starter Kit: Blog
 
+Post tags and Markdown notes share their colors and default in [`src/tag.config.js`](src/tag.config.js).
+Both support `peach`, `sky` (blue), `lavender`, `sage`, `gold`, and `rose`. Change a palette entry's
+`bg`, `border`, or `text` value there to update both tags and notes.
+
+Existing `>` notes use the default `sky` color. To choose a color for an individual note, put
+`[!color]` at the start of the quote:
+
+```md
+> [!rose]
+> NOTE: This note uses the same rose colors as a rose post tag.
+>
+> Notes can contain multiple paragraphs, **emphasis**, links, and lists.
+```
+
+The color marker is hidden in the rendered note. Note text uses normal weight and the surrounding body text
+size, and the rounded box grows to fit its content. Ordinary quotes remain blue by default.
+
 ```sh
 npm create astro@latest -- --template blog
 ```

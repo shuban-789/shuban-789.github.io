@@ -1,10 +1,11 @@
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
+import { DEFAULT_TAG_COLOR, TAG_COLORS } from './tag.config.js';
 
 const tagSchema = z.object({
 	label: z.string(),
-	color: z.enum(['peach', 'sky', 'lavender', 'sage', 'gold', 'rose']).default('sky'),
+	color: z.enum(TAG_COLORS).default(DEFAULT_TAG_COLOR),
 });
 
 const blog = defineCollection({
