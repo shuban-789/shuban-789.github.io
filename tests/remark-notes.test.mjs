@@ -9,9 +9,57 @@ const processor = await createMarkdownProcessor({
 	syntaxHighlight: false,
 });
 
-async function render(markdown) {
-	return (await processor.render(markdown)).code;
+async function render(markdown, frontmatter = {}) {
+	return (await processor.render(markdown, { frontmatter })).code;
 }
+
+function noteColors(html) {
+	return Array.from(html.matchAll(/data-note-color="([a-z]+)"/g), (match) => match[1]);
+}
+
+function notes(count) {
+	return Array.from({ length: count }, (_, index) => `> Note ${index + 1}.`)
+		.join('\n\nA paragraph between notes.\n\n');
+}
+
+test('notes cycle through the post tag colors in their original order', async () => {
+	const html = await render(notes(7), {
+		tags: [{ color: 'rose' }, { color: 'peach' }, { color: 'sage' }],
+	});
+	assert.deepEqual(noteColors(html), ['rose', 'peach', 'sage', 'rose', 'peach', 'sage', 'rose']);
+});
+
+test('each page starts with its own first tag, even with a shared processor', async () => {
+	await render(notes(2), { tags: [{ color: 'rose' }, { color: 'peach' }, { color: 'sage' }] });
+	const html = await render(notes(4), { tags: [{ color: 'lavender' }, { color: 'gold' }] });
+	assert.deepEqual(noteColors(html), ['lavender', 'gold', 'lavender', 'gold']);
+});
+
+test('one tag repeats and pages without tags keep the default color', async () => {
+	assert.deepEqual(noteColors(await render(notes(3), { tags: [{ color: 'gold' }] })), ['gold', 'gold', 'gold']);
+	assert.deepEqual(noteColors(await render(notes(2), { tags: [] })), [DEFAULT_TAG_COLOR, DEFAULT_TAG_COLOR]);
+});
+
+test('missing tag colors and repeated colors keep their positions in the cycle', async () => {
+	const html = await render(notes(5), {
+		tags: [{ color: 'rose' }, { label: 'Default blue' }, { color: 'rose' }, { color: 'sage' }],
+	});
+	assert.deepEqual(noteColors(html), ['rose', DEFAULT_TAG_COLOR, 'rose', 'sage', 'rose']);
+});
+
+test('nested notes take the next color in reading order', async () => {
+	const html = await render('> Outer note.\n>\n> > Inner note.\n\nBody paragraph.\n\n> Final note.', {
+		tags: [{ color: 'peach' }, { color: 'sage' }],
+	});
+	assert.deepEqual(noteColors(html), ['peach', 'sage', 'peach']);
+});
+
+test('explicit color overrides still occupy their note position in the cycle', async () => {
+	const html = await render('> [!gold]\n> Custom color.\n\nBody paragraph.\n\n> Automatic color.', {
+		tags: [{ color: 'rose' }, { color: 'sage' }],
+	});
+	assert.deepEqual(noteColors(html), ['gold', 'sage']);
+});
 
 test('existing notes keep their text and receive the shared default color', async () => {
 	const html = await render('> NOTE: Existing content.');

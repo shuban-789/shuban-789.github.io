@@ -2,10 +2,15 @@ import { DEFAULT_TAG_COLOR, TAG_PALETTE, tagStyle } from '../tag.config.js';
 
 /** @type {import('unified').Plugin<[], import('mdast').Root>} */
 export default function remarkNotes() {
-	/** @param {import('mdast').Nodes} node */
-	function visit(node) {
+	/**
+	 * @param {import('mdast').Nodes} node
+	 * @param {import('../tag.config.js').TagColor[]} colors
+	 * @param {{ index: number }} position
+	 */
+	function visit(node, colors, position) {
 		if (node.type === 'blockquote') {
-			let color = DEFAULT_TAG_COLOR;
+			let color = colors[position.index % colors.length];
+			position.index += 1;
 			const paragraph = node.children[0];
 			const text = paragraph?.type === 'paragraph' ? paragraph.children[0] : undefined;
 
@@ -30,9 +35,20 @@ export default function remarkNotes() {
 		}
 
 		if ('children' in node) {
-			for (const child of node.children) visit(child);
+			for (const child of node.children) visit(child, colors, position);
 		}
 	}
 
-	return (tree) => visit(tree);
+	return (tree, file) => {
+		const tags = file.data.astro?.frontmatter?.tags;
+		const colors = Array.isArray(tags)
+			? tags.map((tag) => {
+				const color = tag?.color;
+				return typeof color === 'string' && Object.hasOwn(TAG_PALETTE, color)
+					? /** @type {import('../tag.config.js').TagColor} */ (color)
+					: DEFAULT_TAG_COLOR;
+			})
+			: [];
+		visit(tree, colors.length ? colors : [DEFAULT_TAG_COLOR], { index: 0 });
+	};
 }
