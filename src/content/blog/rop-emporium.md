@@ -13,9 +13,25 @@ tags:
     color: 'sage'
 ---
 
-> NOTE: Explanations coming :P I just need to make them concise and draw some diagrams
+> NOTE: Skip the "Requisite Information" and "Introduction" sections if you are familiar with the information needed to understand my solutions to these problems.
+
+## Requisite Information
+
+I want my writeups to be accessible to people of all skill levels so I will start with covering requisite information to covers the functionality of the software components and concepts my software works with. For the sake of this writeup though, an understanding of basic programming and OS familiarity is reccomended.  
+
+An operating system is the integral software which enables a computer to orchestrate complex high level tasks. An operating system itself is more of a large software ecosystem formed by a unification of multiple different components such as the kernel, the display manager, system utilities, and standard libraries. Most of the core functionality of an operating system is done by the kernel. The complexity of creating a kernel comes from finding ways to distribute hardware resources to different processes on the system and have processes run concurrently.
+
+For the sake of this writeup, a process is created for every
+
+## Introduction
+
+ROPemporium is a series of binary exploitation challenges focusing on Return Oriented Programming (ROP) exploits (duh). In binary exploitation, ROP exploits combines a series of ROP gadgets (usually some existing instruction in the binary followed by the `ret` intruction) into a ROP chain which is inserted into the stack. An example of a ROP gadget is `pop rdi; ret` and ROP gadgets have addresses associated with them. An address in binary exploitation can be thought of as the location marker of an instruction within an executable.
+
+The chain functionality of a ROP chain comes from the unique relationship the `ret` instruction has with the stack. When a `ret` instruction
 
 ## Challenge 1: ret2win
+
+This is the first challenge of the ROPemporium and acts as the first test of turning memory corruption into code execution. Before
 
 ```py
 from pwn import *
