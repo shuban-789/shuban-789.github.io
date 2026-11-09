@@ -2,24 +2,26 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: ['master', 'main']
+    branches: ['master']
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
-  id-token: write
 
 concurrency:
-  group: 'pages'
+  group: 'publish-master-pages'
   cancel-in-progress: false
 
 jobs:
   build:
+    if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: master
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -38,20 +40,29 @@ jobs:
         env:
           SITE: ${{ steps.pages.outputs.origin }}
           BASE: ${{ steps.pages.outputs.base_path }}
-        run: npm run build
+        run: npm run build -- --outDir docs
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./dist
+      - name: Preserve custom domain
+        run: cp CNAME docs/CNAME
 
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Commit built site to master
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- docs
+          if ! git diff --cached --quiet; then
+            git commit -m 'Build site for GitHub Pages'
+            git push origin HEAD:master
+          fi
+
+      # GITHUB_TOKEN pushes do not automatically trigger a Pages build.
+      - name: Request branch deployment
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          pages_config=$(gh api "repos/$GITHUB_REPOSITORY/pages")
+          if ! jq -e '.build_type == "legacy" and .source.branch == "master" and .source.path == "/docs"' <<< "$pages_config" > /dev/null; then
+            echo '::notice::Site built in master/docs. Set Settings > Pages > Deploy from a branch > master /docs, then run this workflow again.'
+            exit 0
+          fi
+          gh api --method POST "repos/$GITHUB_REPOSITORY/pages/builds"

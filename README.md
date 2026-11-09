@@ -1,5 +1,22 @@
 # Astro Starter Kit: Blog
 
+## GitHub Pages deployment
+
+The `Deploy to GitHub Pages` workflow builds Astro on pushes to `master`
+and commits the generated site to `docs/` on that same branch. It includes `.nojekyll` so Pages
+serves the generated assets directly, and copies the root `CNAME` to preserve the
+custom domain.
+
+Run the workflow once to create `docs/`. Then, in **Settings → Pages → Build
+and deployment**, select **Deploy from a branch**, choose **master** and
+**/docs**, and save. Run the workflow again to publish. Keep editing the source
+on `master`; the workflow manages the generated `docs/` folder. Branch rules must
+allow the workflow to push these generated commits to `master`.
+
+The workflow explicitly requests a Pages build after publishing because pushes
+made with `GITHUB_TOKEN` do not automatically trigger one. No additional token
+secret is needed. See [GitHub's publishing-source documentation](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site).
+
 Post tags and Markdown notes share their colors and default in [`src/tag.config.js`](src/tag.config.js).
 Both support `peach`, `sky` (blue), `lavender`, `sage`, `gold`, and `rose`. Change a palette entry's
 `bg`, `border`, or `text` value there to update both tags and notes.
