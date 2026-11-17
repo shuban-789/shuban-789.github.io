@@ -1,7 +1,6 @@
 ---
 import '../styles/global.css';
 import { SITE_CONFIG } from '../site.config';
-import { tagStyle } from '../tag.config.js';
 
 interface Props {
 	title: string;
@@ -59,8 +58,7 @@ const canonicalURLString = canonicalURL.toString();
 />
 <style
 	is:global
-	set:html={`blockquote { ${tagStyle()} }
-	@font-face {
+	set:html={`@font-face {
 		font-family: 'Comico';
 		src:
 			url('${comicoWoff2}') format('woff2'),

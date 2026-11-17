@@ -1,4 +1,4 @@
-// Shared color configuration for post tags and Markdown notes.
+// Color configuration for post tags.
 export const TAG_PALETTE = {
 	peach: { bg: '#fff0e7', border: '#f4b28b', text: '#96512f' },
 	sky: { bg: '#eef8ff', border: '#8fbfe5', text: '#245b7d' },

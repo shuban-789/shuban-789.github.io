@@ -17,26 +17,20 @@ The workflow explicitly requests a Pages build after publishing because pushes
 made with `GITHUB_TOKEN` do not automatically trigger one. No additional token
 secret is needed. See [GitHub's publishing-source documentation](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site).
 
-Post tags and Markdown notes share their colors and default in [`src/tag.config.js`](src/tag.config.js).
-Both support `peach`, `sky` (blue), `lavender`, `sage`, `gold`, and `rose`. Change a palette entry's
-`bg`, `border`, or `text` value there to update both tags and notes.
+Post tag colors and their default are configured in [`src/tag.config.js`](src/tag.config.js).
+Tags support `peach`, `sky` (blue), `lavender`, `sage`, `gold`, and `rose`.
 
-Markdown `>` notes automatically cycle through the post's tag colors in frontmatter order. The first
-note uses the first tag's color, the second note uses the second tag's color, and the sequence repeats
-after the last tag. Each page starts a fresh cycle. Pages without tags use the default `sky` color.
-
-To override the color of an individual note, put `[!color]` at the start of the quote. That note still
-counts toward the cycle:
+All Markdown `>` notes use a light gray background, darker gray outline, and dark gray text,
+configured in the `blockquote` rule in [`src/styles/global.css`](src/styles/global.css).
 
 ```md
-> [!rose]
-> NOTE: This note uses the same rose colors as a rose post tag.
+> NOTE: This note uses the shared gray style.
 >
 > Notes can contain multiple paragraphs, **emphasis**, links, and lists.
 ```
 
-The color marker is hidden in the rendered note. Note text uses normal weight and the surrounding body text
-size, and the rounded box grows to fit its content.
+Legacy color markers such as `[!rose]` are still hidden, but all notes use the same gray style.
+Note text uses normal weight and the surrounding body text size, and the rounded box grows to fit its content.
 
 ```sh
 npm create astro@latest -- --template blog

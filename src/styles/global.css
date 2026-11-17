@@ -112,10 +112,10 @@ pre code {
 blockquote {
 	margin: 2rem 0;
 	padding: 1rem 1.2rem;
-	border: 2px solid var(--tag-border);
+	border: 2px solid #a3a3a3;
 	border-radius: var(--radius-chip);
-	background: var(--tag-bg);
-	color: var(--tag-text);
+	background: #f2f2f2;
+	color: #4a4a4a;
 	font-size: inherit;
 	font-weight: 400;
 	line-height: inherit;
